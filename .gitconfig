@@ -1,0 +1,17 @@
+[merge]
+	tool = diffuse
+[push]
+	default = simple
+[core]
+	editor = vim
+[color]
+	ui = auto
+[alias]
+	ll = log --oneline --decorate
+	lg = log --oneline --decorate --graph
+	la = log --oneline --decorate --graph --all --date-order
+    stat = status -s -b -uno
+[diff]
+    tool = vimdiff
+[difftool]
+    prompt = no
