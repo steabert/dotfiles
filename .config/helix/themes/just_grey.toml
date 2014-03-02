@@ -1,0 +1,67 @@
+"comment" = { modifiers = ["dim"] }
+"function" = { modifiers = ["bold"] }
+
+"ui.background" = { bg = "base00" }
+"ui.background.separator" = { fg = "base06" }
+
+"ui.linenr" = { fg = "base04" }
+"ui.linenr.selected" = { fg = "base0A" }
+
+"ui.statusline" = { fg = "base0A", bg = "base01" }
+"ui.statusline.inactive" = { fg = "base06", bg = "base01", modifiers = ["dim"] }
+"ui.statusline.normal" = { fg = "base00", bg = "base0B", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "base00", bg = "base0A", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "base00", bg = "base0C", modifiers = ["bold"] }
+
+"ui.popup" = { bg = "base01" }
+"ui.window" = { fg = "base02" }
+"ui.help" = { bg = "base01", fg = "base06" }
+
+"ui.text" = { fg = "base06" }
+"ui.text.focus" = { fg = "base06" }
+
+"ui.virtual" = { fg = "base02" }
+"ui.virtual.ruler" = {bg="base02"}
+"ui.virtual.indent-guide" = { fg = "base02" }
+"ui.virtual.inlay-hint" = { fg = "base03" }
+"ui.virtual.jump-label" = { fg = "base0C" }
+
+"ui.selection" = { bg = "base03" }
+"ui.selection.primary" = { bg = "base03" }
+
+"ui.cursor" = { fg = "base00" , bg = "base0A" }
+"ui.cursorline.primary" = { bg = "base01" }
+
+"ui.highlight" = { bg = "base02" }
+
+"ui.menu" = { fg = "base06", bg = "base01" }
+"ui.menu.selected" = { fg = "base06", bg = "base03" }
+"ui.menu.scroll" = { fg = "base04", bg = "base01" }
+
+"diagnostic.error" = { underline = { color = "base08", style = "curl" } }
+"diagnostic.hint" = { underline = { color = "base0B", style = "curl" } }
+"diagnostic.info" = { underline = { color = "base04", style = "curl" } }
+"diagnostic.warning" = { underline = { color = "base0D", style = "curl" } }
+
+error = "base08"
+hint = "base0B"
+info = "base04"
+warning = "base0D"
+
+[palette]
+base00 = "#101010"
+base01 = "#1b1b1b"
+base02 = "#2a2a2d"
+base03 = "#3e3e3e"
+base04 = "#808080"
+base05 = "#a6a6a6"
+base06 = "#f0f0f0"
+base07 = "#ffffff"
+base08 = "#e78284" # red
+base09 = "#90b99f" # green
+base0A = "#aca1cf" # blue
+base0B = "#99bbe0" # cyan
+base0C = "#e29eca" # magenta
+base0D = "#e5c890" # yellow
+base0E = "#000000"
+base0F = "#ffffff"

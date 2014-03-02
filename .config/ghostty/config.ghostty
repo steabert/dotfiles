@@ -1,0 +1,7 @@
+font-size = 16
+font-family = Iosevka Fixed Slab ExtraLight
+font-family-bold = Iosevka Fixed Slab Medium
+theme = EarlGrey
+command = zsh
+window-height = 32
+window-width = 128
