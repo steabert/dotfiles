@@ -1,0 +1,64 @@
+[user]
+	name = Steven Vancoillie
+	email = steven.vancoillie@axis.com
+	signingkey = 72EA3C69F5BDC32C
+[includeIf "gitdir:~/gitlab/"]
+	path = ~/gitlab/.gitconfig
+[core]
+	editor = nvim
+	pager = delta
+[delta]
+	syntax-theme = none
+	navigate = true
+	side-by-side = true
+[commit]
+	gpgSign = true
+[color]
+	ui = auto
+[diff]
+	tool = nvimdiff
+[difftool]
+	prompt = true
+[difftool "nvimdiff"]
+	cmd = nvim -d $LOCAL $REMOTE
+[merge]
+	tool = nvimdiff
+[mergetool]
+	prompt = true
+	keepBackup = false
+[mergetool "nvimdiff"]
+	cmd = BASE=$BASE LOCAL=$LOCAL REMOTE=$REMOTE MERGED=$MERGED nvim -S ~/.config/nvim/mergetool.vim
+[push]
+	default = current
+[pull]
+	ff = only
+[alias]
+        # Status
+	s = status -s -b
+	sl = status -vv
+	sa = status -vv --ignored
+	sf = show --pretty="" --name-only
+	st = show --pretty=fuller --stat --show-signature
+	d = diff
+	dc = diff --cached
+	dl = diff --find-copies-harder
+	l = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'"
+	lo = "!f() { git l origin/$1; }; f" 
+	lm = "!f() { git l origin/MOM-$1; }; f" 
+	ll = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'" --branches
+	la = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'" --all
+	# Moving around
+	co = checkout
+	set = reset --hard
+	mr = "!f() { git fetch origin MOM-$1; git checkout FETCH_HEAD; }; f" 
+	# Committing
+	au = add -u .
+	c = commit
+	ca = commit --amend --no-edit
+	cn = commit --no-verify
+	cf = commit --fix
+	cp = cherry-pick
+	ri = rebase --interactive --autosquash
+	rc = rebase --continue
+	# Merge
+	k3 = mergetool --tool=kdiff3

@@ -1,0 +1,8 @@
+#!/bin/bash
+for branch in upstream/master upstream/main origin/master origin/main; do
+        base=$(git merge-base --fork-point $branch)
+        if [[ -n "$base" ]]; then
+                git diff --name-only $base
+                break
+        fi
+done
