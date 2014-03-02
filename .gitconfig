@@ -1,3 +1,6 @@
+[user]
+	name = 
+	email = 
 [merge]
 	tool = diffuse
 [push]
@@ -10,8 +13,8 @@
 	ll = log --oneline --decorate
 	lg = log --oneline --decorate --graph
 	la = log --oneline --decorate --graph --all --date-order
-    stat = status -s -b -uno
+	stat = status -s -b -uno
 [diff]
-    tool = vimdiff
+	tool = vimdiff
 [difftool]
-    prompt = no
+	prompt = no

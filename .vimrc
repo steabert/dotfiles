@@ -106,6 +106,10 @@ augroup vim
 augroup END
 " }}}
 
+" Git {{{
+autocmd FileType gitconfig setlocal noexpandtab
+" }}}
+
 " Fortran {{{
 let fortran_do_enddo=1
 let fortran_indent_less=1
