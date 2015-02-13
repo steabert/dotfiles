@@ -1,8 +1,6 @@
 [user]
 	name = 
 	email = 
-[merge]
-	tool = diffuse
 [push]
 	default = simple
 [core]
@@ -10,11 +8,14 @@
 [color]
 	ui = auto
 [alias]
-	ll = log --oneline --decorate
-	lg = log --oneline --decorate --graph
+	ls = log --oneline --decorate --graph --date-order
 	la = log --oneline --decorate --graph --all --date-order
+	ll = log --abbrev-commit --decorate --graph --format=format:'%C(bold blue)%h%C(reset) - %C(yellow)%aD (%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(bold white)%s%C(reset) %C(bold black)- %an%C(reset)'
+	lla = log --abbrev-commit --decorate --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(yellow)%aD (%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(bold white)%s%C(reset) %C(bold black)- %an%C(reset)'
 	stat = status -s -b -uno
 [diff]
-	tool = vimdiff
-[difftool]
-	prompt = no
+	tool = kdiff3
+[merge]
+	tool = kdiff3
+[mergetool]
+	keepBackup = false
