@@ -1,0 +1,59 @@
+# Offline IMAP configuration for a work and personal email account.
+# Replace <workname> and <persname> with appropriate names.
+
+[general]
+accounts = <workname>, <persname>
+maxsyncaccounts = 2
+ui = basic
+
+# Account 1
+[Account <workname>]
+localrepository = <workname>-local
+remoterepository = <workname>-remote
+autorefresh = 5
+quick = 10
+
+[Repository <workname>-local]
+type = Maildir
+localfolders = ~/mail/<workname>
+
+[Repository <workname>-remote]
+type = IMAP
+remotehost = <imaphost>
+remoteuser = <username>
+remotepass = <password>
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+keepalive = 60
+holdconnectionopen = yes
+
+# Account 2
+[Account <persname>]
+localrepository = <persname>-local
+remoterepository = <persname>-remote
+autorefresh = 5
+quick = 10
+
+[Repository <persname>-local]
+type = Maildir
+localfolders = ~/mail/<persname>
+
+[Repository <persname>-remote]
+type = IMAP
+remotehost = <imaphost>
+remoteuser = <username>
+remotepass = <password>
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+keepalive = 60
+holdconnectionopen = yes
+
+# this writes the mailbox names to a file which is
+# then sourced by mutt
+[mbnames]
+enabled = yes
+filename = ~/.mutt/mailboxes
+header = "mailboxes "
+peritem = "+%(accountname)s/%(foldername)s"
+sep = " "
+footer = "\n"
