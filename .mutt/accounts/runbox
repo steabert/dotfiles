@@ -1,0 +1,15 @@
+set from = "<email-address>"
+set signature = "$HOME/.mutt/runbox.sig"
+set sendmail = "/usr/bin/msmtp -a runbox"
+
+set spoolfile = "+runbox/INBOX"
+set record = "+runbox/INBOX.Sent"
+set postponed = "+runbox/INBOX.Drafts"
+macro index D \
+              "<save-message>+runbox/INBOX.Trash<enter>" \
+              "move message to the trash"
+macro index A \
+              "<save-message>+runbox/INBOX.Archive<enter>" \
+              "move message to the archives"
+
+source ~/.mutt/colors/runbox

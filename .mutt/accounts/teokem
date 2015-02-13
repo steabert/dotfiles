@@ -1,0 +1,12 @@
+set from = "<email-address>"
+set signature = "$HOME/.mutt/teokem.sig"
+set sendmail = "/usr/bin/msmtp -a teokem"
+
+set spoolfile = "+teokem/INBOX"
+set record = "+teokem/Skickat"
+set postponed = "+teokem/Drafts"
+macro index D \
+              "<save-message>+teokem/Borttaget<enter>" \
+              "move message to the trash"
+
+source ~/.mutt/colors/teokem

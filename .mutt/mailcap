@@ -1,0 +1,5 @@
+text/html; lynx -display_charset=utf-8 -dump %s; nametemplate=%s.html; copiousoutput
+image/*; feh %s
+application/pgp-keys; pgp -f < %s ; copiousoutput
+application/pdf; mupdf %s
+application/ps; mupdf %s

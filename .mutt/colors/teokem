@@ -1,0 +1,40 @@
+# Palette for use with the Linux console.
+# Suitable for black background.
+
+color normal white default
+
+# index (message list)
+# tagged (selected) messages get inverse colors
+color index black white "~T"
+# flagged (important) appear light yellow instead of white
+color index brightyellow default "~F ! ~T"
+# new (unread) messages appear bright red
+color index brightred default "~N|~O ! ~T"
+color index brightblack default "~D"
+# thread lines
+color tree red default
+
+# pager (message view)
+color hdrdefault white default
+# accentuate from and subject
+color header brightwhite default "^From:"
+color header brightwhite default "^Subject:"
+# quoted text (replies)
+color quoted blue default
+color signature blue default
+# make attachments unobtrusive
+color attachment brightblack default
+
+color message brightred default
+color error brightred default
+color markers yellow default
+color search white default
+color tilde brightmagenta default
+
+# bold types for *, _
+color body brightwhite default '\*+[^*]+\*+'
+color body brightwhite default '_+[^_]+_+'
+
+# account-specific colors (teokem=brown)
+color status white color94
+color indicator white color94
