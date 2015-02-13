@@ -18,7 +18,10 @@ alias ll='ls -lF'
 alias lt='ls -ltr'
 
 # my bash prompt
-PS1='[\u@\h \W]\$ '
+#PS1='[\u@\h \W]\$ '
+# bash prompt which incorporates git branch info
+source /usr/share/git/git-prompt.sh
+PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 
 # larger history
 export HISTSIZE=10000
@@ -35,5 +38,5 @@ export PERL5LIB="$HOME/perl5/lib/perl5:$PERL5LIB";
 export PATH="$HOME/perl5/bin:$PATH";
 
 # Molcas environment
-export MOLCAS_PROJECT='NAME'
-export MOLCAS_WORKDIR='/tmp'
+export MOLCAS_PROJECT="NAME"
+export MOLCAS_WORKDIR="/tmp"
