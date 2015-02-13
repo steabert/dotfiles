@@ -17,11 +17,11 @@ set laststatus=2        " needed to display status line
 
 set number              " number lines
 set relativenumber      " use relative numbers
-set scrolloff=2         " leave 4 lines of 'border'
+set scrolloff=4         " leave 4 lines of 'border'
 
-set tabstop=8           " tab key shifts by 4 spaces
-set softtabstop=8       " tab key shifts by 4 spaces
-set shiftwidth=8        " default indent is 4 spaces
+set tabstop=8           " tab key shifts by 8 spaces
+set softtabstop=8       " tab key shifts by 8 spaces
+set shiftwidth=8        " default indent is 8 spaces
 set expandtab           " convert tabs to spaces
 
 set ignorecase          " make vim case insensitive
@@ -31,6 +31,8 @@ set autoindent          " new line gets same indentation
 filetype indent on      " load filetype specific indentation
 
 set ttimeoutlen=10      " set timeout for keycodes
+
+set textwidth=80
 " }}}
 
 " format options {{{
@@ -51,7 +53,7 @@ set cursorline
 if exists('$TMUX')
         let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
         let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
-else
+elseif &term =~ "rxvt"
         let &t_SI = "\<Esc>[3 q"
         let &t_EI = "\<Esc>[2 q"
 endif
@@ -89,11 +91,11 @@ inoremap <up> <Nop>
 " }}}
 
 " insert two delimiters {{{
-inoremap ' ''<ESC>i
-inoremap " ""<ESC>i
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap { {}<ESC>i
+inoremap <leader>' ''<ESC>i
+inoremap <leader>" ""<ESC>i
+inoremap <leader>( ()<ESC>i
+inoremap <leader>[ []<ESC>i
+inoremap <leader>{ {}<ESC>i
 " }}}
 
 "Type-specific settings
@@ -113,6 +115,7 @@ autocmd FileType gitconfig setlocal noexpandtab
 " Fortran {{{
 let fortran_do_enddo=1
 let fortran_indent_less=1
+autocmd FileType fortran setlocal shiftwidth=2 tabstop=2 softtabstop=2 textwidth=72 formatoptions-=t
 " }}}
 
 " LaTeX {{{
@@ -120,21 +123,30 @@ set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"
 " }}}
 
+" Markdown {{{
+autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+" }}}
+
 " Molcas {{{
 function! MolcasHelp()
+        " set a mark so we can return
         normal! ma
-        normal! viwy`a
-        let l:keyword = @"
-        normal! 0yl`a
-        if @" == ">"
-                let l:args = "emil " . l:keyword
+        " yank the first word of the sentence
+        normal! ^viwy`a
+        let l:key = @"
+        " if the word is e.g. ">>>", "&", then get
+        " the actual keyword behind those characters
+        " else search backwards for the module name
+        if l:key[0] == ">"
+                normal! ^wviwy`a
+                let l:args = "emil " . @"
+        elseif l:key[0] == "&"
+                normal! ^wviwy`a
+                let l:args = @"
         else
-                normal! ? *&f&lyw`a
-                if @" == l:keyword
-                        let l:args = l:keyword
-                else
-                        let l:args = @" . " " . l:keyword
-                endif
+                normal! ?^\s*&f&lyw`a
+                "let l:args = @" . " " . l:key[:3]
+                let l:args = @" . " " . l:key
         endif
         execute "split | enew | setlocal buftype=nowrite | r !molcas help -b " . l:args
 endfunction
