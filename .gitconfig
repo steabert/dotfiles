@@ -1,21 +1,40 @@
 [user]
-	name = 
-	email = 
-[push]
-	default = simple
-[core]
-	editor = vim
+	name = First Last
+	email = first.last@mailprovider.com
+[commit]
+	gpgSign = true
 [color]
 	ui = auto
-[alias]
-	ls = log --oneline --decorate --graph --date-order
-	la = log --oneline --decorate --graph --all --date-order
-	ll = log --abbrev-commit --decorate --graph --format=format:'%C(bold blue)%h%C(reset) - %C(yellow)%aD (%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(bold white)%s%C(reset) %C(bold black)- %an%C(reset)'
-	lla = log --abbrev-commit --decorate --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(yellow)%aD (%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(bold white)%s%C(reset) %C(bold black)- %an%C(reset)'
-	stat = status -s -b -uno
 [diff]
-	tool = kdiff3
+	tool = diffuse
 [merge]
+	log = true
 	tool = kdiff3
 [mergetool]
 	keepBackup = false
+[core]
+	editor = vim
+[push]
+	default = current
+[alias]
+        # Status
+	s = status -s -b
+	sl = status -vv
+	sa = status -vv --ignored
+	d = diff
+	dc = diff --cached
+	dl = diff --find-copies-harder
+	l = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'"
+	ll = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'" --branches
+	la = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'" --all
+	# Moving around
+	co = checkout
+	set = reset --hard
+	# Committing
+	au = add -u .
+	c = commit
+	ca = commit --amend --no-edit
+	cn = commit --no-verify
+	cf = commit --fix
+	ri = rebase --interactive --autosquash
+	rc = rebase --continue
