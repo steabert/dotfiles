@@ -38,7 +38,7 @@ filetype indent on      " load filetype specific indentation
 set textwidth=80
 
 " general mappings
-inoremap <C-j> <Esc>
+noremap <C-j> <Esc>
 
 " deactivate arrow keys
 noremap <down> <Nop>
@@ -154,6 +154,8 @@ set updatetime=300
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 set signcolumn=yes
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -186,8 +188,6 @@ else
 endif
 
 " GoTo code navigation.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -249,12 +249,6 @@ augroup END
 
 " Git
 autocmd FileType gitconfig setlocal noexpandtab
-
-" Completion
-" Better display for messages
-set cmdheight=2
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
 
 " Golang
 let g:go_play_open_browser = 0
