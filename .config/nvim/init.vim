@@ -80,10 +80,17 @@ Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntactic language support
+Plug 'dag/vim-fish'
 Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
-Plug 'dag/vim-fish'
 Plug 'plasticboy/vim-markdown'
+
+" JavaScript / TypeScript
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
 " Themes
 Plug 'chriskempson/base16-vim'
