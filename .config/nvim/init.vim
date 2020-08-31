@@ -77,20 +77,32 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Semantic language support
+" You also need to install the appropriate
+" extensions from within nvim with
+" :CocInstall coc-go
+" :CocInstall coc-rust-analyzer
+" :CocInstall coc-sh
+" :CocInstall coc-prettier
+" :CocInstall coc-eslint
+" :CocInstall coc-tsserver
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntactic language support
+" (most are builtin, some need a plugin)
+
+" Shell / Markup
 Plug 'dag/vim-fish'
 Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
 Plug 'plasticboy/vim-markdown'
 
-" JavaScript / TypeScript
+" JavaScript / TypeScript / GraphQL
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql'
 
 " Themes
 Plug 'chriskempson/base16-vim'
