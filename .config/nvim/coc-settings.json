@@ -1,9 +1,0 @@
-{
-  "coc.preferences.formatOnSaveFiletypes": [
-    "json",
-    "javascript",
-    "typescript",
-    "rust"
-  ],
-  "rust-analyzer.checkOnSave.enable": false
-}
