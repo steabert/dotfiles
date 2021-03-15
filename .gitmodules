@@ -1,0 +1,15 @@
+[submodule "fzfvim"]
+	path = vim/site/pack/bundle/opt/fzfvim
+	url = https://github.com/junegunn/fzf.vim.git
+[submodule "coc"]
+	path = vim/site/pack/bundle/opt/coc
+	url = https://github.com/neoclide/coc.nvim.git
+[submodule "base16"]
+	path = vim/site/pack/bundle/opt/base16
+	url = https://github.com/chriskempson/base16-vim.git
+[submodule "lightline"]
+	path = vim/site/pack/bundle/opt/lightline
+	url = https://github.com/itchyny/lightline.vim.git
+[submodule "graphql"]
+	path = vim/site/pack/bundle/opt/graphql
+	url = https://github.com/jparise/vim-graphql.git
