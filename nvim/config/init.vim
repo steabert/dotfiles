@@ -6,8 +6,7 @@ set nomodeline " security
 let mapleader = "\<Space>"
 inoremap <C-l> <Esc>
 
-set timeoutlen=300
-set ttimeoutlen=100
+set ttimeoutlen=10
 
 " Most of these configs are folded to keep it maintainable.
 " Use `za` on a folded section to toggle folding (or zR to unfold all).
