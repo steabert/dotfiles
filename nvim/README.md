@@ -5,8 +5,8 @@ cloning this repository to `<repo>`, and running
 `git submodule update --init --recursive`:
 
 ```
-ln -s ~/.config/nvim <repo>/vim/config
-ln -s ~/.local/share/nvim/site <repo>/vim/site
+ln -s ~/.config/nvim <repo>/nvim/config
+ln -s ~/.local/share/nvim/site <repo>/nvim/site
 ```
 
 ## Packages (plugins)
