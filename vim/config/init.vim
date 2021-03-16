@@ -76,6 +76,7 @@ endif
 " }}}
 
 " Fuzzy finder {{{
+packadd! fzf
 packadd! fzfvim
 
 "let g:fzf_layout = { 'down': '25%' }
