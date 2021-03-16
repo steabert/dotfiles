@@ -13,3 +13,6 @@
 [submodule "graphql"]
 	path = vim/site/pack/bundle/opt/graphql
 	url = https://github.com/jparise/vim-graphql.git
+[submodule "fzf"]
+	path = vim/site/pack/bundle/opt/fzf
+	url = https://github.com/junegunn/fzf.git
