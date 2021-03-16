@@ -4,15 +4,15 @@ set shell=/bin/bash
 set nocompatible
 set nomodeline " security
 let mapleader = "\<Space>"
-inoremap <C-l> <Esc>
 
 set ttimeoutlen=10
 
 " Most of these configs are folded to keep it maintainable.
 " Use `za` on a folded section to toggle folding (or zR to unfold all).
 
-" Native settings
-"""""""""""""""""
+"""
+""" Native settings
+"""
 " {{{
 
 set title               " use filename to set titlebar
@@ -25,8 +25,7 @@ set relativenumber      " use relative numbers
 set scrolloff=4         " leave 4 lines of 'border' at top and bottom
 
 set tabstop=8           " tab key shifts by 8 spaces
-set softtabstop=8       " tab key shifts by 8 spaces
-set shiftwidth=8        " default indent is 8 spaces
+set noexpandtab
 set list
 set listchars=tab:➝\ ,
 
@@ -43,6 +42,7 @@ endif
 
 " general mappings
 noremap <C-j> <Esc>
+inoremap <C-l> <Esc>
 
 " deactivate arrow keys
 noremap <down> <Nop>
@@ -56,12 +56,9 @@ inoremap <up> <Nop>
 
 " }}}
 
-"Plug 'pangloss/vim-javascript'
-"Plug 'leafgarland/typescript-vim'
-"Plug 'maxmellon/vim-jsx-pretty'
-"Plug 'peitalin/vim-jsx-typescript'
-"Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-
+"""
+""" Interface settings
+"""
 " Theme {{{
 packadd! base16
 
@@ -82,10 +79,10 @@ packadd! fzfvim
 " Empty value to disable preview window altogether
 let g:fzf_preview_window = []
 "nmap <C-o> :Files<CR>
-noremap <C-o> :Files<CR>
-noremap <C-p> :GFiles<CR>
-noremap <C-b> :Buffer<CR>
-noremap <C-f> :BLines<CR>
+nnoremap <leader>o :Files<CR>
+nnoremap <leader>p :GFiles<CR>
+nnoremap <leader>b :Buffer<CR>
+nnoremap <leader>f :BLines<CR>
 " }}}
 
 " Lightline {{{
@@ -108,8 +105,22 @@ endfunction
 " }}}
 
 """
-""" Programming languages
+""" Programming language support
 """
+
+" JavaScript/TypeScript {{{
+packadd! javascript
+autocmd FileType javascript setlocal shiftwidth=2
+
+packadd! typescript
+autocmd FileType typescript setlocal shiftwidth=2
+
+packadd! jsxpretty
+autocmd FileType javascriptreact setlocal shiftwidth=2
+autocmd FileType typescriptreact setlocal shiftwidth=2
+
+packadd! styledcomponents
+" }}}
 
 " GraphQL {{{
 packadd! graphql
@@ -194,12 +205,9 @@ nmap <leader>rn <Plug>(coc-rename)
 " Code actions.
 nmap <leader>do <Plug>(coc-codeaction)
 
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
+nnoremap <leader>s :Format<CR>
 
 " Use auocmd to force lightline update.
 autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()

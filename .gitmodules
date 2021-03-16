@@ -16,3 +16,15 @@
 [submodule "fzf"]
 	path = nvim/site/pack/bundle/opt/fzf
 	url = https://github.com/junegunn/fzf.git
+[submodule "jsxpretty"]
+	path = nvim/site/pack/bundle/opt/jsxpretty
+	url = https://github.com/MaxMEllon/vim-jsx-pretty.git
+[submodule "typescript"]
+	path = nvim/site/pack/bundle/opt/typescript
+	url = https://github.com/leafgarland/typescript-vim.git
+[submodule "javascript"]
+	path = nvim/site/pack/bundle/opt/javascript
+	url = https://github.com/pangloss/vim-javascript.git
+[submodule "styledcomponents"]
+	path = nvim/site/pack/bundle/opt/styledcomponents
+	url = https://github.com/styled-components/vim-styled-components.git

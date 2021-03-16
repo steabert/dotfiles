@@ -1,14 +1,3 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": [
-    "json",
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "rust",
-    "go"
-  ],
-  "tsserver.formatOnType": true,
-  "coc.preferences.formatOnType": true,
   "rust-analyzer.checkOnSave.enable": false
 }
