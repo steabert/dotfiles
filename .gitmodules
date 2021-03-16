@@ -28,3 +28,6 @@
 [submodule "styledcomponents"]
 	path = nvim/site/pack/bundle/opt/styledcomponents
 	url = https://github.com/styled-components/vim-styled-components.git
+[submodule "fugitive"]
+	path = nvim/site/pack/bundle/opt/fugitive
+	url = https://github.com/tpope/vim-fugitive.git

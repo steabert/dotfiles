@@ -104,6 +104,11 @@ function! LightlineFilename()
 endfunction
 " }}}
 
+" Git {{{
+packadd! fugitive
+nnoremap <leader>b :Gblame<CR>
+" }}}
+
 """
 """ Programming language support
 """
