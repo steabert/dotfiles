@@ -8,7 +8,9 @@ let mapleader = "\<Space>"
 set ttimeoutlen=10
 
 " Most of these configs are folded to keep it maintainable.
-" Use `za` on a folded section to toggle folding (or zR to unfold all).
+" Use `za` on a folded section to toggle folding,
+" or use zM to fold all or zR to unfold all.
+set nofoldenable
 
 """
 """ Native settings
@@ -25,6 +27,8 @@ set relativenumber      " use relative numbers
 set scrolloff=4         " leave 4 lines of 'border' at top and bottom
 
 set tabstop=8           " tab key shifts by 8 spaces
+set shiftwidth=8
+set softtabstop=-1
 set noexpandtab
 set list
 set listchars=tab:➝\ ,
@@ -77,12 +81,13 @@ packadd! fzfvim
 
 "let g:fzf_layout = { 'down': '25%' }
 " Empty value to disable preview window altogether
-let g:fzf_preview_window = []
+"let g:fzf_preview_window = []
 "nmap <C-o> :Files<CR>
 nnoremap <leader>o :Files<CR>
 nnoremap <leader>p :GFiles<CR>
-nnoremap <leader>b :Buffer<CR>
+nnoremap <leader>l :Buffer<CR>
 nnoremap <leader>f :BLines<CR>
+nnoremap <leader>F :Ag<CR>
 " }}}
 
 " Lightline {{{
@@ -106,12 +111,14 @@ endfunction
 
 " Git {{{
 packadd! fugitive
-nnoremap <leader>b :Gblame<CR>
+nnoremap <expr> <leader>gb &filetype ==# 'fugitiveblame' ? ":quit\r" : ":Gblame\r"
 " }}}
 
 """
 """ Programming language support
 """
+
+filetype off
 
 " JavaScript/TypeScript {{{
 packadd! javascript
@@ -129,6 +136,7 @@ packadd! styledcomponents
 
 " GraphQL {{{
 packadd! graphql
+autocmd FileType graphql setlocal shiftwidth=8 noexpandtab
 " }}}
 
 " CoC {{{
@@ -235,6 +243,7 @@ augroup vim
         autocmd!
         autocmd FileType vim setlocal foldmethod=marker
 augroup END
-
-" Git
 autocmd FileType gitconfig setlocal noexpandtab
+
+filetype plugin indent on
+
