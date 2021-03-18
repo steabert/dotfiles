@@ -20,6 +20,7 @@ set nofoldenable
 
 set title               " use filename to set titlebar
 set nobackup            " don't keep a backup file
+set noswapfile
 
 set noruler             " show the cursor position all the time
 
@@ -29,7 +30,6 @@ set scrolloff=2         " leave some lines of 'border' at top and bottom
 
 set tabstop=8           " tab key shifts by 8 spaces
 set shiftwidth=8
-set softtabstop=-1
 set noexpandtab
 set list
 set listchars=tab:➝\ ,
@@ -38,13 +38,16 @@ set ignorecase          " make vim case insensitive
 set smartcase           " be case sensitive if need be
 
 set textwidth=80
-set colorcolumn=81
+set colorcolumn=80
 
 if &diff
         syntax off      " don't color in diff mode
 else
         syntax on
 endif
+
+set hidden
+set nohlsearch
 
 " }}}
 
@@ -138,16 +141,11 @@ filetype off
 
 " JavaScript/TypeScript {{{
 packadd! javascript
-autocmd FileType javascript setlocal shiftwidth=2
-
 packadd! typescript
-autocmd FileType typescript setlocal shiftwidth=2
-
 packadd! jsxpretty
-autocmd FileType javascriptreact setlocal shiftwidth=2
-autocmd FileType typescriptreact setlocal shiftwidth=2
-
 packadd! styledcomponents
+autocmd FileType javascript,typescript,javascriptreact,typescriptreact
+			\ setlocal shiftwidth=2 expandtab softtabstop=2
 " }}}
 
 " GraphQL {{{
@@ -259,6 +257,7 @@ augroup vim
         autocmd!
         autocmd FileType vim setlocal foldmethod=marker
 augroup END
+
 autocmd FileType gitconfig setlocal noexpandtab
 
 filetype plugin indent on
