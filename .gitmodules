@@ -34,3 +34,6 @@
 [submodule "editorconfig"]
 	path = nvim/site/pack/bundle/opt/editorconfig
 	url = https://github.com/editorconfig/editorconfig-vim.git
+[submodule "surround"]
+	path = nvim/site/pack/bundle/opt/surround
+	url = https://github.com/tpope/vim-surround.git
