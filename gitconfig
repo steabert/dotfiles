@@ -1,6 +1,7 @@
 [user]
 	name = steabert
 	email = steabert@users.noreply.github.com
+	signingkey = 7DDE6EE65698FA01
 [core]
 	editor = nvim
 [commit]
@@ -22,6 +23,8 @@
 	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [push]
 	default = current
+[pull]
+	ff = only
 [alias]
         # Status
 	s = status -s -b
