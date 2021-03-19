@@ -3,84 +3,15 @@ set shell=/bin/bash
 
 set nocompatible
 set nomodeline " security
-let mapleader = "\<Space>"
 
-set ttimeoutlen=10
+let mapleader = "\<Space>"
 
 " Most of these configs are folded to keep it maintainable.
 " Use `za` on a folded section to toggle folding,
 " or use `zM` to fold all or `zR` to unfold all.
-" By default, nothing starts folded.
-set nofoldenable
+" By default, stuff is folded at start. To disable, use `set nofoldenable`.
 
-"""
-""" Basic settings
-"""
-" {{{
-
-set title               " use filename to set titlebar
-set nobackup            " don't keep a backup file
-set noswapfile
-
-set noruler             " show the cursor position all the time
-
-set number              " number lines
-set relativenumber      " use relative numbers
-set scrolloff=2         " leave some lines of 'border' at top and bottom
-
-set tabstop=8           " tab key shifts by 8 spaces
-set shiftwidth=8
-set noexpandtab
-set list
-set listchars=tab:➝\ ,
-
-set ignorecase          " make vim case insensitive
-set smartcase           " be case sensitive if need be
-
-set textwidth=80
-set colorcolumn=80
-
-if &diff
-        syntax off      " don't color in diff mode
-else
-        syntax on
-endif
-
-set hidden
-set nohlsearch
-
-" }}}
-
-"""
-""" Some basic key bindings
-"""
-
-" {{{
-
-" easier escape (avoid timeout)
-noremap <C-j> <Esc>
-inoremap <C-l> <Esc>
-
-" deactivate arrow keys
-noremap <down> <Nop>
-noremap <up> <Nop>
-noremap <left> <Nop>
-noremap <right> <Nop>
-inoremap <left> <Nop>
-inoremap <right> <Nop>
-inoremap <down> <Nop>
-inoremap <up> <Nop>
-
-" copy to / paste from clipboard in visual mode
-noremap  <leader>y  "+y
-noremap  <leader>p  "+p
-
-" }}}
-
-"""
-""" Interface settings
-"""
-" Theme {{{
+" Colours {{{
 packadd! base16
 
 set background=dark
@@ -89,6 +20,11 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 else
   colorscheme base16-gruvbox-dark-hard
+endif
+if &diff
+        syntax off      " don't color in diff mode
+else
+        syntax on
 endif
 " }}}
 
@@ -129,15 +65,53 @@ endfunction
 " Git {{{
 packadd! fugitive
 nnoremap <expr> <leader>gb &filetype ==# 'fugitiveblame' ? ":quit\r" : ":Gblame\r"
+autocmd FileType gitconfig setlocal noexpandtab
 " }}}
 
+" Surround {{{
 packadd! surround
+" }}}
 
 """
 """ Programming language support
 """
 
-filetype off
+" Intellisense (LSP) {{{
+packadd! completion
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+set completeopt=menuone,noinsert,noselect
+packadd! lspconfig
+" Setup LSP
+set signcolumn=yes
+lua require('lspconfig').gopls.setup{
+		\ on_attach=require('completion').on_attach
+		\ }
+lua require('lspconfig').tsserver.setup{
+			\ on_attach=require('completion').on_attach,
+			\ cmd={
+			\ "typescript-language-server",
+			\ "--tsserver-path", ".yarn/sdks/typescript/bin/tsserver",
+			\ "--stdio"
+			\ }}
+setlocal omnifunc=v:lua.vim.lsp.omnifunc
+inoremap <silent> <C-Space> <C-x><C-o>
+" Diagnostics
+nnoremap <leader>] <cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
+nnoremap <leader>[ <cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
+nnoremap <leader>= <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+" Documentation
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+inoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+" Navigation
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gt <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+" Refactoring
+nnoremap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>fs <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <leader>do <cmd>lua vim.lsp.buf.code_action()<CR>
+" }}}
 
 " JavaScript/TypeScript {{{
 packadd! javascript
@@ -146,99 +120,32 @@ packadd! jsxpretty
 packadd! styledcomponents
 autocmd FileType javascript,typescript,javascriptreact,typescriptreact
 			\ setlocal shiftwidth=2 expandtab softtabstop=2
+" when working with yarn2, jumping to definitions will open a zip file
+" with a path similar to: .yarn/cache/@package.zip/node_modules/.../file.js
+" which can be opened by neovim if the string is massaged a little bit.
+function! OpenZippedFile(f)
+  " get number of new (empty) buffer
+  let l:b = bufnr('%')
+  " construct full path
+  let l:f = substitute(a:f, '.zip/', '.zip::', '')
+  let l:f = substitute(l:f, '^', 'zipfile:', '')
+
+  " swap back to original buffer
+  b #
+  " delete new one
+  exe 'bd! ' . l:b
+  " open buffer with correct path
+  sil exe 'e ' . l:f
+  " read in zip data
+  call zip#Read(l:f, 1)
+endfunction
+
+au BufReadCmd *.yarn/cache/*.zip/* call OpenZippedFile(expand('<afile>'))
 " }}}
 
 " GraphQL {{{
 packadd! graphql
 autocmd FileType graphql setlocal shiftwidth=8 noexpandtab
-" }}}
-
-" CoC {{{
-packadd! coc
-" You also need to install the appropriate
-" extensions from within nvim with
-" :CocInstall coc-go
-" :CocInstall coc-rust-analyzer
-" :CocInstall coc-sh
-" :CocInstall coc-prettier
-" :CocInstall coc-eslint
-" :CocInstall coc-tsserver
-" :CocInstall coc-json
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-set signcolumn=yes
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-" jump back and forth
-nnoremap <silent> gb <C-o>
-nnoremap <silent> gf <C-i>
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-" Highlight the symbol and its references when holding the cursor.
-"autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Code actions.
-nmap <leader>do <Plug>(coc-codeaction)
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-nnoremap <leader>s :Format<CR>
-
-" Use auocmd to force lightline update.
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
-
 " }}}
 
 " Grep {{{
@@ -252,13 +159,72 @@ if executable('rg')
 endif
 " }}}
 
-" Vim
+" Vim {{{
 augroup vim
         autocmd!
         autocmd FileType vim setlocal foldmethod=marker
 augroup END
+" }}}
 
-autocmd FileType gitconfig setlocal noexpandtab
+"""
+""" Customization
+"""
 
 filetype plugin indent on
 
+set title               " use filename to set titlebar
+set nobackup            " don't keep a backup file
+set noswapfile
+
+set noruler             " show the cursor position all the time
+
+set number              " number lines
+set relativenumber      " use relative numbers
+set scrolloff=2         " leave some lines of 'border' at top and bottom
+
+set tabstop=8           " tab key shifts by 8 spaces
+set shiftwidth=8
+set noexpandtab
+set list
+set listchars=tab:➝\ ,
+
+set ignorecase          " make vim case insensitive
+set smartcase           " be case sensitive if need be
+
+set textwidth=80
+set colorcolumn=80
+
+set hidden
+set nohlsearch
+
+" easier escape (avoid timeout)
+set ttimeoutlen=10
+noremap <C-j> <Esc>
+inoremap <C-l> <Esc>
+
+" deactivate arrow keys
+noremap  <down>  <Nop>
+noremap  <up>    <Nop>
+noremap  <left>  <Nop>
+noremap  <right> <Nop>
+inoremap <left>  <Nop>
+inoremap <right> <Nop>
+inoremap <down>  <Nop>
+inoremap <up>    <Nop>
+
+" copy to / paste from clipboard in visual mode
+noremap  <leader>y "+y
+noremap  <leader>p "+p
+
+" open a new line without any comments
+nnoremap <leader>n o<ESC>0c$
+
+" jump back and forth
+nnoremap <silent> gb <C-o>
+nnoremap <silent> gf <C-i>
+nnoremap <leader><Space> <C-w><C-o>
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
+nnoremap <leader>x <C-w>c

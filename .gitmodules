@@ -37,3 +37,9 @@
 [submodule "surround"]
 	path = nvim/site/pack/bundle/opt/surround
 	url = https://github.com/tpope/vim-surround.git
+[submodule "lspconfig"]
+	path = nvim/site/pack/bundle/opt/lspconfig
+	url = https://github.com/neovim/nvim-lspconfig.git
+[submodule "completion"]
+	path = nvim/site/pack/bundle/opt/completion
+	url = https://github.com/nvim-lua/completion-nvim.git
