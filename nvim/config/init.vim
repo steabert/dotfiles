@@ -35,7 +35,7 @@ packadd! fzfvim
 "let g:fzf_layout = { 'down': '25%' }
 " Empty value to disable preview window altogether
 "let g:fzf_preview_window = []
-"nmap <C-o> :Files<CR>
+"nmap <c-o> :Files<CR>
 nnoremap <leader>o :GFiles<CR>
 nnoremap <leader>O :Files<CR>
 nnoremap <leader>l :Buffer<CR>
@@ -84,32 +84,48 @@ packadd! lspconfig
 " Setup LSP
 set signcolumn=yes
 lua require('lspconfig').gopls.setup{
-		\ on_attach=require('completion').on_attach
+		\ on_attach=require('completion').on_attach,
+		\ handlers = { 
+			\ ["textDocument/publishDiagnostics"] = vim.lsp.with(
+			\ vim.lsp.diagnostic.on_publish_diagnostics, {
+				\ virtual_text = false
+			\ })
 		\ }
+	\ }
 lua require('lspconfig').tsserver.setup{
-			\ on_attach=require('completion').on_attach,
-			\ cmd={
+		\ on_attach=require('completion').on_attach,
+		\ cmd={
 			\ "typescript-language-server",
 			\ "--tsserver-path", ".yarn/sdks/typescript/bin/tsserver",
 			\ "--stdio"
-			\ }}
+		\ },
+		\ handlers = { 
+			\ ["textDocument/publishDiagnostics"] = vim.lsp.with(
+			\ vim.lsp.diagnostic.on_publish_diagnostics, {
+				\ virtual_text = false
+			\ })
+		\ }
+	\ }
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
-inoremap <silent> <C-Space> <C-x><C-o>
+inoremap <silent> <c-space> <s-x><s-o>
 " Diagnostics
-nnoremap <leader>] <cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
-nnoremap <leader>[ <cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
-nnoremap <leader>= <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-" Documentation
-nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-inoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <leader>d]     <cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
+nnoremap <leader>d[     <cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
+nnoremap <leader>d=     <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap <leader>dl     <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " Navigation
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gt <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gt    <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " Refactoring
 nnoremap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>fs <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <leader>s <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <leader>do <cmd>lua vim.lsp.buf.code_action()<CR>
 " }}}
 
@@ -180,7 +196,7 @@ set noruler             " show the cursor position all the time
 
 set number              " number lines
 set relativenumber      " use relative numbers
-set scrolloff=2         " leave some lines of 'border' at top and bottom
+set scrolloff=8         " leave some lines of 'border' at top and bottom
 
 set tabstop=8           " tab key shifts by 8 spaces
 set shiftwidth=8
@@ -199,8 +215,8 @@ set nohlsearch
 
 " easier escape (avoid timeout)
 set ttimeoutlen=10
-noremap <C-j> <Esc>
-inoremap <C-l> <Esc>
+noremap <c-j> <Esc>
+inoremap <c-l> <Esc>
 
 " deactivate arrow keys
 noremap  <down>  <Nop>
@@ -220,11 +236,11 @@ noremap  <leader>p "+p
 nnoremap <leader>n o<ESC>0c$
 
 " jump back and forth
-nnoremap <silent> gb <C-o>
-nnoremap <silent> gf <C-i>
-nnoremap <leader><Space> <C-w><C-o>
-nnoremap <leader>h <C-w>h
-nnoremap <leader>j <C-w>j
-nnoremap <leader>k <C-w>k
-nnoremap <leader>l <C-w>l
-nnoremap <leader>x <C-w>c
+nnoremap <silent> gb <c-o>
+nnoremap <silent> gf <c-i>
+nnoremap <leader><Space> <c-w><c-o>
+nnoremap <leader>h <c-w>h
+nnoremap <leader>j <c-w>j
+nnoremap <leader>k <c-w>k
+nnoremap <leader>l <c-w>l
+nnoremap <leader>x <c-w>c
