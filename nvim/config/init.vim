@@ -32,11 +32,6 @@ endif
 " Fuzzy finder {{{
 packadd! fzf
 packadd! fzfvim
-
-"let g:fzf_layout = { 'down': '25%' }
-" Empty value to disable preview window altogether
-"let g:fzf_preview_window = []
-"nmap <c-o> :Files<CR>
 nnoremap <leader>o :GFiles<CR>
 nnoremap <leader>O :Files<CR>
 nnoremap <leader>l :Buffer<CR>
@@ -206,9 +201,9 @@ nnoremap <silent> gb <c-o>
 nnoremap <silent> gf <c-i>
 
 " window shortcuts
-nnoremap <leader><Space> <c-w><c-o>
-nnoremap <leader>h <c-w>h
-nnoremap <leader>j <c-w>j
-nnoremap <leader>k <c-w>k
-nnoremap <leader>l <c-w>l
+" switch windows
+nnoremap <leader><space> <c-w>w
+" keep current window (close all others)
+nnoremap <leader>k <c-w><c-o>
+" close current window
 nnoremap <leader>x <c-w>c
