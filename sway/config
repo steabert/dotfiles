@@ -252,7 +252,7 @@ for_window [window_role="task_dialog"]     floating enable; border normal $borde
 for_window [class="feh"]                   floating enable; border normal $border
 
 # Compose key
-input * xkb_options compose:rctrl
-input * xkb_options caps:ctrl_modifier
+# ! don't add multiple xkb_options, as the last one will overwrite,
+# ! instead add extra options in the comma-separated list
+input * xkb_options compose:rctrl,caps:ctrl_modifier,grp:win_space_toggle
 input * xkb_layout us,se
-input * xkb_options grp:win_space_toggle

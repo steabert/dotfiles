@@ -20,7 +20,8 @@ set -x GPG_TTY (tty)
 # Check current path with
 #   set --show fish_user_paths
 
-# ripgrep conf
+# find utilities
+set -x FZF_DEFAULT_COMMAND 'fd --type f'
 set -x RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 
 # Custom aliases

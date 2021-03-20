@@ -36,7 +36,7 @@ nnoremap <leader>o :GFiles<CR>
 nnoremap <leader>O :Files<CR>
 nnoremap <leader>l :Buffer<CR>
 nnoremap <leader>f :BLines<CR>
-nnoremap <leader>F :Ag<CR>
+nnoremap <leader>F :Rg<CR>
 " }}}
 
 " Status bar {{{
