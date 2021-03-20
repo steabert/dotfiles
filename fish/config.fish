@@ -21,7 +21,7 @@ set -x GPG_TTY (tty)
 #   set --show fish_user_paths
 
 # find utilities
-set -x FZF_DEFAULT_COMMAND 'fd --type f'
+set -x FZF_DEFAULT_COMMAND 'fd --type f --no-ignore-vcs'
 set -x RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 
 # Custom aliases
