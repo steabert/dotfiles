@@ -11,7 +11,7 @@ let mapleader = "\<Space>"
 " or use `zM` to fold all or `zR` to unfold all.
 " By default, stuff is folded at start. To disable, use `set nofoldenable`.
 
-" Colours {{{
+" Look and feel {{{
 packadd! base16
 
 set termguicolors
@@ -44,23 +44,9 @@ nnoremap <leader>f :BLines<CR>
 nnoremap <leader>F :Ag<CR>
 " }}}
 
-" Lightline {{{
-packadd! lightline
-
-set laststatus=2
-let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \   'cocstatus': 'coc#status'
-      \ },
-      \ }
-function! LightlineFilename()
-  return expand('%:t') !=# '' ? @% : '[No Name]'
-endfunction
+" Status bar {{{
+packadd! lualine
+lua require('lualine-init')
 " }}}
 
 " Git {{{
@@ -82,31 +68,9 @@ packadd! completion
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 set completeopt=menuone,noinsert,noselect
 packadd! lspconfig
+lua require('lsp-init')
 " Setup LSP
 set signcolumn=yes
-lua require('lspconfig').gopls.setup{
-		\ on_attach=require('completion').on_attach,
-		\ handlers = { 
-			\ ["textDocument/publishDiagnostics"] = vim.lsp.with(
-			\ vim.lsp.diagnostic.on_publish_diagnostics, {
-				\ virtual_text = false
-			\ })
-		\ }
-	\ }
-lua require('lspconfig').tsserver.setup{
-		\ on_attach=require('completion').on_attach,
-		\ cmd={
-			\ "typescript-language-server",
-			\ "--tsserver-path", ".yarn/sdks/typescript/bin/tsserver",
-			\ "--stdio"
-		\ },
-		\ handlers = { 
-			\ ["textDocument/publishDiagnostics"] = vim.lsp.with(
-			\ vim.lsp.diagnostic.on_publish_diagnostics, {
-				\ virtual_text = false
-			\ })
-		\ }
-	\ }
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
 inoremap <silent> <c-space> <s-x><s-o>
 " Diagnostics
@@ -219,7 +183,7 @@ set ttimeoutlen=10
 noremap <c-j> <Esc>
 inoremap <c-l> <Esc>
 
-" deactivate arrow keys
+" Deactivate arrow keys {{{
 noremap  <down>  <Nop>
 noremap  <up>    <Nop>
 noremap  <left>  <Nop>
@@ -228,6 +192,7 @@ inoremap <left>  <Nop>
 inoremap <right> <Nop>
 inoremap <down>  <Nop>
 inoremap <up>    <Nop>
+" }}}
 
 " copy to / paste from clipboard in visual mode
 noremap  <leader>y "+y
@@ -239,6 +204,8 @@ nnoremap <leader>n o<ESC>0c$
 " jump back and forth
 nnoremap <silent> gb <c-o>
 nnoremap <silent> gf <c-i>
+
+" window shortcuts
 nnoremap <leader><Space> <c-w><c-o>
 nnoremap <leader>h <c-w>h
 nnoremap <leader>j <c-w>j

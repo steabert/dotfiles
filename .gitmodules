@@ -43,3 +43,6 @@
 [submodule "completion"]
 	path = nvim/site/pack/bundle/opt/completion
 	url = https://github.com/nvim-lua/completion-nvim.git
+[submodule "lualine"]
+	path = nvim/site/pack/bundle/opt/lualine
+	url = https://github.com/hoob3rt/lualine.nvim.git
