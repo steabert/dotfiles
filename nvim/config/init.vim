@@ -14,6 +14,7 @@ let mapleader = "\<Space>"
 " Colours {{{
 packadd! base16
 
+set termguicolors
 set background=dark
 let base16colorspace=256
 if filereadable(expand("~/.vimrc_background"))
