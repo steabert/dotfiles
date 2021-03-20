@@ -61,13 +61,20 @@ packadd! surround
 " Intellisense (LSP) {{{
 packadd! completion
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
 packadd! lspconfig
 lua require('lsp-init')
 " Setup LSP
 set signcolumn=yes
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
-inoremap <silent> <c-space> <s-x><s-o>
+inoremap <silent> <c-space> <c-x><c-o>
 " Diagnostics
 nnoremap <leader>d]     <cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
 nnoremap <leader>d[     <cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
@@ -84,9 +91,9 @@ nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " Refactoring
-nnoremap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>s <cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <leader>do <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <leader>rn     <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>s      <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <leader>do     <cmd>lua vim.lsp.buf.code_action()<CR>
 " }}}
 
 " JavaScript/TypeScript {{{
@@ -118,6 +125,10 @@ function! OpenZippedFile(f)
 endfunction
 
 au BufReadCmd *.yarn/cache/*.zip/* call OpenZippedFile(expand('<afile>'))
+" }}}
+
+" Go {{{
+packadd! vimgo
 " }}}
 
 " GraphQL {{{
