@@ -91,8 +91,9 @@ nnoremap <leader>do <cmd>lua vim.lsp.buf.code_action()<CR>
 
 " JavaScript/TypeScript {{{
 packadd! javascript
-packadd! typescript
 packadd! jsxpretty
+packadd! typescript
+packadd! jsxtypescript
 packadd! styledcomponents
 autocmd FileType javascript,typescript,javascriptreact,typescriptreact
 			\ setlocal shiftwidth=2 expandtab softtabstop=2

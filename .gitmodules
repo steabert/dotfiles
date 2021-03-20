@@ -46,3 +46,6 @@
 [submodule "lualine"]
 	path = nvim/site/pack/bundle/opt/lualine
 	url = https://github.com/hoob3rt/lualine.nvim.git
+[submodule "jsxtypescript"]
+	path = nvim/site/pack/bundle/opt/jsxtypescript
+	url = https://github.com/peitalin/vim-jsx-typescript.git
