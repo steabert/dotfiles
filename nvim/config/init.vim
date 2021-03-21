@@ -5,8 +5,8 @@ set nocompatible
 set nomodeline " security
 
 " The leader key will be (mostly) coupled to key sequences that have something
-" to do with windows (opening a diagnostic, finding files/text with fzf, moving
-" between windows).
+" to do with windows (opening a diagnostic, finding files/text, moving between
+" windows).
 let mapleader = "\<Space>"
 
 " Most of these configs are folded to keep it readable.  Use `za` on a folded
@@ -32,21 +32,22 @@ endif
 " }}}
 
 " Fuzzy finder {{{
-packadd! fzf
-packadd! fzfvim
-nnoremap <leader>o :GFiles<CR>
-nnoremap <leader>O :Files<CR>
-nnoremap <leader>l :Buffer<CR>
-nnoremap <leader>f :BLines<CR>
-nnoremap <leader>F :Rg<CR>
+packadd! popup
+packadd! plenary
+packadd! telescope
+nnoremap <leader>p :Telescope git_files<CR>
+nnoremap <leader>o :Telescope find_files find_command=fd,-H,--no-ignore-vcs prompt_prefix=🔍<CR>
+nnoremap <leader>F :Telescope live_grep<CR>
+nnoremap <leader>l :Telescope buffers<CR>
+nnoremap <leader>b :Telescope file_browser<CR>
 
 " After opening a window to search for a file (or text), just hit enter to open
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
 " (next tab) or `gT` (previous tab), or `Ngt` where `N` is the tab number
-" (starting from 1) to jump immediately to the right tab.
-" Closing the last window in a tab will close the tab itself, so you can just
-" use <leader>x to close tabs as well as windows (see window bindings below).
-"
+" (starting from 1) to jump immediately to the right tab.  Closing the last
+" window in a tab will close the tab itself, so you can just use <leader>x to
+" close tabs as well as windows (see window bindings below).
+
 " }}}
 
 " Status bar {{{
@@ -230,7 +231,7 @@ set ignorecase          " make vim case insensitive
 set smartcase           " be case sensitive if need be
 
 set textwidth=80
-set colorcolumn=80
+"set colorcolumn=80	" mark position as column
 
 set hidden
 set nohlsearch
