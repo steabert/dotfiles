@@ -121,7 +121,7 @@ nnoremap <leader>dl     <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " Navigation
 nnoremap <silent>K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent><c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent><c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent><c-s> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent>gi    <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent>gD    <cmd>lua vim.lsp.buf.type_definition()<CR>
