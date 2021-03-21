@@ -37,7 +37,7 @@ packadd! popup
 packadd! plenary
 packadd! telescope
 nnoremap <leader>p :Telescope git_files<CR>
-nnoremap <leader>o :Telescope find_files find_command=fd,-H,--no-ignore-vcs prompt_prefix=🔍<CR>
+nnoremap <leader>o :Telescope find_files find_command=fd,-t,file,-H,--no-ignore-vcs prompt_prefix=🔍<CR>
 nnoremap <leader>F :Telescope live_grep<CR>
 nnoremap <leader>l :Telescope buffers<CR>
 nnoremap <leader>b :Telescope file_browser<CR>
@@ -220,7 +220,7 @@ set noruler             " show the cursor position all the time
 
 set number              " number lines
 set relativenumber      " use relative numbers
-set scrolloff=8         " leave some lines of 'border' at top and bottom
+set scrolloff=999       " leave some lines of 'border' at top and bottom (999 = always middle cursor)
 
 set tabstop=8           " tab key shifts by 8 spaces
 set shiftwidth=8
