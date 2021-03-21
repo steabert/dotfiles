@@ -15,6 +15,7 @@ let mapleader = "\<Space>"
 
 " Look and feel {{{
 packadd! base16
+packadd! devicons
 
 set termguicolors
 set background=dark

@@ -52,3 +52,6 @@
 [submodule "plenary"]
 	path = nvim/site/pack/bundle/opt/plenary
 	url = https://github.com/nvim-lua/plenary.nvim.git
+[submodule "devicons"]
+	path = nvim/site/pack/bundle/opt/devicons
+	url = https://github.com/kyazdani42/nvim-web-devicons.git
