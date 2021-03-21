@@ -36,11 +36,14 @@ endif
 packadd! popup
 packadd! plenary
 packadd! telescope
-nnoremap <leader>p :Telescope git_files<CR>
-nnoremap <leader>o :Telescope find_files find_command=fd,-t,file,-H,--no-ignore-vcs prompt_prefix=🔍<CR>
-nnoremap <leader>F :Telescope live_grep<CR>
-nnoremap <leader>l :Telescope buffers<CR>
-nnoremap <leader>b :Telescope file_browser<CR>
+nnoremap <leader>p :lua require('telescope.builtin').git_files()<CR>
+nnoremap <leader>o :lua require('telescope.builtin').find_files({ find_command={'fd','-t','file','-H','--no-ignore-vcs'}, prompt_prefix='🔍' })<CR>
+nnoremap <leader>f :lua require('telescope.builtin').grep_string({ search=vim.fn.expand("<cword>") })<CR>
+nnoremap <leader>F :lua require('telescope.builtin').grep_string({ search=vim.fn.input("Grep for > ") })<CR>
+nnoremap <leader>l :lua require('telescope.builtin').buffers()<CR>
+nnoremap <leader>bp :lua require('telescope.builtin').file_browser()<CR>
+nnoremap <leader>bd :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expand("%:p:h")})<CR>
+nnoremap <leader>rc :lua require('me.telescope').search_dotfiles()<CR>
 
 " After opening a window to search for a file (or text), just hit enter to open
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
@@ -53,7 +56,7 @@ nnoremap <leader>b :Telescope file_browser<CR>
 
 " Status bar {{{
 packadd! lualine
-lua require('lualine-init')
+lua require('me.lualine')
 
 " The status bar can be configured to use icons (but then you need some special
 " fonts that have those icons, i.e. nerd fonts). The configuration is in the
@@ -131,14 +134,14 @@ nnoremap <silent>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent>gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " Refactoring
 nnoremap <leader>rn     <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>df     <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <leader>rf     <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <leader>do     <cmd>lua vim.lsp.buf.code_action()<CR>
 " }}}
 
 " Code formatting {{{
 packadd! neoformat
 
-nnoremap <leader>dp :Neoformat<CR>
+nnoremap <leader>df :Neoformat<CR>
 
 " There is some formatting capability in the LSP servers, but that's not
 " really what we need all the time, and most often formatting is nice to
@@ -146,7 +149,7 @@ nnoremap <leader>dp :Neoformat<CR>
 " }}}
 
 " JavaScript/TypeScript {{{
-lua require('lsp-ts')
+lua require('me.lsp-ts')
 
 packadd! javascript
 packadd! jsxpretty
@@ -180,7 +183,7 @@ au BufReadCmd *.yarn/cache/*.zip/* call OpenZippedFile(expand('<afile>'))
 " }}}
 
 " Go {{{
-lua require('lsp-go')
+lua require('me.lsp-go')
 " }}}
 
 " GraphQL {{{
