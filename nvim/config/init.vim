@@ -108,7 +108,6 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 packadd! lspconfig
-lua require('lsp-init')
 " Setup LSP
 set signcolumn=yes
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
@@ -130,11 +129,23 @@ nnoremap <silent>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent>gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " Refactoring
 nnoremap <leader>rn     <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>s      <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <leader>df     <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <leader>do     <cmd>lua vim.lsp.buf.code_action()<CR>
 " }}}
 
+" Code formatting {{{
+packadd! neoformat
+
+nnoremap <leader>dp :Neoformat<CR>
+
+" There is some formatting capability in the LSP servers, but that's not
+" really what we need all the time, and most often formatting is nice to
+" have separate from any diagnostics or analysis tool.
+" }}}
+
 " JavaScript/TypeScript {{{
+lua require('lsp-ts')
+
 packadd! javascript
 packadd! jsxpretty
 packadd! typescript
@@ -167,7 +178,7 @@ au BufReadCmd *.yarn/cache/*.zip/* call OpenZippedFile(expand('<afile>'))
 " }}}
 
 " Go {{{
-packadd! vimgo
+lua require('lsp-go')
 " }}}
 
 " GraphQL {{{
@@ -241,7 +252,7 @@ inoremap <up>    <Nop>
 " }}}
 
 " copy to / paste from clipboard in visual mode
-noremap  <silent>gc "+y
+noremap  <silent>gy "+y
 noremap  <silent>gp "+p
 
 " open a new line without any comments
