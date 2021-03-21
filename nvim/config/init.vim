@@ -4,12 +4,14 @@ set shell=/bin/bash
 set nocompatible
 set nomodeline " security
 
+" The leader key will be (mostly) coupled to key sequences that have something
+" to do with windows (opening a diagnostic, finding files/text with fzf, moving
+" between windows).
 let mapleader = "\<Space>"
 
-" Most of these configs are folded to keep it maintainable.
-" Use `za` on a folded section to toggle folding,
-" or use `zM` to fold all or `zR` to unfold all.
-" By default, stuff is folded at start. To disable, use `set nofoldenable`.
+" Most of these configs are folded to keep it readable.  Use `za` on a folded
+" section to toggle folding, or use `zM` to fold all or `zR` to unfold all.  By
+" default, stuff is folded at start. To disable, use `set nofoldenable`.
 
 " Look and feel {{{
 packadd! base16
@@ -37,11 +39,25 @@ nnoremap <leader>O :Files<CR>
 nnoremap <leader>l :Buffer<CR>
 nnoremap <leader>f :BLines<CR>
 nnoremap <leader>F :Rg<CR>
+
+" After opening a window to search for a file (or text), just hit enter to open
+" the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
+" (next tab) or `gT` (previous tab), or `Ngt` where `N` is the tab number
+" (starting from 1) to jump immediately to the right tab.
+" Closing the last window in a tab will close the tab itself, so you can just
+" use <leader>x to close tabs as well as windows (see window bindings below).
+"
 " }}}
 
 " Status bar {{{
 packadd! lualine
 lua require('lualine-init')
+
+" The status bar can be configured to use icons (but then you need some special
+" fonts that have those icons, i.e. nerd fonts). The configuration is in the
+" lua file, and we use the defaults there except that we add diagnostics output
+" next to the file name (which shows LSP diagnostics).
+"
 " }}}
 
 " Git {{{
@@ -52,6 +68,28 @@ autocmd FileType gitconfig setlocal noexpandtab
 
 " Surround {{{
 packadd! surround
+
+" To change one type of quotes to another, use `csXY`
+" with X and Y the characters representing from => to
+" while positioned on the word.
+"
+" "hello" cs"' => 'hello'
+" 'hello' cs'( => ( hello )
+" 'hello' cs') => (hello)
+" {hello} cs}{ => { hello }
+"
+" To add or remove quotes around a word, use either
+" `ysiwX` (add), or `dsX` (delete):
+"
+" (hello) ds(   => hello
+" (hello) ds)   => hello
+" hello   ysiw{ => { hello }
+" hello   ysiw} => { hello }
+"
+" With parentheses, using the open version keeps a space,
+" using the closed version adds no space when adding
+" (no difference when removing).
+"
 " }}}
 
 """
@@ -85,8 +123,8 @@ nnoremap <silent>K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent><c-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent><c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent>gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent>gt    <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent>gi    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent>gD    <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent>gr    <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
 nnoremap <silent>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent>gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
@@ -104,8 +142,9 @@ packadd! jsxtypescript
 packadd! styledcomponents
 autocmd FileType javascript,typescript,javascriptreact,typescriptreact
 			\ setlocal shiftwidth=2 expandtab softtabstop=2
-" when working with yarn2, jumping to definitions will open a zip file
-" with a path similar to: .yarn/cache/@package.zip/node_modules/.../file.js
+
+" When working with yarn2, jumping to definitions will open a zip file
+" with a path similar to: `.yarn/cache/@package.zip/node_modules/.../file.js`,
 " which can be opened by neovim if the string is massaged a little bit.
 function! OpenZippedFile(f)
   " get number of new (empty) buffer
