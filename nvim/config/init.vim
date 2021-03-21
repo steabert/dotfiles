@@ -81,15 +81,15 @@ nnoremap <leader>d[     <cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
 nnoremap <leader>d=     <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 nnoremap <leader>dl     <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " Navigation
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gt    <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent>K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent><c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent><c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent>gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent>gt    <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent>gr    <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+nnoremap <silent>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent>gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " Refactoring
 nnoremap <leader>rn     <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>s      <cmd>lua vim.lsp.buf.formatting()<CR>
@@ -202,15 +202,15 @@ inoremap <up>    <Nop>
 " }}}
 
 " copy to / paste from clipboard in visual mode
-noremap  <leader>y "+y
-noremap  <leader>p "+p
+noremap  <silent>gc "+y
+noremap  <silent>gp "+p
 
 " open a new line without any comments
 nnoremap <leader>n o<ESC>0c$
 
 " jump back and forth
-nnoremap <silent> gb <c-o>
-nnoremap <silent> gf <c-i>
+nnoremap <silent>gb <c-o>
+nnoremap <silent>gf <c-i>
 
 " window shortcuts
 " switch windows
