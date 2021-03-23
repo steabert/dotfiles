@@ -36,7 +36,7 @@ endif
 packadd! popup
 packadd! plenary
 packadd! telescope
-nnoremap <leader>p :lua require('telescope.builtin').git_files()<CR>
+nnoremap <leader>p :lua require('telescope.builtin').find_files({ find_command={'fd','-t','file','-H','-E','.yarn'}, prompt_prefix='🔍' })<CR>
 nnoremap <leader>o :lua require('telescope.builtin').find_files({ find_command={'fd','-t','file','-H','--no-ignore-vcs'}, prompt_prefix='🔍' })<CR>
 nnoremap <leader>f :lua require('telescope.builtin').grep_string({ search=vim.fn.expand("<cword>") })<CR>
 nnoremap <leader>F :lua require('telescope.builtin').grep_string({ search=vim.fn.input("Grep for > ") })<CR>
