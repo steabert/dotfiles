@@ -191,6 +191,10 @@ packadd! graphql
 autocmd FileType graphql setlocal shiftwidth=8 noexpandtab
 " }}}
 
+" Shell {{{
+autocmd FileType sh setlocal shiftwidth=2
+" }}}
+
 " Grep {{{
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 if executable('ag')
