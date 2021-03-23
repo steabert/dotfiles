@@ -36,14 +36,14 @@ endif
 packadd! popup
 packadd! plenary
 packadd! telescope
-nnoremap <leader>p :lua require('telescope.builtin').find_files({ find_command={'fd','-t','file','-H','-E','.yarn'}, prompt_prefix='🔍' })<CR>
-nnoremap <leader>o :lua require('telescope.builtin').find_files({ find_command={'fd','-t','file','-H','--no-ignore-vcs'}, prompt_prefix='🔍' })<CR>
 nnoremap <leader>f :lua require('telescope.builtin').grep_string({ search=vim.fn.expand("<cword>") })<CR>
 nnoremap <leader>F :lua require('telescope.builtin').grep_string({ search=vim.fn.input("Grep for > ") })<CR>
 nnoremap <leader>l :lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>bp :lua require('telescope.builtin').file_browser()<CR>
-nnoremap <leader>bd :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expand("%:p:h")})<CR>
+nnoremap <leader>bh :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expand("%:p:h")})<CR>
 nnoremap <leader>rc :lua require('me.telescope').search_dotfiles()<CR>
+nnoremap <leader>p :lua require('me.telescope').find_files_project()<CR>
+nnoremap <leader>o :lua require('me.telescope').find_files()<CR>
 
 " After opening a window to search for a file (or text), just hit enter to open
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
@@ -141,7 +141,8 @@ nnoremap <leader>do     <cmd>lua vim.lsp.buf.code_action()<CR>
 " Code formatting {{{
 packadd! neoformat
 
-nnoremap <leader>df :Neoformat<CR>
+nnoremap <leader>s :Neoformat<CR>:w<CR>
+set shortmess+=w
 
 " There is some formatting capability in the LSP servers, but that's not
 " really what we need all the time, and most often formatting is nice to
@@ -192,7 +193,7 @@ autocmd FileType graphql setlocal shiftwidth=8 noexpandtab
 " }}}
 
 " Shell {{{
-autocmd FileType sh setlocal shiftwidth=2
+autocmd FileType sh setlocal shiftwidth=2 expandtab
 " }}}
 
 " Grep {{{
@@ -211,6 +212,10 @@ augroup vim
         autocmd!
         autocmd FileType vim setlocal foldmethod=marker
 augroup END
+" }}}
+
+" Lua {{{
+autocmd FileType lua setlocal shiftwidth=4 expandtab
 " }}}
 
 """
