@@ -25,7 +25,8 @@ export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
 # Custom aliases
 alias ls='ls --color=always'
-alias lt='ls -ltra'
+alias ll='ls -lFa'
+alias lt='ll -tr'
 alias vi='nvim'
 
 # Wayland
@@ -37,3 +38,12 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # Prompt
 autoload -Uz promptinit && promptinit && prompt redhat
+PROMPT='[%n@%F{yellow}%m%f %F{blue}%B%1~%b%f]$ '
+
+# History search
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
+[[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
