@@ -157,7 +157,7 @@ packadd! jsxpretty
 packadd! typescript
 packadd! jsxtypescript
 packadd! styledcomponents
-autocmd FileType javascript,typescript,javascriptreact,typescriptreact
+autocmd FileType javascript,typescript,javascriptreact,typescriptreact,html
 			\ setlocal shiftwidth=2 expandtab softtabstop=2
 
 " When working with yarn2, jumping to definitions will open a zip file
