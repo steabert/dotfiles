@@ -1,7 +1,7 @@
 [user]
 	name = steabert
 	email = steabert@users.noreply.github.com
-	signingkey = 7DDE6EE65698FA01
+	signingkey = 72EA3C69F5BDC32C
 [core]
 	editor = nvim
 [commit]
