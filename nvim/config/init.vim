@@ -98,7 +98,7 @@ packadd! surround
 """ Programming language support
 """
 
-" Intellisense (LSP) {{{
+" LSP {{{
 packadd! completion
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 " Use <Tab> and <S-Tab> to navigate through popup menu
@@ -123,16 +123,21 @@ nnoremap <leader>dl     <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 nnoremap <silent>K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent><c-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent><c-s> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent>gi    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent>gD    <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent>gr    <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
-nnoremap <silent>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent>gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+"nnoremap <silent>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+"nnoremap <silent>gd    <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent>gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent>gR    <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+"nnoremap <silent>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+"nnoremap <silent>gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " Refactoring
-nnoremap <leader>rn     <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>rf     <cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <leader>do     <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <leader>dr     <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>df     <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <leader>da     <cmd>lua vim.lsp.buf.code_action()<CR>
+" }}}
+
+" TreeSitter {{{
+packadd! treesitter
+lua require('me.treesitter')
 " }}}
 
 " Code formatting {{{
@@ -212,7 +217,7 @@ augroup END
 " }}}
 
 " Lua {{{
-autocmd FileType lua setlocal shiftwidth=4 expandtab
+autocmd FileType lua setlocal shiftwidth=2 expandtab
 " }}}
 
 """

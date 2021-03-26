@@ -55,3 +55,6 @@
 [submodule "devicons"]
 	path = nvim/site/pack/bundle/opt/devicons
 	url = https://github.com/kyazdani42/nvim-web-devicons.git
+[submodule "treesitter"]
+	path = nvim/site/pack/bundle/opt/treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter.git
