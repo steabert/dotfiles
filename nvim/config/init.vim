@@ -1,6 +1,3 @@
-" Fish doesn't play all that well with others
-set shell=/bin/bash
-
 set nocompatible
 set nomodeline " security
 
@@ -36,7 +33,6 @@ endif
 packadd! popup
 packadd! plenary
 packadd! telescope
-nnoremap <leader>f :lua require('telescope.builtin').grep_string({ search=vim.fn.expand("<cword>") })<CR>
 nnoremap <leader>F :lua require('telescope.builtin').grep_string({ search=vim.fn.input("Grep for > ") })<CR>
 nnoremap <leader>l :lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>bp :lua require('telescope.builtin').file_browser()<CR>
@@ -44,6 +40,7 @@ nnoremap <leader>bh :lua require('telescope.builtin').file_browser({ cwd=vim.fn.
 nnoremap <leader>rc :lua require('me.telescope').search_dotfiles()<CR>
 nnoremap <leader>p :lua require('me.telescope').find_files_project()<CR>
 nnoremap <leader>o :lua require('me.telescope').find_files()<CR>
+nnoremap <leader>f :lua require('me.telescope').grep_string()<CR>
 
 " After opening a window to search for a file (or text), just hit enter to open
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
@@ -283,3 +280,6 @@ nnoremap <leader><space> <c-w>w
 nnoremap <leader>k <c-w><c-o>
 " close current window
 nnoremap <leader>x <c-w>c
+
+" reload init
+nnoremap <leader>rr :source ~/.config/nvim/init.vim<CR>
