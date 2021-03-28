@@ -19,7 +19,7 @@ bindkey '^R' history-incremental-search-backward
 alias ls='ls --color=always'
 alias ll='ls -lFa'
 alias lt='ll -tr'
-alias vi='nvim'
+alias neo='nvim'
 
 # Environment
 export EDITOR=nvim
