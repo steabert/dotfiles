@@ -33,14 +33,14 @@ endif
 packadd! popup
 packadd! plenary
 packadd! telescope
-nnoremap <leader>F :lua require('telescope.builtin').grep_string({ search=vim.fn.input("Grep for > ") })<CR>
-nnoremap <leader>l :lua require('telescope.builtin').buffers()<CR>
-nnoremap <leader>bp :lua require('telescope.builtin').file_browser()<CR>
-nnoremap <leader>bh :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expand("%:p:h")})<CR>
+nnoremap <C-f>/ :lua require('telescope.builtin').grep_string({ search=vim.fn.input("Grep for > ") })<CR>
+nnoremap <C-f>* :lua require('me.telescope').grep_string()<CR>
+nnoremap <C-l> :lua require('telescope.builtin').buffers()<CR>
+nnoremap <C-b>p :lua require('telescope.builtin').file_browser()<CR>
+nnoremap <C-b>h :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expand("%:p:h")})<CR>
 nnoremap <leader>rc :lua require('me.telescope').search_dotfiles()<CR>
-nnoremap <leader>p :lua require('me.telescope').find_files_project()<CR>
+nnoremap <C-p> :lua require('me.telescope').find_files_project()<CR>
 nnoremap <leader>o :lua require('me.telescope').find_files()<CR>
-nnoremap <leader>f :lua require('me.telescope').grep_string()<CR>
 
 " After opening a window to search for a file (or text), just hit enter to open
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
@@ -91,14 +91,17 @@ packadd! surround
 " With parentheses, using the open version keeps a space,
 " using the closed version adds no space when adding
 " (no difference when removing).
-"
+
+" jump to end of line in insert mode (to escape delimiters)
+inoremap <C-e> <C-o>A
+
 " }}}
 
 """
 """ Programming language support
 """
 
-" Intellisense (LSP) {{{
+" LSP {{{
 packadd! completion
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 " Use <Tab> and <S-Tab> to navigate through popup menu
@@ -113,7 +116,7 @@ packadd! lspconfig
 " Setup LSP
 set signcolumn=yes
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
-inoremap <silent> <c-space> <c-x><c-o>
+inoremap <silent> <C-Space> <C-x><C-o>
 " Diagnostics
 nnoremap <leader>d]     <cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
 nnoremap <leader>d[     <cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
@@ -121,18 +124,23 @@ nnoremap <leader>d=     <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 nnoremap <leader>dl     <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " Navigation
 nnoremap <silent>K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent><c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent><c-s> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent>gi    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent>gD    <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent>gr    <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
-nnoremap <silent>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent>gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent><C-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent><C-s> <cmd>lua vim.lsp.buf.signature_help()<CR>
+"nnoremap <silent>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+"nnoremap <silent>gd    <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent>gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent>gR    <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+"nnoremap <silent>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+"nnoremap <silent>gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " Refactoring
-nnoremap <leader>rn     <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>rf     <cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <leader>do     <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <leader>dr     <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>df     <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <leader>da     <cmd>lua vim.lsp.buf.code_action()<CR>
+" }}}
+
+" TreeSitter {{{
+packadd! treesitter
+lua require('me.treesitter')
 " }}}
 
 " Code formatting {{{
@@ -212,7 +220,7 @@ augroup END
 " }}}
 
 " Lua {{{
-autocmd FileType lua setlocal shiftwidth=4 expandtab
+autocmd FileType lua setlocal shiftwidth=2 expandtab
 " }}}
 
 """
@@ -230,6 +238,7 @@ set noruler             " show the cursor position all the time
 set number              " number lines
 set relativenumber      " use relative numbers
 set scrolloff=999       " leave some lines of 'border' at top and bottom (999 = always middle cursor)
+set scroll=20           " how much to scroll with Ctrl-d/Ctrl-u
 
 set tabstop=8           " tab key shifts by 8 spaces
 set shiftwidth=8
@@ -248,8 +257,8 @@ set nohlsearch
 
 " easier escape (avoid timeout)
 set ttimeoutlen=10
-noremap <c-j> <Esc>
-inoremap <c-l> <Esc>
+noremap <C-j> <Esc>
+inoremap <C-l> <Esc>
 
 " Deactivate arrow keys {{{
 noremap  <down>  <Nop>
@@ -267,19 +276,20 @@ noremap  <silent>gy "+y
 noremap  <silent>gp "+p
 
 " open a new line without any comments
-nnoremap <leader>n o<ESC>0c$
+nnoremap <leader>n o<C-o>0c$
 
 " jump back and forth
-nnoremap <silent>gb <c-o>
-nnoremap <silent>gf <c-i>
+nnoremap <silent>gb <C-o>
+nnoremap <silent>gB <C-i>
 
-" window shortcuts
+" window shortcuts {{{
 " switch windows
-nnoremap <leader><space> <c-w>w
+nnoremap <leader><Space> <C-w>w
 " keep current window (close all others)
-nnoremap <leader>k <c-w><c-o>
+nnoremap <leader>k <C-w><C-o>
 " close current window
-nnoremap <leader>x <c-w>c
+nnoremap <leader>x <C-w>c
 
 " reload init
 nnoremap <leader>rr :source ~/.config/nvim/init.vim<CR>
+" }}}
