@@ -32,6 +32,11 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 unset LESS # restore default less behaviour
 
 # Prompt
-autoload -Uz promptinit && promptinit && prompt redhat
-PROMPT='[%n@%F{yellow}%m%f %F{blue}%B%1~%b%f]%# '
+autoload -Uz promptinit && promptinit
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt promptsubst
+zstyle ':vcs_info:git:*' formats '%b'
+PROMPT='[%n@%F{yellow}%m%f %F{blue}%B%1~%b%f %F{green}${vcs_info_msg_0_}%f]%# '
 
