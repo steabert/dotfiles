@@ -33,14 +33,18 @@ endif
 packadd! popup
 packadd! plenary
 packadd! telescope
+
+" find files
 nnoremap <C-f>/ :lua require('telescope.builtin').grep_string({ search=vim.fn.input("Grep for > ") })<CR>
 nnoremap <C-f>* :lua require('me.telescope').grep_string()<CR>
-nnoremap <C-l> :lua require('telescope.builtin').buffers()<CR>
-nnoremap <C-b>p :lua require('telescope.builtin').file_browser()<CR>
-nnoremap <C-b>h :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expand("%:p:h")})<CR>
-nnoremap <leader>rc :lua require('me.telescope').search_dotfiles()<CR>
-nnoremap <C-p> :lua require('me.telescope').find_files_project()<CR>
-nnoremap <leader>o :lua require('me.telescope').find_files()<CR>
+nnoremap <C-f>b :lua require('telescope.builtin').buffers()<CR>
+nnoremap <C-f>p :lua require('me.telescope').find_files_project()<CR>
+nnoremap <C-f>f :lua require('me.telescope').find_files()<CR>
+nnoremap <C-f>c :lua require('me.telescope').search_dotfiles()<CR>
+
+" browse
+nnoremap <C-b> :lua require('telescope.builtin').file_browser()<CR>
+nnoremap <C-h> :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expand("%:p:h")})<CR>
 
 " After opening a window to search for a file (or text), just hit enter to open
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
@@ -118,8 +122,8 @@ set signcolumn=yes
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
 inoremap <silent> <C-Space> <C-x><C-o>
 " Diagnostics
-nnoremap <leader>d]     <cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
-nnoremap <leader>d[     <cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
+nnoremap <leader>dj     <cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
+nnoremap <leader>dk     <cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
 nnoremap <leader>d=     <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 nnoremap <leader>dl     <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " Navigation
@@ -278,18 +282,21 @@ noremap  <silent>gp "+p
 " open a new line without any comments
 nnoremap <leader>n o<C-o>0c$
 
-" jump back and forth
-nnoremap <silent>gb <C-o>
-nnoremap <silent>gB <C-i>
-
 " window shortcuts {{{
 " switch windows
 nnoremap <leader><Space> <C-w>w
 " keep current window (close all others)
-nnoremap <leader>k <C-w><C-o>
+nnoremap <leader>h <C-w><C-o>
 " close current window
 nnoremap <leader>x <C-w>c
+" }}}
+
+" quickfix list {{{
+nnoremap <C-j> :cnext<CR>
+nnoremap <C-k> :cprev<CR>
+nnoremap <leader>j :lnext<CR>
+nnoremap <leader>k :lprev<CR>
+" }}}
 
 " reload init
-nnoremap <leader>rr :source ~/.config/nvim/init.vim<CR>
-" }}}
+nnoremap <leader>r :source ~/.config/nvim/init.vim<CR>
