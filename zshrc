@@ -29,7 +29,7 @@ export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 export MOZ_ENABLE_WAYLAND=1
 export BEMENU_BACKEND=wayland
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-unset LESS # restore default less behaviour
+#unset LESS # restore default less behaviour
 
 # Prompt
 autoload -Uz promptinit && promptinit
