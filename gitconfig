@@ -1,11 +1,8 @@
 [user]
 	name = steabert
 	email = steabert@users.noreply.github.com
-	signingkey = 7DDE6EE65698FA01
 [core]
 	editor = nvim
-[commit]
-	gpgSign = true
 [color]
 	ui = auto
 [diff]
