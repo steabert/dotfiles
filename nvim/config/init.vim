@@ -65,6 +65,7 @@ lua require('me.lualine')
 " Git {{{
 packadd! fugitive
 nnoremap <silent>gb :Gblame<CR><C-w>w
+nnoremap <silent>gl :0Glog<CR><C-w>w
 autocmd FileType gitconfig setlocal noexpandtab
 " }}}
 
@@ -131,8 +132,8 @@ setlocal omnifunc=v:lua.vim.lsp.omnifunc
 inoremap <silent> <C-Space> <C-x><C-o>
 " Diagnostics
 " use the local quickfix list instead for navigating diagnostics!
-"nnoremap <leader>dj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
-"nnoremap <leader>dk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
+nnoremap <leader>gj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
+nnoremap <leader>gk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
 nnoremap <silent>g=	<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 nnoremap <silent>L	<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " Navigation
@@ -150,8 +151,10 @@ nnoremap <silent>gn	<cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent>gf	<cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <silent>ga	<cmd>lua vim.lsp.buf.code_action()<CR>
 
-sign define LspDiagnosticsSignError text=❌ texthl=ErrorMsg
-sign define LspDiagnosticsSignWarning text=⚠️
+sign define LspDiagnosticsSignError text= texthl=lualine_c_diagnostics_error_normal
+sign define LspDiagnosticsSignWarning text= texthl=lualine_c_diagnostics_warning_normal
+sign define LspDiagnosticsSignInformation text= texthl=lualine_c_diagnostics_info_normal
+sign define LspDiagnosticsSignHint text= texthl=lualine_c_diagnostics_info_normal
 
 " populate the location list with LSP diagnostics automatically
 fun! LspLocationList()
@@ -301,8 +304,8 @@ nnoremap <leader>x <C-w>c
 " quickfix list {{{
 nnoremap <C-j> :cnext<CR>
 nnoremap <C-k> :cprev<CR>
-nnoremap <silent>gj :lnext<CR>
-nnoremap <silent>gk :lprev<CR>
+nnoremap <leader>j :lnext<CR>
+nnoremap <leader>k :lprev<CR>
 " }}}
 
 " Deactivate arrow keys {{{
