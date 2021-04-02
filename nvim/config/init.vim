@@ -150,7 +150,7 @@ nnoremap <silent>gn	<cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent>gf	<cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <silent>ga	<cmd>lua vim.lsp.buf.code_action()<CR>
 
-sign define LspDiagnosticsSignError text=❌
+sign define LspDiagnosticsSignError text=❌ texthl=ErrorMsg
 sign define LspDiagnosticsSignWarning text=⚠️
 
 " populate the location list with LSP diagnostics automatically
