@@ -132,8 +132,8 @@ setlocal omnifunc=v:lua.vim.lsp.omnifunc
 inoremap <silent> <C-Space> <C-x><C-o>
 " Diagnostics
 " use the local quickfix list instead for navigating diagnostics!
-nnoremap <leader>gj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
-nnoremap <leader>gk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
+nnoremap <silent>gj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
+nnoremap <silent>gk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
 nnoremap <silent>g=	<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 nnoremap <silent>L	<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " Navigation
