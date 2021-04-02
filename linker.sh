@@ -9,3 +9,5 @@ ln -sfT $PWD/fdignore ~/.fdignore
 ln -sfT $PWD/zshenv ~/.zshenv
 ln -sfT $PWD/zshrc ~/.zshrc
 ln -sfT $PWD/zprofile ~/.zprofile
+ln -sfT $PWD/alacritty ~/.config/alacritty
+ln -sfT $PWD/waybar ~/.config/waybar
