@@ -22,11 +22,6 @@ if filereadable(expand("~/.vimrc_background"))
 else
   colorscheme base16-gruvbox-dark-hard
 endif
-if &diff
-        syntax off      " don't color in diff mode
-else
-        syntax on
-endif
 " }}}
 
 " Fuzzy finder {{{
@@ -35,12 +30,13 @@ packadd! plenary
 packadd! telescope
 
 " find files
+nnoremap <C-f>  <Nop>
 nnoremap <C-f>/ :lua require('telescope.builtin').grep_string({ search=vim.fn.input("Grep for > ") })<CR>
 nnoremap <C-f>* :lua require('me.telescope').grep_string()<CR>
-nnoremap <C-f>b :lua require('telescope.builtin').buffers()<CR>
-nnoremap <C-f>p :lua require('me.telescope').find_files_project()<CR>
-nnoremap <C-f>f :lua require('me.telescope').find_files()<CR>
-nnoremap <C-f>c :lua require('me.telescope').search_dotfiles()<CR>
+nnoremap <C-f><C-b> :lua require('telescope.builtin').buffers()<CR>
+nnoremap <C-f><C-p> :lua require('me.telescope').find_files_project()<CR>
+nnoremap <C-f><C-f> :lua require('me.telescope').find_files()<CR>
+nnoremap <C-f><C-y> :lua require('me.telescope').search_dotfiles()<CR>
 
 " browse
 nnoremap <C-b> :lua require('telescope.builtin').file_browser()<CR>
@@ -68,11 +64,11 @@ lua require('me.lualine')
 
 " Git {{{
 packadd! fugitive
-nnoremap <expr> <leader>gb &filetype ==# 'fugitiveblame' ? ":quit\r" : ":Gblame\r"
+nnoremap <silent>gb :Gblame<CR><C-w>w
 autocmd FileType gitconfig setlocal noexpandtab
 " }}}
 
-" Surround {{{
+" Delimiters {{{
 packadd! surround
 
 " To change one type of quotes to another, use `csXY`
@@ -101,6 +97,18 @@ inoremap <C-e> <C-o>A
 
 " }}}
 
+" Comments {{{
+packadd! commentary
+
+" Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment
+" out the target of a motion (for example, gcap to comment out a paragraph), gc in
+" visual mode to comment out the selection, and gc in operator pending mode to
+" target a comment. You can also use it as a command, either with a range like
+" :7,17Commentary, or as part of a :global invocation like with
+" :g/TODO/Commentary. That's it.
+
+" }}}
+
 """
 """ Programming language support
 """
@@ -122,24 +130,37 @@ set signcolumn=yes
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
 inoremap <silent> <C-Space> <C-x><C-o>
 " Diagnostics
-nnoremap <leader>dj     <cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
-nnoremap <leader>dk     <cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
-nnoremap <leader>d=     <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-nnoremap <leader>dl     <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+" use the local quickfix list instead for navigating diagnostics!
+"nnoremap <leader>dj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
+"nnoremap <leader>dk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
+nnoremap <silent>g=	<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap <silent>L	<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " Navigation
-nnoremap <silent>K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent><C-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent><C-s> <cmd>lua vim.lsp.buf.signature_help()<CR>
-"nnoremap <silent>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-"nnoremap <silent>gd    <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent>gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent>gR    <cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
-"nnoremap <silent>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-"nnoremap <silent>gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent>K	<cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent><C-]>	<cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent><C-s>	<cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent>gd	<cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent>gt	<cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent>gD	<cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent>gR	<cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+"nnoremap <silent>g0	<cmd>lua vim.lsp.buf.document_symbol()<CR>
+"nnoremap <silent>gW	<cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " Refactoring
-nnoremap <leader>dr     <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>df     <cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <leader>da     <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent>gn	<cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent>gf	<cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <silent>ga	<cmd>lua vim.lsp.buf.code_action()<CR>
+
+sign define LspDiagnosticsSignError text=❌
+sign define LspDiagnosticsSignWarning text=⚠️
+
+" populate the location list with LSP diagnostics automatically
+fun! LspLocationList()
+	lua vim.lsp.diagnostic.set_loclist({ open_loclist = false })
+endfun
+augroup SVC_LSP
+	autocmd!
+	autocmd BufWrite,BufEnter,InsertLeave * :call LspLocationList()
+augroup END
 " }}}
 
 " TreeSitter {{{
@@ -161,11 +182,6 @@ set shortmess+=w
 " JavaScript/TypeScript {{{
 lua require('me.lsp-ts')
 
-packadd! javascript
-packadd! jsxpretty
-packadd! typescript
-packadd! jsxtypescript
-packadd! styledcomponents
 autocmd FileType javascript,typescript,javascriptreact,typescriptreact,html
 			\ setlocal shiftwidth=2 expandtab softtabstop=2
 
@@ -217,19 +233,22 @@ endif
 " }}}
 
 " Vim {{{
-augroup vim
+augroup SVC_VIM
         autocmd!
         autocmd FileType vim setlocal foldmethod=marker
 augroup END
 " }}}
 
 " Lua {{{
+lua require('me.lsp-lua')
 autocmd FileType lua setlocal shiftwidth=2 expandtab
 " }}}
 
 """
 """ Customization
 """
+
+" Global {{{
 
 filetype plugin indent on
 
@@ -264,23 +283,11 @@ set ttimeoutlen=10
 noremap <C-j> <Esc>
 inoremap <C-l> <Esc>
 
-" Deactivate arrow keys {{{
-noremap  <down>  <Nop>
-noremap  <up>    <Nop>
-noremap  <left>  <Nop>
-noremap  <right> <Nop>
-inoremap <left>  <Nop>
-inoremap <right> <Nop>
-inoremap <down>  <Nop>
-inoremap <up>    <Nop>
-" }}}
-
 " copy to / paste from clipboard in visual mode
-noremap  <silent>gy "+y
-noremap  <silent>gp "+p
+noremap  <leader>y "+y
+noremap  <leader>p "+p
 
-" open a new line without any comments
-nnoremap <leader>n o<C-o>0c$
+" }}}
 
 " window shortcuts {{{
 " switch windows
@@ -294,9 +301,20 @@ nnoremap <leader>x <C-w>c
 " quickfix list {{{
 nnoremap <C-j> :cnext<CR>
 nnoremap <C-k> :cprev<CR>
-nnoremap <leader>j :lnext<CR>
-nnoremap <leader>k :lprev<CR>
+nnoremap <silent>gj :lnext<CR>
+nnoremap <silent>gk :lprev<CR>
+" }}}
+
+" Deactivate arrow keys {{{
+noremap  <down>  <Nop>
+noremap  <up>    <Nop>
+noremap  <left>  <Nop>
+noremap  <right> <Nop>
+inoremap <left>  <Nop>
+inoremap <right> <Nop>
+inoremap <down>  <Nop>
+inoremap <up>    <Nop>
 " }}}
 
 " reload init
-nnoremap <leader>r :source ~/.config/nvim/init.vim<CR>
+command Reload :source ~/.config/nvim/init.vim
