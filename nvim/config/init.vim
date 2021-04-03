@@ -19,8 +19,6 @@ set background=dark
 let base16colorspace=256
 if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
-else
-  colorscheme base16-gruvbox-dark-hard
 endif
 " }}}
 
@@ -144,6 +142,8 @@ nnoremap <silent>gd	<cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent>gt	<cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent>gD	<cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent>gR	<cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+nnoremap <silent>gC	<cmd>lua vim.lsp.buf.incoming_calls()<CR>:copen<CR>
+nnoremap <silent>gS	<cmd>lua vim.lsp.buf.outgoing_calls()<CR>:copen<CR>
 "nnoremap <silent>g0	<cmd>lua vim.lsp.buf.document_symbol()<CR>
 "nnoremap <silent>gW	<cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " Refactoring
