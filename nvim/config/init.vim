@@ -29,8 +29,8 @@ packadd! telescope
 
 " find files
 nnoremap <C-f>  <Nop>
-nnoremap <C-f>/ :lua require('telescope.builtin').grep_string({ search=vim.fn.input("Grep for > ") })<CR>
-nnoremap <C-f>* :lua require('me.telescope').grep_string()<CR>
+nnoremap <C-f>/ :lua require('me.telescope').grep_pattern(vim.fn.input("Grep for > "))<CR>
+nnoremap <C-f>* :lua require('me.telescope').grep_cword()<CR>
 nnoremap <C-f><C-b> :lua require('telescope.builtin').buffers()<CR>
 nnoremap <C-f><C-p> :lua require('me.telescope').find_files_project()<CR>
 nnoremap <C-f><C-f> :lua require('me.telescope').find_files()<CR>
@@ -157,13 +157,13 @@ sign define LspDiagnosticsSignInformation text= texthl=lualine_c_diagnostics_
 sign define LspDiagnosticsSignHint text= texthl=lualine_c_diagnostics_info_normal
 
 " populate the location list with LSP diagnostics automatically
-fun! LspLocationList()
-	lua vim.lsp.diagnostic.set_loclist({ open_loclist = false })
-endfun
-augroup SVC_LSP
-	autocmd!
-	autocmd BufWrite,BufEnter,InsertLeave * :call LspLocationList()
-augroup END
+" fun! LspLocationList()
+" 	lua vim.lsp.diagnostic.set_loclist({ open_loclist = false })
+" endfun
+" augroup SVC_LSP
+" 	autocmd!
+" 	autocmd BufWrite,BufEnter,InsertLeave * :call LspLocationList()
+" augroup END
 " }}}
 
 " TreeSitter {{{
