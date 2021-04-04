@@ -61,3 +61,6 @@
 [submodule "commentary"]
 	path = nvim/site/pack/bundle/opt/commentary
 	url = https://github.com/tpope/vim-commentary.git
+[submodule "coc"]
+	path = nvim/site/pack/bundle/opt/coc
+	url = https://github.com/neoclide/coc.nvim.git

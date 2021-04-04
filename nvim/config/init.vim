@@ -123,8 +123,9 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
+" LSP
 packadd! lspconfig
-" Setup LSP
+
 set signcolumn=yes
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
 inoremap <silent> <C-Space> <C-x><C-o>
@@ -135,24 +136,42 @@ sign define LspDiagnosticsSignInformation text= texthl=lualine_c_diagnostics_
 sign define LspDiagnosticsSignHint text= texthl=lualine_c_diagnostics_info_normal
 
 " Diagnostics key bindings
-nnoremap <silent>gdj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
-nnoremap <silent>gdk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
-nnoremap <silent>gd=	<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap <silent>glj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
+nnoremap <silent>glk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
+nnoremap <silent>gl=	<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 nnoremap <silent>L	<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " Navigation
 nnoremap <silent>K	<cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent><C-]>	<cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent><C-s>	<cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent>gdd	<cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent>gdt	<cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent>gdi	<cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent>gdr	<cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
-nnoremap <silent>gdc	<cmd>lua vim.lsp.buf.incoming_calls()<CR>:copen<CR>
-nnoremap <silent>gdC	<cmd>lua vim.lsp.buf.outgoing_calls()<CR>:copen<CR>
+nnoremap <silent>gld	<cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent>glt	<cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent>gli	<cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent>glr	<cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+nnoremap <silent>glc	<cmd>lua vim.lsp.buf.incoming_calls()<CR>:copen<CR>
+nnoremap <silent>glC	<cmd>lua vim.lsp.buf.outgoing_calls()<CR>:copen<CR>
 " Refactoring
-nnoremap <silent>grn	<cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent>grf	<cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <silent>gra	<cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent>glw	<cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent>glf	<cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <silent>gla	<cmd>lua vim.lsp.buf.code_action()<CR>
+
+" CoC
+packadd! coc
+
+set updatetime=300
+
+augroup SVC_COC_HIGHLIGHT
+	autocmd!
+	autocmd FileType * hi! link CocErrorSign lualine_c_diagnostics_error_normal
+				\ | hi! link CocWarningSign lualine_c_diagnostics_warning_normal
+				\ | hi! link CocInfoSign lualine_c_diagnostics_info_normal
+augroup end
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent>gnj <Plug>(coc-diagnostic-next)
+nmap <silent>gnk <Plug>(coc-diagnostic-prev)
+nmap <silent>gn= <Plug>(coc-diagnostics)
 
 " }}}
 
@@ -173,12 +192,14 @@ set shortmess+=w
 " }}}
 
 " JavaScript/TypeScript {{{
+" For now, use CoC with JS/TS, eslint, and styled components, by running
+" :CocInstall coc-tsserver coc-eslint coc-styled-components
+" The use of LSP with tsserver works better for navigating code, wo we
+" use that instead.
 lua require('me.lsp-ts')
 
 autocmd FileType javascript,typescript,javascriptreact,typescriptreact,html
 			\ setlocal shiftwidth=2 expandtab softtabstop=2
-autocmd FileType javascript,typescript,javascriptreact,typescriptreact,html
-			\ setlocal makeprg=yarn\ lint\ --format\ unix
 
 " When working with yarn2, jumping to definitions will open a zip file
 " with a path similar to: `.yarn/cache/@package.zip/node_modules/.../file.js`,
