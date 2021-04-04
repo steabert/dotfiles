@@ -112,7 +112,7 @@ packadd! commentary
 """ Programming language support
 """
 
-" LSP {{{
+" Intellisense {{{
 packadd! completion
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 " Use <Tab> and <S-Tab> to navigate through popup menu
@@ -128,42 +128,32 @@ packadd! lspconfig
 set signcolumn=yes
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
 inoremap <silent> <C-Space> <C-x><C-o>
-" Diagnostics
-" use the local quickfix list instead for navigating diagnostics!
-nnoremap <silent>gj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
-nnoremap <silent>gk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
-nnoremap <silent>g=	<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-nnoremap <silent>L	<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-" Navigation
-nnoremap <silent>K	<cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent><C-]>	<cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent><C-s>	<cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent>gd	<cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent>gt	<cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent>gD	<cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent>gR	<cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
-nnoremap <silent>gC	<cmd>lua vim.lsp.buf.incoming_calls()<CR>:copen<CR>
-nnoremap <silent>gS	<cmd>lua vim.lsp.buf.outgoing_calls()<CR>:copen<CR>
-"nnoremap <silent>g0	<cmd>lua vim.lsp.buf.document_symbol()<CR>
-"nnoremap <silent>gW	<cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-" Refactoring
-nnoremap <silent>gn	<cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent>gf	<cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <silent>ga	<cmd>lua vim.lsp.buf.code_action()<CR>
 
 sign define LspDiagnosticsSignError text= texthl=lualine_c_diagnostics_error_normal
 sign define LspDiagnosticsSignWarning text= texthl=lualine_c_diagnostics_warning_normal
 sign define LspDiagnosticsSignInformation text= texthl=lualine_c_diagnostics_info_normal
 sign define LspDiagnosticsSignHint text= texthl=lualine_c_diagnostics_info_normal
 
-" populate the location list with LSP diagnostics automatically
-" fun! LspLocationList()
-" 	lua vim.lsp.diagnostic.set_loclist({ open_loclist = false })
-" endfun
-" augroup SVC_LSP
-" 	autocmd!
-" 	autocmd BufWrite,BufEnter,InsertLeave * :call LspLocationList()
-" augroup END
+" Diagnostics key bindings
+nnoremap <silent>gdj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
+nnoremap <silent>gdk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
+nnoremap <silent>gd=	<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap <silent>L	<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+" Navigation
+nnoremap <silent>K	<cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent><C-]>	<cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent><C-s>	<cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent>gdd	<cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent>gdt	<cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent>gdi	<cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent>gdr	<cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+nnoremap <silent>gdc	<cmd>lua vim.lsp.buf.incoming_calls()<CR>:copen<CR>
+nnoremap <silent>gdC	<cmd>lua vim.lsp.buf.outgoing_calls()<CR>:copen<CR>
+" Refactoring
+nnoremap <silent>grn	<cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent>grf	<cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <silent>gra	<cmd>lua vim.lsp.buf.code_action()<CR>
+
 " }}}
 
 " TreeSitter {{{
@@ -187,6 +177,8 @@ lua require('me.lsp-ts')
 
 autocmd FileType javascript,typescript,javascriptreact,typescriptreact,html
 			\ setlocal shiftwidth=2 expandtab softtabstop=2
+autocmd FileType javascript,typescript,javascriptreact,typescriptreact,html
+			\ setlocal makeprg=yarn\ lint\ --format\ unix
 
 " When working with yarn2, jumping to definitions will open a zip file
 " with a path similar to: `.yarn/cache/@package.zip/node_modules/.../file.js`,
