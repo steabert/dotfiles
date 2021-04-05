@@ -58,3 +58,9 @@
 [submodule "treesitter"]
 	path = nvim/site/pack/bundle/opt/treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter.git
+[submodule "commentary"]
+	path = nvim/site/pack/bundle/opt/commentary
+	url = https://github.com/tpope/vim-commentary.git
+[submodule "coc"]
+	path = nvim/site/pack/bundle/opt/coc
+	url = https://github.com/neoclide/coc.nvim.git
