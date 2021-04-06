@@ -35,6 +35,7 @@ nnoremap <C-f><C-b> :lua require('telescope.builtin').buffers()<CR>
 nnoremap <C-f><C-p> :lua require('me.telescope').find_files_project()<CR>
 nnoremap <C-f><C-f> :lua require('me.telescope').find_files()<CR>
 nnoremap <C-f><C-y> :lua require('me.telescope').search_dotfiles()<CR>
+nnoremap <C-f><C-k> :lua require('me.telescope').search_kb()<CR>
 
 " browse
 nnoremap <C-b> :lua require('telescope.builtin').file_browser()<CR>
