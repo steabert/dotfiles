@@ -34,8 +34,9 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 # Prompt
 autoload -Uz promptinit && promptinit
 autoload -Uz vcs_info
+precmd_title () { print -Pn "\e]0;$(basename $PWD)\a" }
 precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
+precmd_functions+=( precmd_vcs_info, precmd_title )
 setopt promptsubst
 zstyle ':vcs_info:git:*' formats '%b'
 PROMPT='[%n@%F{yellow}%m%f %F{blue}%B%1~%b%f %F{green}${vcs_info_msg_0_}%f]%# '

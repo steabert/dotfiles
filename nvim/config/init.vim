@@ -172,6 +172,7 @@ augroup end
 nmap <silent>gnj <Plug>(coc-diagnostic-next)
 nmap <silent>gnk <Plug>(coc-diagnostic-prev)
 nmap <silent>gn= <Plug>(coc-diagnostics)
+nmap <silent>gna <Plug>(coc-codeaction)
 
 " }}}
 
