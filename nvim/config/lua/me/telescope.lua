@@ -8,7 +8,13 @@ return {
   search_dotfiles = function()
     builtin.find_files({
       prompt_title = '< Config Files >',
-      cwd = '~/github/dotfiles/'
+      cwd = '~/github/dotfiles'
+    })
+  end,
+  search_kb = function()
+    builtin.find_files({
+      prompt_title = '< Knowledge Base >',
+      cwd = '~/github/dotfiles/KB'
     })
   end,
   -- instead of git ls-files, use fd for searching a project,
