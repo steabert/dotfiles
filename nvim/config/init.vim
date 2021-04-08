@@ -195,9 +195,10 @@ set shortmess+=w
 
 " JavaScript/TypeScript {{{
 " For now, use CoC with JS/TS, eslint, and styled components, by running
-" :CocInstall coc-tsserver coc-eslint coc-styled-components
+" :CocInstall coc-tsserver coc-eslint coc-styled-components coc-json
 " The use of LSP with tsserver works better for navigating code, wo we
 " use that instead.
+packadd! styledcomponents
 lua require('me.lsp-ts')
 
 autocmd FileType javascript,typescript,javascriptreact,typescriptreact,html
