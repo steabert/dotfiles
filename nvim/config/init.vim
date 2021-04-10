@@ -199,9 +199,6 @@ set shortmess+=w
 " use that instead.
 lua require('me.lsp-ts')
 
-autocmd FileType javascript,typescript,javascriptreact,typescriptreact,html
-			\ setlocal shiftwidth=2 expandtab softtabstop=2
-
 " When working with yarn2, jumping to definitions will open a zip file
 " with a path similar to: `.yarn/cache/@package.zip/node_modules/.../file.js`,
 " which can be opened by neovim if the string is massaged a little bit.
@@ -231,11 +228,13 @@ lua require('me.lsp-go')
 
 " GraphQL {{{
 packadd! graphql
-autocmd FileType graphql setlocal shiftwidth=8 noexpandtab
 " }}}
 
 " Shell {{{
-autocmd FileType sh setlocal shiftwidth=2 expandtab
+" Neoformat will use shfmt to format shell scripts
+" We use tabs for indentation in shell script, so we
+" don't need to override any of our default settings.
+let g:shfmt_opt="-ci -i 0"
 " }}}
 
 " Grep {{{
@@ -258,7 +257,11 @@ augroup END
 
 " Lua {{{
 lua require('me.lsp-lua')
-autocmd FileType lua setlocal shiftwidth=2 expandtab
+" }}}
+
+" EditorConfig{{{
+" This detects .editorconfig files and sets indentation accordingly
+packadd! editorconfig
 " }}}
 
 """
@@ -280,9 +283,6 @@ set relativenumber      " use relative numbers
 set scrolloff=999       " leave some lines of 'border' at top and bottom (999 = always middle cursor)
 set scroll=20           " how much to scroll with Ctrl-d/Ctrl-u
 
-set tabstop=8           " tab key shifts by 8 spaces
-set shiftwidth=8
-set noexpandtab
 set list
 set listchars=tab:➝\ ,
 
@@ -291,6 +291,7 @@ set smartcase           " be case sensitive if need be
 
 set textwidth=80
 "set colorcolumn=80	" mark position as column
+set formatoptions-=t	" do not automatically wrap text when typing
 
 set hidden
 set nohlsearch
