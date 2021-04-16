@@ -232,9 +232,9 @@ packadd! graphql
 
 " Shell {{{
 " Neoformat will use shfmt to format shell scripts
-" We use tabs for indentation in shell script, so we
-" don't need to override any of our default settings.
-let g:shfmt_opt="-ci -i 0"
+" It will follow the shiftwidth settings for the file
+" (which in our case will come from the defaults or
+" from an .editorconfig)
 " }}}
 
 " Grep {{{
@@ -286,6 +286,7 @@ set scroll=20           " how much to scroll with Ctrl-d/Ctrl-u
 set list
 set listchars=tab:➝\ ,
 
+set tabstop=8
 set ignorecase          " make vim case insensitive
 set smartcase           " be case sensitive if need be
 
