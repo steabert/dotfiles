@@ -45,7 +45,7 @@ nnoremap <C-h> :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expan
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
 " (next tab) or `gT` (previous tab), or `Ngt` where `N` is the tab number
 " (starting from 1) to jump immediately to the right tab.  Closing the last
-" window in a tab will close the tab itself, so you can just use <leader>x to
+" window in a tab will close the tab itself, so you can just use <leader>c to
 " close tabs as well as windows (see window bindings below).
 
 " }}}
@@ -66,6 +66,12 @@ packadd! fugitive
 nnoremap <silent>gb :Gblame<CR><C-w>w
 nnoremap <silent>gl :0Glog<CR><C-w>w
 autocmd FileType gitconfig setlocal noexpandtab
+
+" mergetool with diff view can be used (see mergetool.vim)
+" make sure LOCAL is on the left, REMOTE is on the right.
+nnoremap <leader>dh :diffget LO<CR>
+nnoremap <leader>dl :diffget RE<CR>
+nnoremap <leader>db :diffget BA<CR>
 " }}}
 
 " Delimiters {{{
@@ -312,16 +318,14 @@ noremap  <leader>p "+p
 " switch windows
 nnoremap <leader><Space> <C-w>w
 " keep current window (close all others)
-nnoremap <leader>h <C-w><C-o>
+nnoremap <leader>f <C-w><C-o>
 " close current window
-nnoremap <leader>x <C-w>c
+nnoremap <leader>c <C-w>c
 " }}}
 
 " quickfix list {{{
 nnoremap <C-j> :cnext<CR>
 nnoremap <C-k> :cprev<CR>
-nnoremap <leader>j :lnext<CR>
-nnoremap <leader>k :lprev<CR>
 " }}}
 
 " Deactivate arrow keys {{{
