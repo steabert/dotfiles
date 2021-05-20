@@ -45,7 +45,7 @@ nnoremap <C-h> :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expan
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
 " (next tab) or `gT` (previous tab), or `Ngt` where `N` is the tab number
 " (starting from 1) to jump immediately to the right tab.  Closing the last
-" window in a tab will close the tab itself, so you can just use <leader>x to
+" window in a tab will close the tab itself, so you can just use <leader>c to
 " close tabs as well as windows (see window bindings below).
 
 " }}}
@@ -66,6 +66,12 @@ packadd! fugitive
 nnoremap <silent>gb :Gblame<CR><C-w>w
 nnoremap <silent>gl :0Glog<CR><C-w>w
 autocmd FileType gitconfig setlocal noexpandtab
+
+" mergetool with diff view can be used (see mergetool.vim)
+" make sure LOCAL is on the left, REMOTE is on the right.
+nnoremap <leader>dh :diffget LO<CR>
+nnoremap <leader>dl :diffget RE<CR>
+nnoremap <leader>db :diffget BA<CR>
 " }}}
 
 " Delimiters {{{
@@ -201,9 +207,6 @@ set shortmess+=w
 packadd! styledcomponents
 lua require('me.lsp-ts')
 
-autocmd FileType javascript,typescript,javascriptreact,typescriptreact,html
-			\ setlocal shiftwidth=2 expandtab softtabstop=2
-
 " When working with yarn2, jumping to definitions will open a zip file
 " with a path similar to: `.yarn/cache/@package.zip/node_modules/.../file.js`,
 " which can be opened by neovim if the string is massaged a little bit.
@@ -234,11 +237,13 @@ lua require('me.lsp-go')
 
 " GraphQL {{{
 packadd! graphql
-autocmd FileType graphql setlocal shiftwidth=8 noexpandtab
 " }}}
 
 " Shell {{{
-autocmd FileType sh setlocal shiftwidth=2 expandtab
+" Neoformat will use shfmt to format shell scripts
+" It will follow the shiftwidth settings for the file
+" (which in our case will come from the defaults or
+" from an .editorconfig)
 " }}}
 
 " Grep {{{
@@ -261,7 +266,11 @@ augroup END
 
 " Lua {{{
 lua require('me.lsp-lua')
-autocmd FileType lua setlocal shiftwidth=2 expandtab
+" }}}
+
+" EditorConfig{{{
+" This detects .editorconfig files and sets indentation accordingly
+packadd! editorconfig
 " }}}
 
 """
@@ -283,17 +292,16 @@ set relativenumber      " use relative numbers
 set scrolloff=999       " leave some lines of 'border' at top and bottom (999 = always middle cursor)
 set scroll=20           " how much to scroll with Ctrl-d/Ctrl-u
 
-set tabstop=8           " tab key shifts by 8 spaces
-set shiftwidth=8
-set noexpandtab
 set list
 set listchars=tab:➝\ ,
 
+set tabstop=8
 set ignorecase          " make vim case insensitive
 set smartcase           " be case sensitive if need be
 
 set textwidth=80
 "set colorcolumn=80	" mark position as column
+set formatoptions-=t	" do not automatically wrap text when typing
 
 set hidden
 set nohlsearch
@@ -325,8 +333,6 @@ nnoremap <leader>c <C-w>c
 " quickfix list {{{
 nnoremap <C-j> :cnext<CR>
 nnoremap <C-k> :cprev<CR>
-" nnoremap <leader>j :lnext<CR>
-" nnoremap <leader>k :lprev<CR>
 " }}}
 
 " Deactivate arrow keys {{{

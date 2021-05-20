@@ -20,8 +20,7 @@
 	prompt = true
 	keepBackup = false
 [mergetool "nvimdiff"]
-	#cmd = nvim -d -c \"diffsplit $LOCAL | vert diffsplit $BASE | vert diffsplit $REMOTE\" $MERGED
-	cmd = LOCAL="$LOCAL" BASE="$BASE" REMOTE="$REMOTE" MERGED="$MERGED" nvim -S ~/.config/nvim/mergetool.vim
+	cmd = BASE=$BASE LOCAL=$LOCAL REMOTE=$REMOTE MERGED=$MERGED nvim -S ~/.config/nvim/mergetool.vim
 [push]
 	default = current
 [pull]
