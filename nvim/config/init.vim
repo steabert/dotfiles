@@ -212,6 +212,7 @@ function! OpenZippedFile(f)
   let l:b = bufnr('%')
   " construct full path
   let l:f = substitute(a:f, '.zip/', '.zip::', '')
+  let l:f = substitute(l:f, '.yarn/.*/cache/', '.yarn/cache/', '')
   let l:f = substitute(l:f, '^', 'zipfile:', '')
 
   " swap back to original buffer
@@ -224,7 +225,7 @@ function! OpenZippedFile(f)
   call zip#Read(l:f, 1)
 endfunction
 
-au BufReadCmd *.yarn/cache/*.zip/* call OpenZippedFile(expand('<afile>'))
+au BufReadCmd *.yarn/*cache/*.zip/* call OpenZippedFile(expand('<afile>'))
 " }}}
 
 " Go {{{
@@ -311,17 +312,21 @@ noremap  <leader>p "+p
 " window shortcuts {{{
 " switch windows
 nnoremap <leader><Space> <C-w>w
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
 " keep current window (close all others)
-nnoremap <leader>h <C-w><C-o>
+nnoremap <leader>f <C-w><C-o>
 " close current window
-nnoremap <leader>x <C-w>c
+nnoremap <leader>c <C-w>c
 " }}}
 
 " quickfix list {{{
 nnoremap <C-j> :cnext<CR>
 nnoremap <C-k> :cprev<CR>
-nnoremap <leader>j :lnext<CR>
-nnoremap <leader>k :lprev<CR>
+" nnoremap <leader>j :lnext<CR>
+" nnoremap <leader>k :lprev<CR>
 " }}}
 
 " Deactivate arrow keys {{{

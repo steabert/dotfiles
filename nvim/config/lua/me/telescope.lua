@@ -14,7 +14,7 @@ return {
   search_kb = function()
     builtin.find_files({
       prompt_title = '< Knowledge Base >',
-      cwd = '~/github/dotfiles/KB'
+      cwd = '~/gitlab/kb'
     })
   end,
   -- instead of git ls-files, use fd for searching a project,

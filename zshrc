@@ -29,7 +29,7 @@ export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 export MOZ_ENABLE_WAYLAND=1
 export BEMENU_BACKEND=wayland
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-#unset LESS # restore default less behaviour
+unset LESS # restore default less behaviour
 
 # Prompt
 autoload -Uz promptinit && promptinit
@@ -42,7 +42,8 @@ precmd() {
 }
 setopt promptsubst
 zstyle ':vcs_info:git:*' formats '%b'
-PROMPT='[%n@%F{yellow}%m%f %F{blue}%B%1~%b%f %F{green}${vcs_info_msg_0_}%f]%# '
+#PROMPT='[%n@%F{yellow}%m%f %F{blue}%B%1~%b%f %F{green}${vcs_info_msg_0_}%f]%# '
+PROMPT='[%n@%F{yellow}%m%f %F{blue}%16<…<%~%<<%f %F{green}${vcs_info_msg_0_}%f]%# '
 
 # Base16 Shell
 BASE16_SHELL="$HOME/.config/base16-shell/"
