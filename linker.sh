@@ -13,6 +13,7 @@ ln -sfT $PWD/nvim/site ~/.local/share/nvim/site
 # Terminal
 ln -sfT $PWD/alacritty ~/.config/alacritty
 ln -sfT $PWD/kitty ~/.config/kitty
+ln -sfT $PWD/base16-shell ~/.config/base16-shell
 
 # Shell
 ln -sfT $PWD/zshenv ~/.zshenv
