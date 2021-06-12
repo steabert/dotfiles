@@ -19,8 +19,6 @@ set background=dark
 let base16colorspace=256
 if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
-else
-  colorscheme base16-gruvbox-dark-hard
 endif
 " }}}
 
@@ -31,12 +29,13 @@ packadd! telescope
 
 " find files
 nnoremap <C-f>  <Nop>
-nnoremap <C-f>/ :lua require('telescope.builtin').grep_string({ search=vim.fn.input("Grep for > ") })<CR>
-nnoremap <C-f>* :lua require('me.telescope').grep_string()<CR>
+nnoremap <C-f>/ :lua require('me.telescope').grep_pattern(vim.fn.input("Grep for > "))<CR>
+nnoremap <C-f>* :lua require('me.telescope').grep_cword()<CR>
 nnoremap <C-f><C-b> :lua require('telescope.builtin').buffers()<CR>
 nnoremap <C-f><C-p> :lua require('me.telescope').find_files_project()<CR>
 nnoremap <C-f><C-f> :lua require('me.telescope').find_files()<CR>
 nnoremap <C-f><C-y> :lua require('me.telescope').search_dotfiles()<CR>
+nnoremap <C-f><C-k> :lua require('me.telescope').search_kb()<CR>
 
 " browse
 nnoremap <C-b> :lua require('telescope.builtin').file_browser()<CR>
@@ -46,7 +45,7 @@ nnoremap <C-h> :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expan
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
 " (next tab) or `gT` (previous tab), or `Ngt` where `N` is the tab number
 " (starting from 1) to jump immediately to the right tab.  Closing the last
-" window in a tab will close the tab itself, so you can just use <leader>x to
+" window in a tab will close the tab itself, so you can just use <leader>c to
 " close tabs as well as windows (see window bindings below).
 
 " }}}
@@ -67,6 +66,12 @@ packadd! fugitive
 nnoremap <silent>gb :Gblame<CR><C-w>w
 nnoremap <silent>gl :0Glog<CR><C-w>w
 autocmd FileType gitconfig setlocal noexpandtab
+
+" mergetool with diff view can be used (see mergetool.vim)
+" make sure LOCAL is on the left, REMOTE is on the right.
+nnoremap <leader>dh :diffget LO<CR>
+nnoremap <leader>dl :diffget RE<CR>
+nnoremap <leader>db :diffget BA<CR>
 " }}}
 
 " Delimiters {{{
@@ -114,7 +119,7 @@ packadd! commentary
 """ Programming language support
 """
 
-" LSP {{{
+" Intellisense {{{
 packadd! completion
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 " Use <Tab> and <S-Tab> to navigate through popup menu
@@ -125,45 +130,56 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
+" LSP
 packadd! lspconfig
-" Setup LSP
+
 set signcolumn=yes
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
 inoremap <silent> <C-Space> <C-x><C-o>
-" Diagnostics
-" use the local quickfix list instead for navigating diagnostics!
-nnoremap <silent>gj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
-nnoremap <silent>gk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
-nnoremap <silent>g=	<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-nnoremap <silent>L	<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-" Navigation
-nnoremap <silent>K	<cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent><C-]>	<cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent><C-s>	<cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent>gd	<cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent>gt	<cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent>gD	<cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent>gR	<cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
-"nnoremap <silent>g0	<cmd>lua vim.lsp.buf.document_symbol()<CR>
-"nnoremap <silent>gW	<cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-" Refactoring
-nnoremap <silent>gn	<cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent>gf	<cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <silent>ga	<cmd>lua vim.lsp.buf.code_action()<CR>
 
 sign define LspDiagnosticsSignError text= texthl=lualine_c_diagnostics_error_normal
 sign define LspDiagnosticsSignWarning text= texthl=lualine_c_diagnostics_warning_normal
 sign define LspDiagnosticsSignInformation text= texthl=lualine_c_diagnostics_info_normal
 sign define LspDiagnosticsSignHint text= texthl=lualine_c_diagnostics_info_normal
 
-" populate the location list with LSP diagnostics automatically
-fun! LspLocationList()
-	lua vim.lsp.diagnostic.set_loclist({ open_loclist = false })
-endfun
-augroup SVC_LSP
+" Diagnostics key bindings
+nnoremap <silent>glj	<cmd>lua vim.lsp.diagnostic.goto_next{ wrap = true }<CR>
+nnoremap <silent>glk	<cmd>lua vim.lsp.diagnostic.goto_prev{ wrap = true }<CR>
+nnoremap <silent>gl=	<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap <silent>L	<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+" Navigation
+nnoremap <silent>K	<cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent><C-]>	<cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent><C-s>	<cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent>gld	<cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent>glt	<cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent>gli	<cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent>glr	<cmd>lua vim.lsp.buf.references()<CR>:copen<CR>
+nnoremap <silent>glc	<cmd>lua vim.lsp.buf.incoming_calls()<CR>:copen<CR>
+nnoremap <silent>glC	<cmd>lua vim.lsp.buf.outgoing_calls()<CR>:copen<CR>
+" Refactoring
+nnoremap <silent>glw	<cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent>glf	<cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <silent>gla	<cmd>lua vim.lsp.buf.code_action()<CR>
+
+" CoC
+packadd! coc
+
+set updatetime=300
+
+augroup SVC_COC_HIGHLIGHT
 	autocmd!
-	autocmd BufWrite,BufEnter,InsertLeave * :call LspLocationList()
-augroup END
+	autocmd FileType * hi! link CocErrorSign lualine_c_diagnostics_error_normal
+				\ | hi! link CocWarningSign lualine_c_diagnostics_warning_normal
+				\ | hi! link CocInfoSign lualine_c_diagnostics_info_normal
+augroup end
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent>gnj <Plug>(coc-diagnostic-next)
+nmap <silent>gnk <Plug>(coc-diagnostic-prev)
+nmap <silent>gn= <Plug>(coc-diagnostics)
+
 " }}}
 
 " TreeSitter {{{
@@ -183,10 +199,11 @@ set shortmess+=w
 " }}}
 
 " JavaScript/TypeScript {{{
+" For now, use CoC with JS/TS, eslint, and styled components, by running
+" :CocInstall coc-tsserver coc-eslint coc-styled-components
+" The use of LSP with tsserver works better for navigating code, wo we
+" use that instead.
 lua require('me.lsp-ts')
-
-autocmd FileType javascript,typescript,javascriptreact,typescriptreact,html
-			\ setlocal shiftwidth=2 expandtab softtabstop=2
 
 " When working with yarn2, jumping to definitions will open a zip file
 " with a path similar to: `.yarn/cache/@package.zip/node_modules/.../file.js`,
@@ -217,11 +234,13 @@ lua require('me.lsp-go')
 
 " GraphQL {{{
 packadd! graphql
-autocmd FileType graphql setlocal shiftwidth=8 noexpandtab
 " }}}
 
 " Shell {{{
-autocmd FileType sh setlocal shiftwidth=2 expandtab
+" Neoformat will use shfmt to format shell scripts
+" It will follow the shiftwidth settings for the file
+" (which in our case will come from the defaults or
+" from an .editorconfig)
 " }}}
 
 " Grep {{{
@@ -244,7 +263,11 @@ augroup END
 
 " Lua {{{
 lua require('me.lsp-lua')
-autocmd FileType lua setlocal shiftwidth=2 expandtab
+" }}}
+
+" EditorConfig{{{
+" This detects .editorconfig files and sets indentation accordingly
+packadd! editorconfig
 " }}}
 
 """
@@ -266,17 +289,16 @@ set relativenumber      " use relative numbers
 set scrolloff=999       " leave some lines of 'border' at top and bottom (999 = always middle cursor)
 set scroll=20           " how much to scroll with Ctrl-d/Ctrl-u
 
-set tabstop=8           " tab key shifts by 8 spaces
-set shiftwidth=8
-set noexpandtab
 set list
 set listchars=tab:➝\ ,
 
+set tabstop=8
 set ignorecase          " make vim case insensitive
 set smartcase           " be case sensitive if need be
 
 set textwidth=80
 "set colorcolumn=80	" mark position as column
+set formatoptions-=t	" do not automatically wrap text when typing
 
 set hidden
 set nohlsearch
@@ -296,16 +318,14 @@ noremap  <leader>p "+p
 " switch windows
 nnoremap <leader><Space> <C-w>w
 " keep current window (close all others)
-nnoremap <leader>h <C-w><C-o>
+nnoremap <leader>f <C-w><C-o>
 " close current window
-nnoremap <leader>x <C-w>c
+nnoremap <leader>c <C-w>c
 " }}}
 
 " quickfix list {{{
 nnoremap <C-j> :cnext<CR>
 nnoremap <C-k> :cprev<CR>
-nnoremap <leader>j :lnext<CR>
-nnoremap <leader>k :lprev<CR>
 " }}}
 
 " Deactivate arrow keys {{{

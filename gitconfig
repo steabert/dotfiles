@@ -17,7 +17,7 @@
 	prompt = true
 	keepBackup = false
 [mergetool "nvimdiff"]
-	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+	cmd = BASE=$BASE LOCAL=$LOCAL REMOTE=$REMOTE MERGED=$MERGED nvim -S ~/.config/nvim/mergetool.vim
 [push]
 	default = current
 [pull]
