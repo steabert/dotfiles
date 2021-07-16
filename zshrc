@@ -20,6 +20,8 @@ alias ls='ls --color=always'
 alias ll='ls -lFa'
 alias lt='ll -tr'
 alias vim='nvim'
+alias s3='aws s3 --profile adm6'
+alias git='tsocks git'
 
 # Environment
 export EDITOR=nvim
