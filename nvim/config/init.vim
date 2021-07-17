@@ -179,6 +179,7 @@ augroup end
 nmap <silent>gnj <Plug>(coc-diagnostic-next)
 nmap <silent>gnk <Plug>(coc-diagnostic-prev)
 nmap <silent>gn= <Plug>(coc-diagnostics)
+nmap <silent>gna <Plug>(coc-codeaction)
 
 " }}}
 
@@ -200,7 +201,7 @@ set shortmess+=w
 
 " JavaScript/TypeScript {{{
 " For now, use CoC with JS/TS, eslint, and styled components, by running
-" :CocInstall coc-tsserver coc-eslint coc-styled-components
+" :CocInstall coc-tsserver coc-eslint coc-styled-components coc-json
 " The use of LSP with tsserver works better for navigating code, wo we
 " use that instead.
 lua require('me.lsp-ts')
@@ -213,6 +214,7 @@ function! OpenZippedFile(f)
   let l:b = bufnr('%')
   " construct full path
   let l:f = substitute(a:f, '.zip/', '.zip::', '')
+  let l:f = substitute(l:f, '.yarn/.*/cache/', '.yarn/cache/', '')
   let l:f = substitute(l:f, '^', 'zipfile:', '')
 
   " swap back to original buffer
@@ -225,7 +227,7 @@ function! OpenZippedFile(f)
   call zip#Read(l:f, 1)
 endfunction
 
-au BufReadCmd *.yarn/cache/*.zip/* call OpenZippedFile(expand('<afile>'))
+au BufReadCmd *.yarn/*cache/*.zip/* call OpenZippedFile(expand('<afile>'))
 " }}}
 
 " Go {{{

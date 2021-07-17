@@ -30,6 +30,7 @@
 	s = status -s -b
 	sl = status -vv
 	sa = status -vv --ignored
+	sf = show --pretty="" --name-only
 	d = diff
 	dc = diff --cached
 	dl = diff --find-copies-harder

@@ -1,5 +1,5 @@
 require('lualine').setup {
-  options = {icons_enabled = true, theme = 'gruvbox'},
+  options = {icons_enabled = true, theme = 'ayu_light'},
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch'},
