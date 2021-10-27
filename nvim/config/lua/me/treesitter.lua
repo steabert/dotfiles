@@ -1,6 +1,9 @@
 require('nvim-treesitter.configs').setup(
   {
-    highlight = {enable = true},
+    highlight = {
+      enable = true,
+      disable = { "yaml" },
+    },
     incremental_selection = {
       enable = true,
       keymaps = {

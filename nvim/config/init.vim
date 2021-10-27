@@ -13,6 +13,7 @@ let mapleader = "\<Space>"
 " Look and feel {{{
 packadd! base16
 packadd! devicons
+lua require('me.lsp-devicons')
 
 set termguicolors
 set background=dark
@@ -35,11 +36,14 @@ nnoremap <C-f><C-b> :lua require('telescope.builtin').buffers()<CR>
 nnoremap <C-f><C-p> :lua require('me.telescope').find_files_project()<CR>
 nnoremap <C-f><C-f> :lua require('me.telescope').find_files()<CR>
 nnoremap <C-f><C-y> :lua require('me.telescope').search_dotfiles()<CR>
-nnoremap <C-f><C-k> :lua require('me.telescope').search_kb()<CR>
+" nnoremap <C-f><C-k> :lua require('me.telescope').search_kb()<CR>
+nnoremap <C-f><C-w> :lua require('me.telescope').git_worktree()<CR>
+nnoremap <C-f><C-t> :lua require('me.telescope').git_trunk()<CR>
 
 " browse
 nnoremap <C-b> :lua require('telescope.builtin').file_browser()<CR>
 nnoremap <C-h> :lua require('telescope.builtin').file_browser({ cwd=vim.fn.expand("%:p:h")})<CR>
+nnoremap <C-f><C-k> :lua require('telescope.builtin').file_browser({ cwd='~/gitlab/kb'})<CR>
 
 " After opening a window to search for a file (or text), just hit enter to open
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
@@ -237,6 +241,7 @@ lua require('me.lsp-go')
 
 " GraphQL {{{
 packadd! graphql
+lua require('me.lsp-graphql')
 " }}}
 
 " Shell {{{
@@ -266,6 +271,16 @@ augroup END
 
 " Lua {{{
 lua require('me.lsp-lua')
+" }}}
+
+" Bicep {{init{
+au BufRead,BufNewFile *.bicep set filetype=bicep
+"lua require('lspconfig').bicep.setup{cmd={"dotnet", "/home/stevenv/.azure/bicep-ls/Bicep.LangServer.dll"}}
+lua require('me.lsp-bicep')
+" }}}
+
+" YAML {{{
+lua require('me.lsp-yaml')
 " }}}
 
 " EditorConfig{{{

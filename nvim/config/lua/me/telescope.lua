@@ -85,5 +85,28 @@ return {
       previewer = conf.grep_previewer(opts),
       sorter = conf.generic_sorter(opts)
     }):find()
+  end,
+  git_worktree = function()
+    builtin.find_files({
+      prompt_title = '< Git worktree >',
+      find_command = {
+        'git',
+        'diff',
+        '--name-only',
+        'HEAD'
+      },
+      prompt_prefix = '🔍'
+    })
+  end,
+  git_trunk = function()
+    builtin.find_files({
+      prompt_title = '< Git trunk >',
+      find_command = {
+        'bash',
+        '-c',
+        '~/.config/nvim/sbin/git-diff-trunk'
+      },
+      prompt_prefix = '🔍'
+    })
   end
 }

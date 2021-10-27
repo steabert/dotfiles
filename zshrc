@@ -21,7 +21,7 @@ alias ll='ls -lFa'
 alias lt='ll -tr'
 alias vim='nvim'
 alias s3='aws s3 --profile adm6'
-alias git='tsocks git'
+alias g='tsocks git'
 
 # Environment
 export EDITOR=nvim
@@ -32,6 +32,10 @@ export MOZ_ENABLE_WAYLAND=1
 export BEMENU_BACKEND=wayland
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 unset LESS # restore default less behaviour
+export YARN_HTTP_PROXY=$HTTP_PROXY
+export YARN_HTTPS_PROXY=$HTTPS_PROXY
+export ELECTRON_GET_USE_PROXY='1'
+export GLOBAL_AGENT_HTTPS_PROXY='http://wwwproxy:3128'
 
 # Prompt
 autoload -Uz promptinit && promptinit

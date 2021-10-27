@@ -31,6 +31,7 @@
 	sl = status -vv
 	sa = status -vv --ignored
 	sf = show --pretty="" --name-only
+	st = show --stat
 	d = diff
 	dc = diff --cached
 	dl = diff --find-copies-harder
