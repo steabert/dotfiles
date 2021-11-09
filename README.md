@@ -18,7 +18,9 @@ and the run the included linking script:
 which will link from the proper locations in your
 home directory to the files in the repository.
 
-## NeoVIM Packages (plugins)
+## NeoVIM
+
+### Packages (plugins)
 
 Add a new package as a git submodule under `site`, with:
 
@@ -31,4 +33,13 @@ in order to load the plugin:
 
 ```
 packadd! <NAME>
+```
+
+### Configuration
+
+Some language server support requires manual installation of
+the appropriate language servers:
+
+```
+yarn global add graphql-language-service-cli
 ```
