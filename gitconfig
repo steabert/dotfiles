@@ -1,13 +1,15 @@
-[user]
-	name = Steven Vancoillie
-	email = steven.vancoillie@axis.com
-	signingkey = 72EA3C69F5BDC32C
-[includeIf "gitdir:~/gitlab/"]
-	path = ~/gitlab/.gitconfig
+[include]
+	path = ~/.gitconfig-user
+[credential "https://github.com"]
+	helper = !gh auth git-credential
+	useHttpPath = true
 [core]
-	editor = nvim
+	editor = hx
 	pager = delta
+[pager]
+	blame = less
 [delta]
+	light = false
 	syntax-theme = none
 	navigate = true
 	side-by-side = true
@@ -30,35 +32,49 @@
 	cmd = BASE=$BASE LOCAL=$LOCAL REMOTE=$REMOTE MERGED=$MERGED nvim -S ~/.config/nvim/mergetool.vim
 [push]
 	default = current
+	autoSetupRemote = true
 [pull]
 	ff = only
 [alias]
-        # Status
+    # Status
 	s = status -s -b
 	sl = status -vv
 	sa = status -vv --ignored
-	sf = show --pretty="" --name-only
-	st = show --pretty=fuller --stat --show-signature
+	sh = show --pretty=fuller --stat --show-signature
+	so = remote get-url origin
 	d = diff
 	dc = diff --cached
 	dl = diff --find-copies-harder
+	dm = diff --relative --cached --merge-base origin/main
+	dms = "dm --stat" 
+	dmf = "dm --name-only" 
 	l = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'"
 	lo = "!f() { git l origin/$1; }; f" 
-	lm = "!f() { git l origin/MOM-$1; }; f" 
+	lm = "!f() { git l origin/SPCORE-$1; }; f" 
 	ll = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'" --branches
 	la = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'" --all
+	# Branches
+	b = branch --list --sort=-committerdate --column --format='%(refname:short) (%(upstream:trackshort))'
+	new = "!f() { git switch -c $1 && git branch --edit-description $1; }; f"
 	# Moving around
-	co = checkout
+	sw = switch
 	set = reset --hard
+	cut = reset --hard HEAD~1
 	mr = "!f() { git fetch origin MOM-$1; git checkout FETCH_HEAD; }; f" 
+	main = "!f() { git fetch origin && git switch -C main origin/main; }; f"
 	# Committing
 	au = add -u .
-	c = commit
+	# commit and amend, use --edit to override the default
 	ca = commit --amend --no-edit
 	cn = commit --no-verify
-	cf = commit --fix
-	cp = cherry-pick
-	ri = rebase --interactive --autosquash
+	fixup = "!git log -n 20 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
+	ri = rebase --interactive --autosquash --update-refs
 	rc = rebase --continue
 	# Merge
 	k3 = mergetool --tool=kdiff3
+	# Restore
+	rem = restore -s origin/main
+	# Push
+	fp = push --force-with-lease origin
+[http]
+	cookiefile = /home/stevenv/.gitcookies

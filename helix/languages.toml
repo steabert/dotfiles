@@ -1,0 +1,92 @@
+[language-server]
+biome = { command = "biome", args = ["lsp-proxy"] }
+cfn-lint-extra = { command = "cfn-lint-extra" }
+tfn = { command = "tfn", args = ["lsp"] }
+
+[[language]]
+name = "cloudformation"
+grammar = "yaml"
+scope = "source.cf.yaml"
+file-types = [ "cf.yaml" ]
+language-servers = [ "cfn-lint-extra" ]
+
+[language-server.yaml-language-server.config.yaml]
+schemas = { "https://raw.githubusercontent.com/aws/serverless-application-model/main/samtranslator/schema/schema.json" = "sam*.yaml" }
+
+[[language]]
+name = "asdm"
+grammar = "yaml"
+comment-token = "#"
+scope = "source.yaml"
+file-types = [ { glob = "*.ASDM.yaml" } ]
+indent = { tab-width = 2, unit = "  " }
+language-servers = [ "yaml-language-server", "tfn" ]
+
+[[language]]
+name = "typescript"
+formatter = { command = "biome", args = ["format", "--stdin-file-path=fake.ts"] }
+language-servers = [
+  { name = "eslint", except-features = ["format"] },
+  { name = "typescript-language-server", except-features = ["format"] },
+  "biome",
+]
+
+[[language]]
+name = "javascript"
+formatter = { command = "biome", args = ["format", "--stdin-file-path=fake.js"] }
+language-servers = [
+  { name = "eslint", except-features = ["format"] },
+  { name = "typescript-language-server", except-features = ["format"] },
+  "biome",
+]
+
+[[language]]
+name = "tsx"
+formatter = { command = "biome", args = ["format", "--stdin-file-path=fake.tsx"] }
+language-servers = [
+  { name = "eslint", except-features = ["format"] },
+  { name = "typescript-language-server", except-features = ["format"] },
+  "biome",
+]
+
+[[language]]
+name = "json"
+formatter = { command = "biome", args = ["format", "--stdin-file-path=fake.json"] }
+language-servers = [
+  { name = "vscode-json-language-server", except-features = ["format"] },
+  "biome",
+]
+
+[[language]]
+name = "bash"
+formatter = { command = "shfmt" }
+
+[language-server.gopls.config]
+staticcheck = true
+usePlaceholders = true
+
+[language-server.gopls.config.analyses]
+# fieldalignment = true
+shadow = true
+unusedvariable = true
+
+[language-server.gopls.config.hints]
+assignVariableTypes = true
+compositeLiteralFields = true
+compositeLiteralTypes = true
+constantValues = true
+functionTypeParameters = true
+parameterNames = true
+rangeVariableTypes = true
+
+[[language]]
+name = "go"
+scope = "source.go"
+injection-regex = "go"
+file-types = ["go"]
+roots = ["go.work", "go.mod"]
+auto-format = false
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+language-servers = [ "gopls" ]
+indent = { tab-width = 4, unit = "\t" }

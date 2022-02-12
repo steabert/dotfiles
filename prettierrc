@@ -1,0 +1,4 @@
+overrides:
+  - files: "*.graphql"
+    options:
+      useTabs: true

@@ -1,48 +1,21 @@
 [submodule "base16"]
 	path = nvim/site/pack/bundle/opt/base16
 	url = https://github.com/chriskempson/base16-vim.git
-[submodule "lightline"]
-	path = nvim/site/pack/bundle/opt/lightline
-	url = https://github.com/itchyny/lightline.vim.git
 [submodule "graphql"]
 	path = nvim/site/pack/bundle/opt/graphql
 	url = https://github.com/jparise/vim-graphql.git
-[submodule "jsxpretty"]
-	path = nvim/site/pack/bundle/opt/jsxpretty
-	url = https://github.com/MaxMEllon/vim-jsx-pretty.git
-[submodule "typescript"]
-	path = nvim/site/pack/bundle/opt/typescript
-	url = https://github.com/leafgarland/typescript-vim.git
-[submodule "javascript"]
-	path = nvim/site/pack/bundle/opt/javascript
-	url = https://github.com/pangloss/vim-javascript.git
 [submodule "styledcomponents"]
 	path = nvim/site/pack/bundle/opt/styledcomponents
 	url = https://github.com/styled-components/vim-styled-components.git
-[submodule "fugitive"]
-	path = nvim/site/pack/bundle/opt/fugitive
-	url = https://github.com/tpope/vim-fugitive.git
-[submodule "editorconfig"]
-	path = nvim/site/pack/bundle/opt/editorconfig
-	url = https://github.com/editorconfig/editorconfig-vim.git
 [submodule "surround"]
 	path = nvim/site/pack/bundle/opt/surround
 	url = https://github.com/tpope/vim-surround.git
 [submodule "lspconfig"]
 	path = nvim/site/pack/bundle/opt/lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git
-[submodule "completion"]
-	path = nvim/site/pack/bundle/opt/completion
-	url = https://github.com/nvim-lua/completion-nvim.git
 [submodule "lualine"]
 	path = nvim/site/pack/bundle/opt/lualine
 	url = https://github.com/hoob3rt/lualine.nvim.git
-[submodule "jsxtypescript"]
-	path = nvim/site/pack/bundle/opt/jsxtypescript
-	url = https://github.com/peitalin/vim-jsx-typescript.git
-[submodule "neoformat"]
-	path = nvim/site/pack/bundle/opt/neoformat
-	url = https://github.com/sbdchd/neoformat.git
 [submodule "telescope"]
 	path = nvim/site/pack/bundle/opt/telescope
 	url = https://github.com/nvim-telescope/telescope.nvim.git
@@ -61,12 +34,42 @@
 [submodule "commentary"]
 	path = nvim/site/pack/bundle/opt/commentary
 	url = https://github.com/tpope/vim-commentary.git
-[submodule "coc"]
-	path = nvim/site/pack/bundle/opt/coc
-	url = https://github.com/neoclide/coc.nvim.git
 [submodule "base16-shell"]
 	path = base16-shell
 	url = https://github.com/chriskempson/base16-shell.git
 [submodule "telescope-file-browser"]
 	path = nvim/site/pack/bundle/opt/telescope-file-browser
 	url = https://github.com/nvim-telescope/telescope-file-browser.nvim.git
+[submodule "nvim-cmp"]
+	path = nvim/site/pack/bundle/opt/nvim-cmp
+	url = https://github.com/hrsh7th/nvim-cmp.git
+[submodule "cmp-buffer"]
+	path = nvim/site/pack/bundle/opt/cmp-buffer
+	url = https://github.com/hrsh7th/cmp-buffer.git
+[submodule "cmp-path"]
+	path = nvim/site/pack/bundle/opt/cmp-path
+	url = https://github.com/hrsh7th/cmp-path.git
+[submodule "cmp-nvim-lsp"]
+	path = nvim/site/pack/bundle/opt/cmp-nvim-lsp
+	url = https://github.com/hrsh7th/cmp-nvim-lsp.git
+[submodule "lspkind-nvim"]
+	path = nvim/site/pack/bundle/opt/lspkind-nvim
+	url = https://github.com/onsails/lspkind-nvim.git
+[submodule "cmp-cmdline"]
+	path = nvim/site/pack/bundle/opt/cmp-cmdline
+	url = https://github.com/hrsh7th/cmp-cmdline.git
+[submodule "tree-sitter-just"]
+	path = nvim/site/pack/bundle/opt/tree-sitter-just
+	url = https://github.com/steabert/tree-sitter-just.git
+[submodule "neogit"]
+	path = nvim/site/pack/bundle/opt/neogit
+	url = https://github.com/TimUntersberger/neogit.git
+[submodule "bufferline.nvim"]
+	path = nvim/site/pack/bundle/opt/bufferline.nvim
+	url = https://github.com/akinsho/bufferline.nvim.git
+[submodule "peek.nvim"]
+	path = nvim/site/pack/bundle/opt/peek.nvim
+	url = https://github.com/toppair/peek.nvim.git
+[submodule "formatter.nvim"]
+	path = nvim/site/pack/bundle/opt/formatter.nvim
+	url = https://github.com/mhartington/formatter.nvim.git

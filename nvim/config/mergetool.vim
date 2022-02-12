@@ -5,7 +5,7 @@ TSDisableAll highlight
 " and LOCAL - BASE - REMOTE at the top.
 edit $MERGED
 diffsplit $REMOTE
-vert diffsplit $BASE
 vert diffsplit $LOCAL
+vert diffsplit $BASE
 " move to merged file
 wincmd j

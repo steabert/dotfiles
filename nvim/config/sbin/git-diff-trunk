@@ -1,6 +1,6 @@
 #!/bin/bash
 for branch in upstream/master upstream/main origin/master origin/main; do
-        base=$(git merge-base --fork-point $branch)
+        base=$(git merge-base $branch HEAD)
         if [[ -n "$base" ]]; then
                 git diff --name-only $base
                 break
