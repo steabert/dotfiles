@@ -1,5 +1,6 @@
 typeset -U PATH path
 path=(
+        $HOME/.node/bin
         $HOME/.deno/bin
         $HOME/.azure/bin
         $HOME/go/bin
@@ -9,6 +10,7 @@ path=(
         $HOME/bento4/bin
         $HOME/.fzf/bin
         $HOME/.yarn/bin
+        $HOME/.npm-global/bin
         $HOME/.luarocks/bin
         $HOME/bin "$path[@]"
 )
@@ -19,3 +21,4 @@ export PATH
 export LESS=dMqifr
 # - change latin1 -> utf-8
 export LESSCHARSET=utf-8
+. "$HOME/.cargo/env"

@@ -19,13 +19,13 @@ return {
   search_dotfiles = function()
     builtin.find_files({
       prompt_title = '< Config Files >',
-      cwd = '~/github/dotfiles/nvim/config'
+      cwd = '~/.config/nvim'
     })
   end,
   search_kb = function()
     builtin.find_files({
       prompt_title = '< Knowledge Base >',
-      cwd = '~/github/dotfiles/kb'
+      cwd = '~/kb'
     })
   end,
   -- instead of git ls-files, use fd for searching a project,
@@ -80,6 +80,8 @@ return {
 
     local args = {
       'rg',
+      '-U',
+      '--hidden',
       '--color=never',
       '--no-heading',
       '--with-filename',

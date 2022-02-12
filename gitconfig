@@ -2,6 +2,8 @@
 	name = Steven Vancoillie
 	email = steven.vancoillie@axis.com
 	signingkey = 72EA3C69F5BDC32C
+[credential "https://github.com"]
+	helper = !gh auth git-credential
 [includeIf "gitdir:~/gitlab/"]
 	path = ~/gitlab/.gitconfig
 [core]
@@ -42,6 +44,7 @@
 	d = diff
 	dc = diff --cached
 	dl = diff --find-copies-harder
+	dm = "!f() { git diff $(git merge-base --fork-point origin/main); }; f" 
 	l = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'"
 	lo = "!f() { git l origin/$1; }; f" 
 	lm = "!f() { git l origin/MOM-$1; }; f" 

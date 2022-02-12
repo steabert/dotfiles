@@ -12,6 +12,7 @@ else
 end
 
 lsp.tsserver.setup({
+  capabilities = lspcfg.capabilities,
   on_attach = lspcfg.on_attach,
   cmd = {
     'typescript-language-server',

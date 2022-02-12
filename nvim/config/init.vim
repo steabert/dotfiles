@@ -30,21 +30,20 @@ packadd! telescope
 packadd! telescope-file-browser
 
 " find files
-nnoremap <C-f>  <Nop>
-nnoremap <C-f>/ :lua require('me.telescope').grep_pattern(vim.fn.input("Grep for > "))<CR>
-nnoremap <C-f>* :lua require('me.telescope').grep_cword()<CR>
-nnoremap <C-f><C-b> :lua require('telescope.builtin').buffers()<CR>
-nnoremap <C-f><C-p> :lua require('me.telescope').find_files_project()<CR>
-nnoremap <C-f><C-f> :lua require('me.telescope').find_files()<CR>
-nnoremap <C-f><C-w> :lua require('me.telescope').git_worktree()<CR>
-nnoremap <C-f><C-t> :lua require('me.telescope').git_trunk()<CR>
-nnoremap <C-f><C-s> :lua require('me.telescope').git_show_qf()<CR>
+nnoremap <leader>/ :lua require('me.telescope').grep_pattern(vim.fn.input("Grep for > "))<CR>
+nnoremap <leader>* :lua require('me.telescope').grep_cword()<CR>
+nnoremap <leader>b :lua require('telescope.builtin').buffers()<CR>
+nnoremap <leader>f :lua require('me.telescope').find_files_project()<CR>
+nnoremap <leader>F :lua require('me.telescope').find_files()<CR>
+nnoremap <leader>w :lua require('me.telescope').git_worktree()<CR>
+nnoremap <leader>W :lua require('me.telescope').git_trunk()<CR>
+nnoremap <leader>q :lua require('me.telescope').git_show_qf()<CR>
 
 " browse
-nnoremap <C-f><C-y> :lua require('me.telescope').search_dotfiles()<CR>
-nnoremap <C-f><C-k> :lua require('me.telescope').search_kb()<CR>
-nnoremap <C-b> :lua require('telescope').extensions.file_browser.file_browser()<CR>
-nnoremap <C-h> :lua require('telescope').extensions.file_browser.file_browser({ path=vim.fn.expand("%:p:h")})<CR>
+nnoremap <leader>c :lua require('me.telescope').search_dotfiles()<CR>
+nnoremap <leader>k :lua require('me.telescope').search_kb()<CR>
+"nnoremap <leader>bp :lua require('telescope').extensions.file_browser.file_browser()<CR>
+nnoremap <leader>h :lua require('telescope').extensions.file_browser.file_browser({ path=vim.fn.expand("%:p:h")})<CR>
 
 " After opening a window to search for a file (or text), just hit enter to open
 " the file, or Ctrl-t to open it in a new tab. You can switch tabs with `gt`
@@ -67,10 +66,6 @@ lua require('me.lualine')
 " }}}
 
 " Git {{{
-" packadd! fugitive
-" nnoremap <silent>gb :Gblame<CR><C-w>w
-" nnoremap <silent>gl :0Glog<CR><C-w>w
-
 autocmd FileType gitconfig setlocal noexpandtab
 
 " Read commit diff into quickfix list
@@ -87,6 +82,13 @@ command -nargs=1 Gdiff call MyGdiff(<q-args>)
 nnoremap <leader>dh :diffget LO<CR>
 nnoremap <leader>dl :diffget RE<CR>
 nnoremap <leader>db :diffget BA<CR>
+
+" Git blame virtual text
+" nnoremap <leader>b :lua require('me.blame').blameVirtText()<CR>
+" lua vim.api.nvim_command [[autocmd CursorHold   * lua require'utils'.blameVirtText()]]
+lua vim.api.nvim_command [[autocmd CursorMoved  * lua require'me.blame'.clearBlameVirtText()]]
+lua vim.api.nvim_command [[autocmd CursorMovedI * lua require'me.blame'.clearBlameVirtText()]]
+hi! link GitLens Comment
 " }}}
 
 " Delimiters {{{
@@ -135,15 +137,20 @@ packadd! commentary
 """
 
 " Completion {{{
+packadd! nvim-cmp
+packadd! cmp-nvim-lsp
+packadd! cmp-buffer
+packadd! cmp-cmdline
+packadd! cmp-path
+packadd! lspkind-nvim
+lua require('me.cmp')
 " " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
-" " Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " " Avoid showing extra message when using completion
 set shortmess+=c
+" }}}
 
-" LSP
+" LSP {{{
 packadd! lspconfig
 
 " LSP relies on a bunch of language servers, a lot of which are
@@ -159,7 +166,7 @@ packadd! lspconfig
 
 set signcolumn=yes
 " setlocal omnifunc=v:lua.vim.lsp.omnifunc
-inoremap <silent><Tab> <C-x><C-o>
+" inoremap <silent><C-k> <C-x><C-o>
 
 sign define LspDiagnosticsSignError text= texthl=lualine_c_diagnostics_error_normal
 sign define LspDiagnosticsSignWarning text= texthl=lualine_c_diagnostics_warning_normal
@@ -186,6 +193,7 @@ nnoremap <silent>glC	<cmd>lua vim.lsp.buf.outgoing_calls()<CR>:copen<CR>
 nnoremap <silent>glw	<cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent>glf	<cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <silent>gla	<cmd>lua vim.lsp.buf.code_action()<CR>
+" }}}
 
 " TreeSitter {{{
 packadd! treesitter
@@ -208,8 +216,13 @@ set shortmess+=w
 " :CocInstall coc-tsserver coc-eslint coc-styled-components coc-json
 " The use of LSP with tsserver works better for navigating code, wo we
 " use that instead.
-packadd! styledcomponents
+" packadd! styledcomponents
 lua require('me.lsp-ts')
+
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType javascriptreact setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType typescriptreact setlocal shiftwidth=2 tabstop=2 expandtab
 
 " When working with yarn2, jumping to definitions will open a zip file
 " with a path similar to: `.yarn/cache/@package.zip/node_modules/.../file.js`,
@@ -237,6 +250,14 @@ au BufReadCmd *.yarn/*cache/*.zip/* call OpenZippedFile(expand('<afile>'))
 
 " Go {{{
 lua require('me.lsp-go')
+" }}}
+
+" Python {{{
+lua require('me.lsp-python')
+" }}}
+
+" Rust {{{
+lua require('me.lsp-rust')
 " }}}
 
 " GraphQL {{{
@@ -282,11 +303,6 @@ lua require('me.lsp-bicep')
 lua require('me.lsp-yaml')
 " }}}
 
-" EditorConfig{{{
-" This detects .editorconfig files and sets indentation accordingly
-" packadd! editorconfig
-" }}}
-
 """
 """ Customization
 """
@@ -313,7 +329,7 @@ set tabstop=8
 set ignorecase          " make vim case insensitive
 set smartcase           " be case sensitive if need be
 
-set textwidth=80
+"set textwidth=80
 "set colorcolumn=80	" mark position as column
 set formatoptions-=t	" do not automatically wrap text when typing
 
@@ -329,19 +345,18 @@ inoremap <C-l> <Esc>
 noremap  <leader>y "+y
 noremap  <leader>p "+p
 
+" map indenting/unindenting to tab/shift-tab
+noremap <>> <C-t>
+noremap <<> <C-d>
 " }}}
 
 " window shortcuts {{{
 " switch windows
 nnoremap <leader><Space> <C-w>w
-nnoremap <leader>h <C-w>h
-nnoremap <leader>j <C-w>j
-nnoremap <leader>k <C-w>k
-nnoremap <leader>l <C-w>l
 " keep current window (close all others)
-nnoremap <leader>f <C-w><C-o>
+nnoremap <leader>e <C-w><C-o>
 " close current window
-nnoremap <leader>c <C-w>c
+nnoremap <leader>x <C-w>c
 " }}}
 
 " quickfix list {{{

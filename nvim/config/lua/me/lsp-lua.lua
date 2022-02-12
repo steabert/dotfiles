@@ -3,6 +3,7 @@ local lsp = require("lspconfig")
 local lspcfg = require("me/lsp")
 
 lsp.sumneko_lua.setup {
+  capabilities = lspcfg.capabilities,
   on_attach = lspcfg.on_attach,
   handlers = lspcfg.handlers,
   -- cmd = {'lua-language-server', '-E', '/usr/share/lua-language-server/main.lua'},

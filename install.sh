@@ -32,3 +32,11 @@ ln -sfT $PWD/sway ~/.config/sway
 
 # Finder
 ln -sfT $PWD/fdignore ~/.fdignore
+
+# Knowledge base
+ln -sfTn $PWD/kb ~/kb
+
+# Scripts
+for file in $PWD/bin/*; do
+	ln -sfT $file ~/bin/$(basename $file)
+done
