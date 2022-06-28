@@ -12,6 +12,7 @@ path=(
         $HOME/.yarn/bin
         $HOME/.npm-global/bin
         $HOME/.luarocks/bin
+        $HOME/.lua-language-server/bin
         $HOME/bin "$path[@]"
 )
 export PATH

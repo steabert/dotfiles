@@ -32,7 +32,7 @@ packadd! telescope-file-browser
 " find files
 nnoremap <leader>/ :lua require('me.telescope').grep_pattern(vim.fn.input("Grep for > "))<CR>
 nnoremap <leader>* :lua require('me.telescope').grep_cword()<CR>
-nnoremap <leader>b :lua require('telescope.builtin').buffers()<CR>
+" nnoremap <leader>b :lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>f :lua require('me.telescope').find_files_project()<CR>
 nnoremap <leader>F :lua require('me.telescope').find_files()<CR>
 nnoremap <leader>w :lua require('me.telescope').git_worktree()<CR>
@@ -84,7 +84,7 @@ nnoremap <leader>dl :diffget RE<CR>
 nnoremap <leader>db :diffget BA<CR>
 
 " Git blame virtual text
-" nnoremap <leader>b :lua require('me.blame').blameVirtText()<CR>
+nnoremap <leader>b :lua require('me.blame').blameVirtText()<CR>
 " lua vim.api.nvim_command [[autocmd CursorHold   * lua require'utils'.blameVirtText()]]
 lua vim.api.nvim_command [[autocmd CursorMoved  * lua require'me.blame'.clearBlameVirtText()]]
 lua vim.api.nvim_command [[autocmd CursorMovedI * lua require'me.blame'.clearBlameVirtText()]]
