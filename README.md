@@ -11,8 +11,8 @@ git submodule update --init --recursive
 
 and the run the included linking script:
 
-```
-./linker.sh
+```shell
+./install.sh
 ```
 
 which will link from the proper locations in your
@@ -24,15 +24,15 @@ home directory to the files in the repository.
 
 Add a new package as a git submodule under `site`, with:
 
-```
+```shell
 git submodule add --name <NAME> <URL> site/pack/bundle/opt/<NAME>
 ```
 
-and then add a corresponding section in the `init.vim` file
+and then add a corresponding section in the `init.lua` file
 in order to load the plugin:
 
-```
-packadd! <NAME>
+```lua
+vim.cmd('packadd! <NAME>')
 ```
 
 ### Configuration
@@ -40,6 +40,6 @@ packadd! <NAME>
 Some language server support requires manual installation of
 the appropriate language servers:
 
-```
-yarn global add graphql-language-service-cli
+```shell
+npm --global add graphql-language-service-cli
 ```

@@ -61,3 +61,15 @@
 [submodule "cmp-cmdline"]
 	path = nvim/site/pack/bundle/opt/cmp-cmdline
 	url = https://github.com/hrsh7th/cmp-cmdline.git
+[submodule "null-ls.nvim"]
+	path = nvim/site/pack/bundle/opt/null-ls.nvim
+	url = https://github.com/jose-elias-alvarez/null-ls.nvim.git
+[submodule "tree-sitter-just"]
+	path = nvim/site/pack/bundle/opt/tree-sitter-just
+	url = https://github.com/steabert/tree-sitter-just.git
+[submodule "neogit"]
+	path = nvim/site/pack/bundle/opt/neogit
+	url = https://github.com/TimUntersberger/neogit.git
+[submodule "bufferline.nvim"]
+	path = nvim/site/pack/bundle/opt/bufferline.nvim
+	url = https://github.com/akinsho/bufferline.nvim.git

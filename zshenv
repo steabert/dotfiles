@@ -1,3 +1,5 @@
+fpath=(~/.zfunc $fpath)
+
 typeset -U PATH path
 path=(
         $HOME/.node/bin

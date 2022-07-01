@@ -9,6 +9,8 @@
 [core]
 	editor = nvim
 	pager = delta
+[pager]
+	blame = less
 [delta]
 	syntax-theme = none
 	navigate = true
@@ -39,7 +41,7 @@
 	s = status -s -b
 	sl = status -vv
 	sa = status -vv --ignored
-	sf = show --pretty="" --name-only
+	sf = show --stat
 	st = show --pretty=fuller --stat --show-signature
 	d = diff
 	dc = diff --cached
@@ -65,3 +67,10 @@
 	rc = rebase --continue
 	# Merge
 	k3 = mergetool --tool=kdiff3
+	# Restore
+	rem = restore -s origin/main
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

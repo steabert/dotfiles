@@ -16,7 +16,6 @@ vim.diagnostic.config({
 local lspcfg = {
 	capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 	on_attach = function(client, bufnr)
-		client.resolved_capabilities.document_formatting = false
 		vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 	end,
 	handlers = {
@@ -43,6 +42,7 @@ lsp.gopls.setup({
 })
 
 -- GraphQL
+-- npm install -g graphql-lsp
 lsp.graphql.setup({
 	capabilities = lspcfg.capabilities,
 	on_attach = lspcfg.on_attach,
@@ -95,7 +95,15 @@ lsp.rust_analyzer.setup({
 	handlers = lspcfg.handlers,
 })
 
--- TypeScript / ESLint
+-- Web
+-- npm install -g \
+-- 	vscode-json-language-server \
+-- 	vscode-html-language-server \
+-- 	vscode-eslint-language-server \
+-- 	vscode-css-language-server \
+-- 	typescript-language-server \
+-- 	typescript
+
 -- support yarn PnP if present
 local tsserver_path = ".yarn/sdks/typescript/bin/tsserver"
 local tsserver_file = io.open(tsserver_path, "r")
@@ -114,6 +122,33 @@ lsp.tsserver.setup({
 		"--stdio",
 	},
 	handlers = lspcfg.handlers,
+	commands = {
+		TSServerOrganizeImports = {
+			function()
+				local params = {
+					command = "_typescript.organizeImports",
+					arguments = { vim.api.nvim_buf_get_name(0) },
+				}
+				vim.lsp.buf.execute_command(params)
+			end,
+			description = "Organize Imports",
+		},
+	},
+	user_commands = {
+		{
+			name = "TSServerOrganizeImports",
+			command = function()
+				local params = {
+					command = "_typescript.organizeImports",
+					arguments = { vim.api.nvim_buf_get_name(0) },
+				}
+				vim.lsp.buf.execute_command(params)
+			end,
+			opts = {
+				desc = "Organize Imports",
+			},
+		},
+	},
 })
 
 lsp.eslint.setup({
@@ -122,13 +157,38 @@ lsp.eslint.setup({
 })
 
 -- YAML
+-- npm install -g yaml-language-server
 lsp.yamlls.setup({
 	capabilities = lspcfg.capabilities,
 	on_attach = lspcfg.on_attach,
 	handlers = lspcfg.handlers,
 	settings = {
 		yaml = {
-			["https://json.schemastore.org/github-workflow"] = "/.github/workflows/*",
+			hover = true,
+			validate = true,
+			schemaStore = {
+				enable = true,
+				url = "https://www.schemastore.org/api/json/catalog.json",
+			},
+			schemas = {
+				["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.json"] = "schema.yaml",
+			},
 		},
 	},
+})
+
+-- Null-ls (used for formatting)
+local null_ls = require("null-ls")
+local null_ls_utils = require("null-ls.utils")
+null_ls.setup({
+	debug = true,
+	debounce = 250,
+	sources = {
+		null_ls.builtins.formatting.prettierd.with({
+			PRETTIERD_LOCAL_PRETTIER_ONLY = 1,
+		}),
+		null_ls.builtins.formatting.stylua,
+	},
+	on_attach = function(client) end,
+	root_dir = null_ls_utils.root_pattern(".git"),
 })

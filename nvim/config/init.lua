@@ -1,8 +1,33 @@
--- The leader key will be (mostly) coupled to key sequences that have something
--- to do with windows (opening a diagnostic, finding files/text, moving between
--- windows).
--- let mapleader = "\<Space>"
+-- Leader key
 vim.g.mapleader = " "
+
+-- General options
+--
+vim.opt.background = "dark"
+vim.opt.completeopt = { "menuone", "noinsert", "noselect" } -- Set completeopt to have a better completion experience
+vim.opt.foldenable = false -- Do not fold by default when opening files
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = "expr"
+vim.opt.formatoptions:append({ t = false })
+vim.opt.hidden = true
+vim.opt.hlsearch = false
+vim.opt.ignorecase = true -- make vim case insensitive
+vim.opt.list = true
+vim.opt.listchars = "tab:➝ ,"
+vim.opt.number = true -- number lines
+vim.opt.relativenumber = true -- use relative numbers
+vim.opt.scroll = 20 -- how much to scroll with Ctrl-d/Ctrl-u
+-- vim.opt.scrolloff = 999 -- leave some lines of 'border' at top and bottom (999 = always middle cursor)
+vim.opt.scrolloff = 5 -- leave some lines of 'border' at top and bottom (999 = always middle cursor)
+vim.opt.shortmess:append({ c = true }) -- Avoid showing extra message when using completion
+vim.opt.shortmess:append({ w = true })
+vim.opt.signcolumn = "yes" -- display signs in a column (e.g. LSP diagnostics)
+vim.opt.smartcase = true -- be case sensitive if need be
+vim.opt.tabstop = 8
+vim.opt.termguicolors = true
+vim.opt.title = true -- use filename to set titlebar
+vim.opt.ttimeoutlen = 10 -- easier escape (avoid timeout)
+vim.opt.undofile = true
 
 -- Most of these configs are folded to keep it readable.  Use `za` on a folded
 -- section to toggle folding, or use `zM` to fold all or `zR` to unfold all.  By
@@ -13,8 +38,6 @@ vim.cmd("packadd! base16")
 vim.cmd("packadd! devicons")
 require("me.devicons")
 
-vim.opt.termguicolors = true
-vim.opt.background = "dark"
 vim.cmd("colorscheme base16-monokai")
 -- }
 
@@ -24,6 +47,8 @@ vim.cmd("packadd! plenary")
 vim.cmd("packadd! telescope")
 vim.cmd("packadd! telescope-file-browser")
 
+-- Telescope
+--
 local my_telescope = require("me.telescope")
 local telescope_builtin = require("telescope.builtin")
 -- After opening a window to search for a file (or text), just hit enter to open
@@ -33,19 +58,19 @@ local telescope_builtin = require("telescope.builtin")
 -- window in a tab will close the tab itself, so you can just use <leader>c to
 -- close tabs as well as windows (see window bindings below).
 
--- }
-
--- Status bar {
+-- Status bar
+--
 vim.cmd("packadd! lualine")
 require("me.lualine")
--- The status bar can be configured to use icons (but then you need some special
--- fonts that have those icons, i.e. nerd fonts). The configuration is in the
--- lua file, and we use the defaults there except that we add diagnostics output
--- next to the file name (which shows LSP diagnostics).
--- }
+vim.cmd("packadd! bufferline.nvim")
+require("bufferline").setup({})
 
 -- Git {
 vim.cmd("autocmd FileType gitconfig setlocal noexpandtab")
+vim.cmd("autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab")
+vim.cmd("autocmd FileType javascriptreact setlocal shiftwidth=2 tabstop=2 expandtab")
+vim.cmd("autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 expandtab")
+vim.cmd("autocmd FileType typescriptreact setlocal shiftwidth=2 tabstop=2 expandtab")
 
 -- " Read commit diff into quickfix list
 -- " command -nargs=1 Gdiff cexpr system('git diff <args> HEAD -U0 | ~/.config/nvim/sbin/diff2qf')
@@ -64,14 +89,7 @@ vim.cmd("autocmd FileType gitconfig setlocal noexpandtab")
 -- nnoremap <leader>db :diffget BA<CR>
 
 -- " Git blame virtual text
-local my_blame = require("me.blame")
-vim.api.nvim_set_keymap("n", "<Leader>B", "", {
-	noremap = true,
-	silent = true,
-	callback = function()
-		my_blame.gitBlame()
-	end,
-})
+local git = require("me.git")
 
 -- " Delimiters {
 vim.cmd("packadd! surround")
@@ -126,45 +144,20 @@ vim.cmd("packadd! cmp-cmdline")
 vim.cmd("packadd! cmp-path")
 vim.cmd("packadd! lspkind-nvim")
 require("me.cmp")
--- Set completeopt to have a better completion experience
-vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
--- Avoid showing extra message when using completion
-vim.opt.shortmess:append({ c = true })
 -- }
 
--- " LSP {
+-- LSP
 vim.cmd("packadd! lspconfig")
+vim.cmd("packadd! null-ls.nvim")
 require("me.lsp")
 
--- LSP relies on a bunch of language servers, a lot of which are
--- related to TS for us, so install language servers with yarn global:
--- graphql-lsp
--- yaml-language-server
--- vscode-json-language-server
--- vscode-html-language-server
--- vscode-eslint-language-server
--- vscode-css-language-server
--- typescript-language-server
--- tsserver
-
-vim.opt.signcolumn = "yes"
-vim.fn.sign_define("LspDiagnosticsSignError", { text = "", texthl = lualine_c_diagnostics_error_normal })
-vim.fn.sign_define("LspDiagnosticsSignWarning", { text = "", texthl = lualine_c_diagnostics_warning_normal })
-vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "", texthl = lualine_c_diagnostics_info_normal })
-vim.fn.sign_define("LspDiagnosticsSignHint", { text = "", texthl = lualine_c_diagnostics_info_normal })
-
--- " }
-
--- " TreeSitter {
+-- TreeSitter
 vim.cmd("packadd! treesitter")
+vim.cmd("packadd! tree-sitter-just")
 require("me.treesitter")
--- " }
 
 -- Code formatting {
 vim.cmd("packadd! neoformat")
-
-vim.api.nvim_set_keymap("n", "=", [[<Cmd>Neoformat<CR>:w<CR>]], { noremap = true, silent = true })
-vim.opt.shortmess:append({ w = true })
 
 -- There is some formatting capability in the LSP servers, but that's not
 -- really what we need all the time, and most often formatting is nice to
@@ -177,11 +170,6 @@ vim.opt.shortmess:append({ w = true })
 -- The use of LSP with tsserver works better for navigating code, wo we
 -- use that instead.
 vim.cmd("packadd! styledcomponents")
-
--- vim.cmd('autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab')
--- vim.cmd('autocmd FileType javascriptreact setlocal shiftwidth=2 tabstop=2 expandtab')
--- vim.cmd('autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 expandtab')
--- vim.cmd('autocmd FileType typescriptreact setlocal shiftwidth=2 tabstop=2 expandtab')
 
 -- " When working with yarn2, jumping to definitions will open a zip file
 -- " with a path similar to: `.yarn/cache/@package.zip/node_modules/.../file.js`,
@@ -218,41 +206,15 @@ vim.cmd("packadd! styledcomponents")
 vim.opt.grepprg = "rg --no-heading --vim-grep"
 vim.opt.grepformat = "%f:%l:%c:%m"
 
--- Vim
--- augroup SVC_VIM
---         autocmd!
---         autocmd FileType vim setlocal foldmethod=marker
--- augroup END
-
 -- Bicep
 -- au BufRead,BufNewFile *.bicep set filetype=bicep
 -- "lua require('lspconfig').bicep.setup{cmd={"dotnet", "/home/stevenv/.azure/bicep-ls/Bicep.LangServer.dll"}}
 
--- """
--- """ Customization
--- """
-
--- filetype plugin indent on
-
-vim.opt.title = true -- use filename to set titlebar
-vim.opt.number = true -- number lines
-vim.opt.relativenumber = true -- use relative numbers
-vim.opt.scrolloff = 999 -- leave some lines of 'border' at top and bottom (999 = always middle cursor)
-vim.opt.scroll = 20 -- how much to scroll with Ctrl-d/Ctrl-u
-vim.opt.list = true
-vim.opt.listchars = "tab:➝ ,"
-vim.opt.tabstop = 8
-vim.opt.ignorecase = true -- make vim case insensitive
-vim.opt.smartcase = true -- be case sensitive if need be
-vim.opt.formatoptions:append({ t = false })
-vim.opt.hidden = true
-vim.opt.ttimeoutlen = 10 -- easier escape (avoid timeout)
-
--- Commands
+-- User commands
 --
-vim.api.nvim_create_user_command("Reload", function()
+vim.api.nvim_create_user_command("Init", function()
 	-- reload init
-	vim.cmd("source ~/.config/nvim/init.lua")
+	vim.cmd("luafile ~/.config/nvim/init.lua")
 end, {})
 
 vim.api.nvim_create_user_command("Edit", function(opts)
@@ -260,43 +222,76 @@ vim.api.nvim_create_user_command("Edit", function(opts)
 	vim.cmd("edit %:h/" .. opts.args)
 end, { nargs = 1 })
 
+vim.api.nvim_create_user_command("Rename", function()
+	-- you can use vim.fs to get basename/dirname
+	local oldname = vim.api.nvim_buf_get_name(0)
+	vim.ui.input({ prompt = "new name: ", default = oldname, completion = "file" }, function(newname)
+		if newname then
+			vim.cmd("redraw") -- clear input
+			os.rename(oldname, newname)
+			vim.api.nvim_buf_set_name(0, newname)
+		end
+	end)
+end, {})
+
+-- Auto commands
+--
+
+vim.api.nvim_create_autocmd("TermOpen", { pattern = "*", command = "startinsert" })
+
 -- Keybindings
 --
-vim.api.nvim_set_keymap("", "<C-j>", "<Esc>", { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-l>", "<Esc>", { noremap = true })
+
+local set_keymap_options = { noremap = true, silent = true }
+
+-- escape
+vim.api.nvim_set_keymap("", "<C-j>", "<Esc>", set_keymap_options)
+vim.api.nvim_set_keymap("i", "<C-l>", "<Esc>", set_keymap_options)
 
 -- copy to / paste from clipboard in visual mode
-vim.api.nvim_set_keymap("", "<Leader>y", [["+y]], { noremap = true })
-vim.api.nvim_set_keymap("", "<Leader>p", [["+p]], { noremap = true })
-
--- map indenting/unindenting to tab/shift-tab
-vim.api.nvim_set_keymap("", "<>>", "<C-t>", { noremap = true })
-vim.api.nvim_set_keymap("", "<<>", "<C-d>", { noremap = true })
+vim.api.nvim_set_keymap("", "<Leader>y", [["+y]], set_keymap_options)
+vim.api.nvim_set_keymap("", "<Leader>p", [["+p]], set_keymap_options)
 
 -- switch windows
-vim.api.nvim_set_keymap("n", "<Leader><Space>", "<C-w>w", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader><Space>", "<C-w>w", set_keymap_options)
 -- keep current window (close all others)
-vim.api.nvim_set_keymap("n", "<Leader>e", "<C-w><C-o>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>e", "<C-w><C-o>", set_keymap_options)
 -- close current window
-vim.api.nvim_set_keymap("n", "<Leader>x", "<C-w>c", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>x", "<C-w>c", set_keymap_options)
 
--- quickfix list {
-vim.api.nvim_set_keymap("n", "<C-j>", ":cnext<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-k>", ":cprev<CR>", { noremap = true })
+-- quickfix list navigation
+vim.api.nvim_set_keymap("n", "<C-j>", ":cnext<CR>", set_keymap_options)
+vim.api.nvim_set_keymap("n", "<C-k>", ":cprev<CR>", set_keymap_options)
+
+-- file buffer navigation
+vim.api.nvim_set_keymap("n", "<Right>", ":bnext<CR>", set_keymap_options)
+vim.api.nvim_set_keymap("n", "<Left>", ":bprev<CR>", set_keymap_options)
+
+-- exit and close terminal
+vim.api.nvim_set_keymap("t", "<C-c>", "<C-\\><C-n>:bd!<CR>", set_keymap_options)
 
 -- lua function bindings
-local normal_silent = {
+local normal_mode = {
+	["="] = function()
+		vim.lsp.buf.format({
+			filter = function(client)
+				-- apply whatever logic you want (in this example, we'll only use null-ls)
+				return client.name == "null-ls"
+			end,
+		})
+		vim.cmd("write")
+	end,
 	["L"] = function()
 		vim.diagnostic.open_float()
-	end,
-	["K"] = function()
-		vim.lsp.buf.hover()
 	end,
 	["<Leader>/"] = function()
 		my_telescope.grep_pattern(vim.fn.input("Grep for > "))
 	end,
 	["<Leader>*"] = function()
 		my_telescope.grep_cword()
+	end,
+	["<Leader>."] = function()
+		my_telescope.browse_current_dir()
 	end,
 	["<Leader>a"] = function()
 		vim.lsp.buf.code_action()
@@ -308,10 +303,13 @@ local normal_silent = {
 		my_telescope.search_dotfiles()
 	end,
 	["<Leader>f"] = function()
-		my_telescope.find_files_project()
+		my_telescope.find_project_files()
 	end,
 	["<Leader>F"] = function()
-		require("telescope").extensions.file_browser.file_browser({ path = vim.fn.expand("%:p:h") })
+		my_telescope.find_all_files()
+	end,
+	["<Leader>k"] = function()
+		vim.lsp.buf.hover()
 	end,
 	["<Leader>n"] = function()
 		my_telescope.search_kb()
@@ -321,9 +319,6 @@ local normal_silent = {
 	end,
 	["<Leader>W"] = function()
 		my_telescope.git_trunk()
-	end,
-	["<Leader>q"] = function()
-		my_telescope.git_show_qf()
 	end,
 	["<Leader>r"] = function()
 		vim.lsp.buf.rename()
@@ -349,6 +344,9 @@ local normal_silent = {
 	["]q"] = function()
 		vim.diagnostic.setqflist()
 	end,
+	["gb"] = function()
+		git.git_blame()
+	end,
 	["gd"] = function()
 		telescope_builtin.lsp_definitions()
 	end,
@@ -357,6 +355,9 @@ local normal_silent = {
 	end,
 	["gD"] = function()
 		vim.lsp.buf.declaration()
+	end,
+	["gl"] = function()
+		git.git_log()
 	end,
 	["gy"] = function()
 		telescope_builtin.lsp_type_definitions()
@@ -369,6 +370,26 @@ local normal_silent = {
 	end,
 }
 
-for binding, callback in pairs(normal_silent) do
+for binding, callback in pairs(normal_mode) do
 	vim.api.nvim_set_keymap("n", binding, "", { noremap = true, silent = true, callback = callback })
+end
+
+local visual_mode = {
+	["="] = function()
+		vim.lsp.buf.range_formatting()
+	end,
+}
+
+for binding, callback in pairs(visual_mode) do
+	vim.api.nvim_set_keymap("v", binding, "", { noremap = true, silent = true, callback = callback })
+end
+
+local terminal_mode = {
+	["<C-b>"] = function()
+		telescope_builtin.buffers()
+	end,
+}
+
+for binding, callback in pairs(terminal_mode) do
+	vim.api.nvim_set_keymap("t", binding, "", { noremap = true, silent = true, callback = callback })
 end
