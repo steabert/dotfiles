@@ -1,7 +1,5 @@
-[user]
-	name = Steven Vancoillie
-	email = steven.vancoillie@axis.com
-	signingkey = 72EA3C69F5BDC32C
+[include]
+	path = ~/gitconfig-user
 [credential "https://github.com"]
 	helper = !gh auth git-credential
 [includeIf "gitdir:~/gitlab/"]
@@ -34,6 +32,7 @@
 	cmd = BASE=$BASE LOCAL=$LOCAL REMOTE=$REMOTE MERGED=$MERGED nvim -S ~/.config/nvim/mergetool.vim
 [push]
 	default = current
+	autoSetupRemote = true
 [pull]
 	ff = only
 [alias]
@@ -47,6 +46,7 @@
 	dc = diff --cached
 	dl = diff --find-copies-harder
 	dm = "!f() { git diff $(git merge-base --fork-point origin/main); }; f" 
+	dms = "!f() { git diff --stat $(git merge-base --fork-point origin/main); }; f" 
 	l = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'"
 	lo = "!f() { git l origin/$1; }; f" 
 	lm = "!f() { git l origin/MOM-$1; }; f" 
@@ -55,6 +55,7 @@
 	# Moving around
 	co = checkout
 	set = reset --hard
+	cut = reset --hard HEAD~1
 	mr = "!f() { git fetch origin MOM-$1; git checkout FETCH_HEAD; }; f" 
 	# Committing
 	au = add -u .

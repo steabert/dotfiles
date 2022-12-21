@@ -256,8 +256,8 @@ vim.api.nvim_set_keymap("", "<Leader>p", [["+p]], set_keymap_options)
 vim.api.nvim_set_keymap("n", "<Leader><Space>", "<C-w>w", set_keymap_options)
 -- keep current window (close all others)
 vim.api.nvim_set_keymap("n", "<Leader>e", "<C-w><C-o>", set_keymap_options)
--- close current window
-vim.api.nvim_set_keymap("n", "<Leader>x", "<C-w>c", set_keymap_options)
+-- close current buffer
+vim.api.nvim_set_keymap("n", "<Leader>x", ":bd<CR>", set_keymap_options)
 
 -- quickfix list navigation
 vim.api.nvim_set_keymap("n", "<C-j>", ":cnext<CR>", set_keymap_options)
@@ -279,7 +279,7 @@ local normal_mode = {
 				return client.name == "null-ls"
 			end,
 		})
-		vim.cmd("write")
+		vim.cmd("write!")
 	end,
 	["L"] = function()
 		vim.diagnostic.open_float()

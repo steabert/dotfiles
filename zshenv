@@ -25,3 +25,7 @@ export LESS=dMqifr
 # - change latin1 -> utf-8
 export LESSCHARSET=utf-8
 . "$HOME/.cargo/env"
+
+export LANG=en_US.utf8
+export LANGUAGE=en_US.utf8
+export LC_ALL=en_US.utf8

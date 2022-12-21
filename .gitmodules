@@ -73,3 +73,6 @@
 [submodule "bufferline.nvim"]
 	path = nvim/site/pack/bundle/opt/bufferline.nvim
 	url = https://github.com/akinsho/bufferline.nvim.git
+[submodule "peek.nvim"]
+	path = nvim/site/pack/bundle/opt/peek.nvim
+	url = https://github.com/toppair/peek.nvim.git

@@ -14,7 +14,7 @@ vim.diagnostic.config({
 
 -- LSP base configurations
 local lspcfg = {
-	capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+	capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
 	on_attach = function(client, bufnr)
 		vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 	end,
@@ -25,6 +25,12 @@ local lspcfg = {
 		),
 	},
 }
+
+-- Bash
+lsp.bashls.setup({
+	on_attach = lspcfg.on_attach,
+	handlers = lspcfg.handlers,
+})
 
 -- Bicep
 lsp.bicep.setup({
@@ -50,7 +56,7 @@ lsp.graphql.setup({
 })
 
 -- Lua
-lsp.sumneko_lua.setup({
+lsp.lua_ls.setup({
 	capabilities = lspcfg.capabilities,
 	on_attach = lspcfg.on_attach,
 	handlers = lspcfg.handlers,
@@ -184,9 +190,29 @@ null_ls.setup({
 	debug = true,
 	debounce = 250,
 	sources = {
-		null_ls.builtins.formatting.prettierd.with({
-			PRETTIERD_LOCAL_PRETTIER_ONLY = 1,
+		null_ls.builtins.formatting.dprint.with({
+			filetypes = {
+				"javascript",
+				"javascriptreact",
+				"graphql",
+				"graphqls",
+				"typescript",
+				"typescriptreact",
+				"json",
+				"markdown",
+				"toml",
+				"rust",
+				"yaml",
+				"yml",
+			},
 		}),
+		-- null_ls.builtins.formatting.prettier.with({
+		-- 	filetypes = { "graphql" },
+		-- }),
+		-- null_ls.builtins.formatting.prettier,
+		-- null_ls.builtins.formatting.prettierd.with({
+		-- 	PRETTIERD_LOCAL_PRETTIER_ONLY = 1,
+		-- }),
 		null_ls.builtins.formatting.stylua,
 	},
 	on_attach = function(client) end,
