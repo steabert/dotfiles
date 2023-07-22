@@ -1,0 +1,12 @@
+[[language]]
+name = "typescript"
+# formatter = { command = "dprint", args=["fmt", "--stdin", "ts"] }
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+
+[[language]]
+name = "json"
+formatter = { command = "dprint", args = ["fmt", "--stdin", "json"] }
+
+[[language]]
+name = "toml"
+formatter = { command = "dprint", args = ["fmt", "--stdin", "toml"] }

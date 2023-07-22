@@ -1,0 +1,19 @@
+# theme = "ubuntu"
+# theme = "monokai_pro_ristretto"
+theme = "monokai_pro_spectrum"
+
+[keys.normal]
+g = { k = "toggle_comments" }
+"=" = ":fmt"
+
+[keys.insert]
+C-c = "normal_mode"
+
+[editor]
+line-number = "relative"
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.file-picker]
+hidden = false
