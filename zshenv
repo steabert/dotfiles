@@ -2,20 +2,22 @@ fpath=(~/.zfunc $fpath)
 
 typeset -U PATH path
 path=(
-        $HOME/.node/bin
-        $HOME/.deno/bin
         $HOME/.azure/bin
-        $HOME/go/bin
-        /usr/local/go/bin
         $HOME/.cargo/bin
-        $HOME/.local/bin
-        $HOME/bento4/bin
+        $HOME/.deno/bin
         $HOME/.fzf/bin
-        $HOME/.yarn/bin
-        $HOME/.npm-global/bin
-        $HOME/.luarocks/bin
+        $HOME/.local/bin
         $HOME/.lua-language-server/bin
-        $HOME/bin "$path[@]"
+        $HOME/.luarocks/bin
+        $HOME/.npm-global/bin
+        $HOME/.yarn/bin
+        $HOME/go/bin
+        $HOME/prog/bento4/bin
+        $HOME/prog/delta-0.15.0-x86_64-unknown-linux-musl
+        $HOME/prog/go/bin
+        $HOME/prog/node-v18.17.0-linux-x64/bin
+        $HOME/prog/nvim-linux64/bin
+        "$path[@]"
 )
 export PATH
 # fix "less" behaviour from /etc/zsh/zshenv default

@@ -148,7 +148,6 @@ require("me.cmp")
 
 -- LSP
 vim.cmd("packadd! lspconfig")
-vim.cmd("packadd! null-ls.nvim")
 require("me.lsp")
 
 -- TreeSitter
@@ -157,7 +156,8 @@ vim.cmd("packadd! tree-sitter-just")
 require("me.treesitter")
 
 -- Code formatting {
-vim.cmd("packadd! neoformat")
+vim.cmd("packadd! formatter.nvim")
+require("me.formatter")
 
 -- There is some formatting capability in the LSP servers, but that's not
 -- really what we need all the time, and most often formatting is nice to
@@ -196,7 +196,7 @@ vim.cmd("packadd! styledcomponents")
 -- " }
 
 -- Shell {
--- Neoformat will use shfmt to format shell scripts
+-- When using shfmt to format shell scripts
 -- It will follow the shiftwidth settings for the file
 -- (which in our case will come from the defaults or
 -- from an .editorconfig)
@@ -270,20 +270,23 @@ vim.api.nvim_set_keymap("n", "<Left>", ":bprev<CR>", set_keymap_options)
 -- exit and close terminal
 vim.api.nvim_set_keymap("t", "<C-c>", "<C-\\><C-n>:bd!<CR>", set_keymap_options)
 
+-- formatting
+vim.api.nvim_set_keymap("n", "=", ":Format<CR>", set_keymap_options)
+
 -- lua function bindings
 local normal_mode = {
-	["="] = function()
-		vim.lsp.buf.format({
-			filter = function(client)
-				-- apply whatever logic you want (in this example, we'll only use null-ls)
-				return client.name == "null-ls"
-			end,
-		})
-		vim.cmd("write!")
-	end,
 	["L"] = function()
 		vim.diagnostic.open_float()
 	end,
+	-- ["<Leader>="] = function()
+	-- 	vim.lsp.buf.format({
+	-- 		-- filter = function(client)
+	-- 		-- 	-- apply whatever logic you want (in this example, we'll only use null-ls)
+	-- 		-- 	return client.name == "null-ls"
+	-- 		-- end,
+	-- 	})
+	-- 	vim.cmd("write!")
+	-- end,
 	["<Leader>/"] = function()
 		my_telescope.grep_pattern(vim.fn.input("Grep for > "))
 	end,

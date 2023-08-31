@@ -1,9 +1,7 @@
 [include]
-	path = ~/gitconfig-user
+	path = ~/.gitconfig-user
 [credential "https://github.com"]
 	helper = !gh auth git-credential
-[includeIf "gitdir:~/gitlab/"]
-	path = ~/gitlab/.gitconfig
 [core]
 	editor = nvim
 	pager = delta

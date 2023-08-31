@@ -33,8 +33,8 @@ export BEMENU_BACKEND=wayland
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export YARN_HTTP_PROXY=$http_proxy
 export YARN_HTTPS_PROXY=$https_proxy
-export ELECTRON_GET_USE_PROXY='1'
-export GLOBAL_AGENT_HTTPS_PROXY='http://wwwproxy:3128'
+# export ELECTRON_GET_USE_PROXY='1'
+# export GLOBAL_AGENT_HTTPS_PROXY='http://wwwproxy:3128'
 
 # Prompt
 autoload -Uz promptinit && promptinit

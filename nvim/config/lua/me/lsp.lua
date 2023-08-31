@@ -40,6 +40,11 @@ lsp.bicep.setup({
 	cmd = { "dotnet", "/home/stevenv/.azure/bicep-ls/Bicep.LangServer.dll" },
 })
 
+-- Clangd
+lsp.clangd.setup({
+	cmd = { "clangd-15" },
+})
+
 -- Go
 lsp.gopls.setup({
 	capabilities = lspcfg.capabilities,
@@ -181,40 +186,4 @@ lsp.yamlls.setup({
 			},
 		},
 	},
-})
-
--- Null-ls (used for formatting)
-local null_ls = require("null-ls")
-local null_ls_utils = require("null-ls.utils")
-null_ls.setup({
-	debug = true,
-	debounce = 250,
-	sources = {
-		null_ls.builtins.formatting.dprint.with({
-			filetypes = {
-				"javascript",
-				"javascriptreact",
-				"graphql",
-				"graphqls",
-				"typescript",
-				"typescriptreact",
-				"json",
-				"markdown",
-				"toml",
-				"rust",
-				"yaml",
-				"yml",
-			},
-		}),
-		-- null_ls.builtins.formatting.prettier.with({
-		-- 	filetypes = { "graphql" },
-		-- }),
-		-- null_ls.builtins.formatting.prettier,
-		-- null_ls.builtins.formatting.prettierd.with({
-		-- 	PRETTIERD_LOCAL_PRETTIER_ONLY = 1,
-		-- }),
-		null_ls.builtins.formatting.stylua,
-	},
-	on_attach = function(client) end,
-	root_dir = null_ls_utils.root_pattern(".git"),
 })
