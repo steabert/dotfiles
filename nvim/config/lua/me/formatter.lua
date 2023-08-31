@@ -6,9 +6,13 @@ local stylua = require("formatter.filetypes.lua").stylua
 local dprint = function()
 	return {
 		exe = "dprint",
-		args = { "fmt", "--stdin", util.escape_path(util.get_current_buffer_file_path()) },
+		args = { "fmt", "--stdin", util.get_current_buffer_file_extension() },
 		stdin = true,
 	}
+end
+
+local lsp = function()
+	vim.lsp.buf.format({ async = true })
 end
 
 formatter.setup({
@@ -26,8 +30,6 @@ formatter.setup({
 		typescriptreact = { dprint },
 		yaml = { dprint },
 		yml = { dprint },
-		["*"] = function()
-			vim.lsp.buf.format({ async = true })
-		end,
+		go = { lsp },
 	},
 })

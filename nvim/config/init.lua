@@ -271,7 +271,7 @@ vim.api.nvim_set_keymap("n", "<Left>", ":bprev<CR>", set_keymap_options)
 vim.api.nvim_set_keymap("t", "<C-c>", "<C-\\><C-n>:bd!<CR>", set_keymap_options)
 
 -- formatting
-vim.api.nvim_set_keymap("n", "=", ":Format<CR>", set_keymap_options)
+vim.api.nvim_set_keymap("n", "=", ":FormatWrite<CR>", set_keymap_options)
 
 -- lua function bindings
 local normal_mode = {
