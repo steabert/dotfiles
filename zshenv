@@ -10,12 +10,13 @@ path=(
         $HOME/.lua-language-server/bin
         $HOME/.luarocks/bin
         $HOME/.npm-global/bin
+        $HOME/.pulumi/bin
         $HOME/.yarn/bin
         $HOME/go/bin
         $HOME/prog/bento4/bin
         $HOME/prog/delta-0.15.0-x86_64-unknown-linux-musl
         $HOME/prog/go/bin
-        $HOME/prog/node-v18.17.0-linux-x64/bin
+        $HOME/prog/node18/bin
         $HOME/prog/nvim-linux64/bin
         "$path[@]"
 )

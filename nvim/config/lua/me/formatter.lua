@@ -1,6 +1,7 @@
 local formatter = require("formatter")
 local util = require("formatter.util")
 
+local goimports = require("formatter.filetypes.go").goimports
 local stylua = require("formatter.filetypes.lua").stylua
 
 local dprint = function()
@@ -30,6 +31,6 @@ formatter.setup({
 		typescriptreact = { dprint },
 		yaml = { dprint },
 		yml = { dprint },
-		go = { lsp },
+		go = { goimports },
 	},
 })

@@ -3,7 +3,7 @@
 [credential "https://github.com"]
 	helper = !gh auth git-credential
 [core]
-	editor = nvim
+	editor = hx
 	pager = delta
 [pager]
 	blame = less
@@ -34,7 +34,7 @@
 [pull]
 	ff = only
 [alias]
-        # Status
+    # Status
 	s = status -s -b
 	sl = status -vv
 	sa = status -vv --ignored
@@ -51,10 +51,12 @@
 	ll = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'" --branches
 	la = log --graph --format=format:"'%C(bold blue)%h %C(auto)%d %C(reset) - %s %n %C(dim white)%an (%cd; %cr)'" --all
 	# Moving around
-	co = checkout
+	b = switch
+	bc = switch -c
 	set = reset --hard
 	cut = reset --hard HEAD~1
 	mr = "!f() { git fetch origin MOM-$1; git checkout FETCH_HEAD; }; f" 
+	main = "!f() { git fetch origin && git switch -C main origin/main; }; f"
 	# Committing
 	au = add -u .
 	c = commit

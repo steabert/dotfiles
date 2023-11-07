@@ -1,5 +1,4 @@
 # theme = "ubuntu"
-# theme = "monokai_pro_ristretto"
 theme = "monokai_pro_spectrum"
 
 [keys.normal]
@@ -11,9 +10,13 @@ C-c = "normal_mode"
 
 [editor]
 line-number = "relative"
+true-color = true
 
 [editor.cursor-shape]
 insert = "bar"
 
 [editor.file-picker]
 hidden = false
+
+[editor.lsp]
+display-messages = true

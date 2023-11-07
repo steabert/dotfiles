@@ -16,7 +16,7 @@ vim.opt.list = true
 vim.opt.listchars = "tab:➝ ,"
 vim.opt.number = true -- number lines
 vim.opt.relativenumber = true -- use relative numbers
-vim.opt.scroll = 20 -- how much to scroll with Ctrl-d/Ctrl-u
+vim.opt.scroll = 16 -- how much to scroll with Ctrl-d/Ctrl-u
 -- vim.opt.scrolloff = 999 -- leave some lines of 'border' at top and bottom (999 = always middle cursor)
 vim.opt.scrolloff = 5 -- leave some lines of 'border' at top and bottom (999 = always middle cursor)
 vim.opt.shortmess:append({ c = true }) -- Avoid showing extra message when using completion

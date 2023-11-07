@@ -107,6 +107,7 @@ lsp.rust_analyzer.setup({
 })
 
 -- Web
+-- npm i -g vscode-langservers-extracted
 -- npm install -g \
 -- 	vscode-json-language-server \
 -- 	vscode-html-language-server \
@@ -187,3 +188,12 @@ lsp.yamlls.setup({
 		},
 	},
 })
+
+-- JSON
+-- npm i -g vscode-langservers-extracted
+-- Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+lsp.jsonls.setup {
+  capabilities = capabilities,
+}
