@@ -2,6 +2,7 @@
 	path = ~/.gitconfig-user
 [credential "https://github.com"]
 	helper = !gh auth git-credential
+	useHttpPath = true
 [core]
 	editor = hx
 	pager = delta
@@ -38,8 +39,7 @@
 	s = status -s -b
 	sl = status -vv
 	sa = status -vv --ignored
-	sf = show --stat
-	st = show --pretty=fuller --stat --show-signature
+	sh = show --pretty=fuller --stat --show-signature
 	d = diff
 	dc = diff --cached
 	dl = diff --find-copies-harder
@@ -60,9 +60,11 @@
 	# Committing
 	au = add -u .
 	c = commit
+	# commit and amend, use --edit to override the default
 	ca = commit --amend --no-edit
 	cn = commit --no-verify
 	cf = commit --fix
+	fixup = "!git log -n 10 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
 	cp = cherry-pick
 	ri = rebase --interactive --autosquash
 	rc = rebase --continue
@@ -70,8 +72,5 @@
 	k3 = mergetool --tool=kdiff3
 	# Restore
 	rem = restore -s origin/main
-[filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+[http]
+	cookiefile = /home/stevenv/.gitcookies
