@@ -1,16 +1,24 @@
+theme = "gray_dark"
+# theme = "curzon"
+# theme = "monokai"
+# theme = "monokai_aqua"
+# theme = "monokai_pro_spectrum"
+# theme = "tokyonight_storm"
 # theme = "ubuntu"
-theme = "monokai_pro_spectrum"
-
-[keys.normal]
-g = { k = "toggle_comments" }
-"=" = ":fmt"
-
-[keys.insert]
-C-c = "normal_mode"
 
 [editor]
 line-number = "relative"
 true-color = true
+bufferline = "multiple"
+auto-format = false
+
+[keys.normal]
+"=" = ":fmt"
+esc = ["collapse_selection", "keep_primary_selection"]
+g = { P = ":pipe goprint" }
+
+[keys.insert]
+C-j = "normal_mode"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -20,3 +28,20 @@ hidden = false
 
 [editor.lsp]
 display-messages = true
+
+[editor.whitespace.render]
+tab = "all"
+newline = "all"
+
+[editor.whitespace.characters]
+tab = "→"
+newline = "↩"
+
+[editor.statusline]
+left = ["mode", "spinner", "selections"]
+center = ["file-name"]
+right = ["diagnostics", "workspace-diagnostics", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+mode.normal = "NOR"
+mode.insert = "INS"
+mode.select = "SEL"
