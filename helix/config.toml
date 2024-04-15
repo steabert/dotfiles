@@ -1,10 +1,4 @@
-theme = "gray_dark"
-# theme = "curzon"
-# theme = "monokai"
-# theme = "monokai_aqua"
-# theme = "monokai_pro_spectrum"
-# theme = "tokyonight_storm"
-# theme = "ubuntu"
+theme = "earl_grey"
 
 [editor]
 line-number = "relative"
@@ -38,9 +32,9 @@ tab = "→"
 newline = "↩"
 
 [editor.statusline]
-left = ["mode", "spinner", "selections"]
-center = ["file-name"]
-right = ["diagnostics", "workspace-diagnostics", "position", "file-encoding", "file-line-ending", "file-type"]
+left = ["mode", "spinner", "diagnostics"]
+center = []
+right = ["file-name", "separator", "file-encoding", "file-line-ending", "file-type"]
 separator = "│"
 mode.normal = "NOR"
 mode.insert = "INS"

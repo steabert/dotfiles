@@ -7,11 +7,11 @@
 ln -sfT $PWD/gitconfig ~/.gitconfig
 
 # Editor config
-ln -sfT $PWD/editorconfig.ini ~/.editorconfig
+#ln -sfT $PWD/editorconfig.ini ~/.editorconfig
 
 # NeoVIM
-ln -sfT $PWD/nvim/config ~/.config/nvim
-ln -sfT $PWD/nvim/site ~/.local/share/nvim/site
+#ln -sfT $PWD/nvim/config ~/.config/nvim
+#ln -sfT $PWD/nvim/site ~/.local/share/nvim/site
 
 # Terminal
 ln -sfT $PWD/alacritty ~/.config/alacritty
