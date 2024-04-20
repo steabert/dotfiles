@@ -32,7 +32,7 @@ tab = "→"
 newline = "↩"
 
 [editor.statusline]
-left = ["mode", "spinner", "diagnostics"]
+left = ["mode", "spinner", "diagnostics", "workspace-diagnostics"]
 center = []
 right = ["file-name", "separator", "file-encoding", "file-line-ending", "file-type"]
 separator = "│"
