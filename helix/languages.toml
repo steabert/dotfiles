@@ -11,26 +11,44 @@ rulesCustomizations = []
 run = "onType"
 validate = "on"
 
+[language-server]
+biome = { command = "biome", args = ["lsp-proxy"] }
+
 [[language]]
 name = "typescript"
-formatter = { command = "dprint", args = ["fmt", "--stdin", "ts"] }
+formatter = { command = "biome", args = ["format", "--stdin-file-path=fake.ts"] }
 language-servers = [
   { name = "eslint", except-features = ["format"] },
   { name = "typescript-language-server", except-features = ["format"] },
+  "biome",
+]
+
+[[language]]
+name = "javascript"
+formatter = { command = "biome", args = ["format", "--stdin-file-path=fake.js"] }
+language-servers = [
+  { name = "eslint", except-features = ["format"] },
+  { name = "typescript-language-server", except-features = ["format"] },
+  "biome",
 ]
 
 [[language]]
 name = "tsx"
-formatter = { command = "dprint", args = ["fmt", "--stdin", "tsx"] }
+formatter = { command = "biome", args = ["format", "--stdin-file-path=fake.tsx"] }
 language-servers = [
   { name = "eslint", except-features = ["format"] },
   { name = "typescript-language-server", except-features = ["format"] },
+  "biome",
 ]
 
 [[language]]
 name = "json"
-formatter = { command = "dprint", args = ["fmt", "--stdin", "json"] }
+formatter = { command = "biome", args = ["format", "--stdin-file-path=fake.json"] }
+language-servers = [
+  { name = "vscode-json-language-server", except-features = ["format"] },
+  "biome",
+]
 
 [[language]]
-name = "toml"
-formatter = { command = "dprint", args = ["fmt", "--stdin", "toml"] }
+name = "bash"
+formatter = { command = "shfmt" }
