@@ -1,9 +1,5 @@
 "comment" = { modifiers = ["dim"] }
 "function" = { modifiers = ["bold"] }
-"keyword" = { fg = "base0A" }
-"module" = { fg = "base0D" }
-"namespace" = { fg = "base0D" }
-"type" = { fg = "base0D" }
 
 "ui.background" = { bg = "base00" }
 "ui.background.separator" = { fg = "base06" }

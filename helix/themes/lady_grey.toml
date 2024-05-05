@@ -50,22 +50,22 @@
 error = "base08"
 hint = "base0B"
 info = "base04"
-warning = "base0D"
+warning = "base09"
 
 [palette]
-base00 = "#101010"
-base01 = "#1b1b1b"
-base02 = "#2a2a2d"
-base03 = "#3e3e3e"
-base04 = "#808080"
-base05 = "#a6a6a6"
-base06 = "#f0f0f0"
-base07 = "#ffffff"
-base08 = "#e78284" # red
-base09 = "#90b99f" # green
-base0A = "#aca1cf" # blue
-base0B = "#99bbe0" # cyan
-base0C = "#e29eca" # magenta
-base0D = "#e5c890" # yellow
+base00 = "#fbfbfb"
+base01 = "#f0f0f0"
+base02 = "#e9e9e9"
+base03 = "#d0d0d0"
+base04 = "#3e3e3e"
+base05 = "#2a2a2d"
+base06 = "#1b1b1b"
+base07 = "#101010"
+base08 = "#9a0e2a" # red
+base09 = "#ffa500" # orange
+base0A = "#000099" # blue
+base0B = "#009966" # green
+base0C = "#990099" # magenta
+base0D = "#7c3f00" # brown
 base0E = "#000000"
 base0F = "#ffffff"
