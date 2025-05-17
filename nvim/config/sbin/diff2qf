@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# grep -E '^diff|^@@' - |
-awk '
-/^diff/ { match($0, / b\/(.*)$/, f) }
-/^@@/ { match($0, / \+([0-9]+),?[0-9]* @@/, l); getline m; print f[1] ":" l[1] ":" m }
-' -
