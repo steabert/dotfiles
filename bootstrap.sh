@@ -1,9 +1,5 @@
 sudo apt update
-sudo apt install \
-	binutils \
-	curl \
-	git \
-	vim
+sudo apt install curl
 
 mkdir -p ~/opt
 mkdir -p ~/.local/bin

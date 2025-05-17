@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/stevenv/opt/zen/zen
+Terminal=false
+Icon=/home/stevenv/opt/zen/browser/chrome/icons/default/default128.png
+StartupWMClass=zen
+Name=Zen
