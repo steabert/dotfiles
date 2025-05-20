@@ -6,9 +6,10 @@ default:
     just --list
 
 # https://github.com/go-delve/delve
-delve:
+delve: (dir "~/.config")
     go install github.com/go-delve/delve/cmd/dlv@latest
     go install github.com/aarzilli/gdlv@latest
+    ln -sf {{justfile_directory()}}/gdlv ~/.config/gdlv
     
 dev:
     sudo apt update
@@ -57,11 +58,13 @@ iosevka version='33.2.3': (dir "~/.local/share/fonts/iosevka")
     if [[ ! -f ~/opt/SuperTTC-SGr-IosevkaFixedSlab-{{version}}.zip ]]; then \
         curl -L -O --output-dir ~/opt \
           https://github.com/be5invis/Iosevka/releases/download/v{{version}}/SuperTTC-SGr-IosevkaFixedSlab-{{version}}.zip; \
+    fi
+    unzip -o -u ~/opt/SuperTTC-SGr-IosevkaFixedSlab-{{version}}.zip -d ~/.local/share/fonts/iosevka 
+    if [[ ! -f ~/opt/PkgTTF-IosevkaFixedSlab-{{version}}.zip ]]; then \
         curl -L -O --output-dir ~/opt \
           https://github.com/be5invis/Iosevka/releases/download/v{{version}}/PkgTTF-IosevkaFixedSlab-{{version}}.zip; \
     fi
-    unzip -o -f ~/opt/SuperTTC-SGr-IosevkaFixedSlab-{{version}}.zip -d ~/.local/share/fonts/iosevka 
-    unzip -o -f ~/opt/PkgTTF-IosevkaFixedSlab-{{version}}.zip -d ~/.local/share/fonts/iosevka 
+    unzip -o -u ~/opt/PkgTTF-IosevkaFixedSlab-{{version}}.zip -d ~/.local/share/fonts/iosevka 
     fc-cache
 
 # https://sw.kovidgoyal.net/kitty/
