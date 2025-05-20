@@ -109,14 +109,3 @@ uhk version='7.0.0':
     fi
     chmod +x ~/opt/UHK.Agent-{{version}}-linux-x86_64.AppImage
     ln -sf ~/opt/UHK.Agent-7.0.0-linux-x86_64.AppImage ~/.local/bin/uhk-agent
-
-# https://zen-browser.app/
-zen:
-    if [[ ! -f ~/opt/zen.linux-x86_64.tar.xz ]]; then \
-        curl -L -O --output-dir ~/opt \
-          https://github.com/zen-browser/desktop/releases/latest/download/zen.linux-x86_64.tar.xz; \
-    fi
-    cd ~/opt && tar -xJf zen.linux-x86_64.tar.xz
-    ln -sf ~/opt/zen/zen ~/.local/bin
-    cp zen.desktop ~/.local/share/applications/
-
